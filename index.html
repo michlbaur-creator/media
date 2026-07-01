@@ -230,7 +230,7 @@
 
   <section id="vortraege">
     <h2>Meine Vorträge</h2>
-    <p>Sieben Themen – tippen Sie auf eine Kachel für die Kurzbeschreibung.</p>
+    <p>Sechs Themen – tippen Sie auf eine Kachel für die Kurzbeschreibung.</p>
     <div class="tiles" id="vortragsTiles"></div>
   </section>
 
@@ -318,34 +318,30 @@
 <script>
 /* ====== Inhalte (öffentliche Texte hier pflegen) ====== */
 const vortraege = [
-  {t:"Internet", kurz:"Sicher und selbstbestimmt im Netz unterwegs.",
-   worum:"Wie funktioniert das Internet, und wie bewege ich mich sicher darin?",
-   fuerWen:"Alle, die die Grundlagen verstehen und mehr Sicherheit gewinnen möchten.",
-   mitnehmen:"Ein klares Bild vom Netz und praktische Handgriffe für den Alltag."},
-  {t:"KI & ChatGPT", kurz:"Was künstliche Intelligenz kann – und was nicht.",
-   worum:"Chatbots wie ChatGPT verständlich erklärt, mit ehrlicher Einordnung.",
-   fuerWen:"Neugierige ohne Vorkenntnisse, die KI selbst ausprobieren wollen.",
-   mitnehmen:"Erste eigene Gespräche mit einer KI und ein Gespür für ihre Grenzen."},
-  {t:"SMART Home", kurz:"Das vernetzte Zuhause – nützlich statt kompliziert.",
-   worum:"Licht, Heizung, Sprachassistenten: was sinnvoll ist und was nicht.",
+  {t:"Das Internet – unendliche Weiten …", kurz:"Eine Reise durch das Netz und seine Möglichkeiten.",
+   worum:"Was das Internet eigentlich ist, wie es entstand und welche Welten es uns öffnet.",
+   fuerWen:"Alle, die neugierig sind und das große Ganze verstehen möchten.",
+   mitnehmen:"Ein Gefühl dafür, was hinter dem Netz steckt – und Lust, es zu erkunden."},
+  {t:"Internet ohne Angst – Wie agiere ich sicher im Netz?", kurz:"Sicher unterwegs, ohne die Freude zu verlieren.",
+   worum:"Betrug, Passwörter, Datenschutz: die häufigsten Fallen und wie man sie umgeht.",
+   fuerWen:"Alle, die sich im Netz sicherer fühlen möchten.",
+   mitnehmen:"Konkrete Handgriffe für mehr Sicherheit – ganz ohne Panikmache."},
+  {t:"Künstliche Intelligenz – Chance und Risiko", kurz:"Was KI kann, was nicht – und was das für uns bedeutet.",
+   worum:"Chatbots wie ChatGPT verständlich erklärt, mit ehrlicher Einordnung von Nutzen und Grenzen.",
+   fuerWen:"Neugierige ohne Vorkenntnisse, die mitreden und ausprobieren wollen.",
+   mitnehmen:"Ein klarer Blick auf Chancen und Risiken – und ein erstes eigenes Ausprobieren."},
+  {t:"Das Internet der Dinge – Steuerung und Automatisierung im Smart Home", kurz:"Das vernetzte Zuhause – nützlich statt kompliziert.",
+   worum:"Licht, Heizung, Sprachassistenten: was wirklich hilft und was nur Spielerei ist.",
    fuerWen:"Alle, die ihr Zuhause vorsichtig moderner machen möchten.",
-   mitnehmen:"Überblick, wo smarte Technik wirklich hilft – und wo nicht."},
-  {t:"Digitale Ordnung", kurz:"Fotos, Dateien und Mails im Griff behalten.",
-   worum:"Struktur auf Handy und Computer, damit man alles wiederfindet.",
-   fuerWen:"Wer im digitalen Durcheinander den Überblick sucht.",
-   mitnehmen:"Ein einfaches Ordnungssystem, das im Alltag durchhält."},
-  {t:"Digitaler Nachlass", kurz:"Was mit den Daten geschieht, wenn man geht.",
-   worum:"Konten, Passwörter und Zugänge vorsorglich regeln.",
-   fuerWen:"Alle, die für sich und ihre Angehörigen vorsorgen möchten.",
-   mitnehmen:"Eine Checkliste, um den digitalen Nachlass zu ordnen."},
-  {t:"ePA", kurz:"Die elektronische Patientenakte verständlich.",
-   worum:"Was die ePA ist, wie sie funktioniert und wer was sieht.",
-   fuerWen:"Patientinnen und Patienten, die selbst entscheiden möchten.",
-   mitnehmen:"Klarheit über Nutzen, Rechte und die eigenen Einstellungen."},
-  {t:"Leben", kurz:"Digitale Helfer für den ganz normalen Alltag.",
-   worum:"Von Fahrplan-Apps bis Videotelefonie mit den Enkeln.",
-   fuerWen:"Alle, die den Alltag mit digitaler Hilfe leichter machen wollen.",
-   mitnehmen:"Konkrete Apps und Kniffe, die sofort weiterhelfen."}
+   mitnehmen:"Überblick, wo smarte Technik den Alltag erleichtert – und wo Vorsicht gut ist."},
+  {t:"Musik-Streaming – Digitaler Musikgenuss, jederzeit und überall", kurz:"Die ganze Musikwelt in der Hosentasche.",
+   worum:"Wie Streaming-Dienste funktionieren, was sie kosten und wie man sie bedient.",
+   fuerWen:"Musikliebhaber, die vom Plattenschrank ins digitale Zeitalter wechseln möchten.",
+   mitnehmen:"Das Rüstzeug, um jederzeit die eigene Lieblingsmusik zu finden und zu hören."},
+  {t:"Über die Kostbarkeit des Alters – Wir schauen gemeinsam zurück und von hier aus nach vorn", kurz:"Ein nachdenklicher Blick zurück und nach vorn.",
+   worum:"Ein persönlicher Vortrag über das Älterwerden, Erinnerungen und neue Möglichkeiten.",
+   fuerWen:"Alle, die innehalten und den eigenen Lebensweg neu betrachten möchten.",
+   mitnehmen:"Ermutigung, das Alter als kostbare, gestaltbare Zeit zu sehen."}
 ];
 
 const termine = [
@@ -422,7 +418,7 @@ renderTermine();
     { titel:'Willkommen bei Media Mibaso!',
       text:'In ein paar Sätzen zeige ich Ihnen, was Sie hier finden.' },
     { titel:'Meine Vorträge',
-      text:'Sieben Themen rund um digitale Medien – von Internet über KI bis zum digitalen Nachlass. Tippen Sie eine Kachel für die Kurzbeschreibung an.' },
+      text:'Sechs Themen rund um digitale Medien – von Internet über KI bis zum Musik-Streaming. Tippen Sie eine Kachel für die Kurzbeschreibung an.' },
     { titel:'Kursmaterialien',
       text:'Hinter dem Knopf „Zu den Kursmaterialien" liegen Folien, Handouts und Übungen für meine Kurse – geschützt durch ein Passwort, das Sie von mir bekommen.' },
     { titel:'Tipps für den Einstieg',
@@ -453,5 +449,6 @@ renderTermine();
   try{ if(!localStorage.getItem('media-tour-gesehen')) setTimeout(starte,700); }catch(e){}
 })();
 </script>
+<script src="/assets/app.js" defer></script>
 </body>
 </html>
