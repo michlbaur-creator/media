@@ -254,10 +254,10 @@
 
 <script>
 /* ====== Passwort-Prüfung (Hash, nicht Klartext) ======
-   Demo-Passwort: vhs-material
+   Passwort: .Material!
    Neues Passwort erzeugen: in der Konsole  await hashe('neuesPasswort')
    und den Wert unten bei PW_HASH eintragen. */
-const PW_HASH = "523fbc3ec0ed219dc2539045cc5e5a48cbf7131a5a010c4e83ac4ab7d6b49bd9";
+const PW_HASH = "da5360a60fe7d345efa6b8d46f5e2fee4efb3550652e4e007c742836366ff77d";
 
 async function hashe(text){
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
