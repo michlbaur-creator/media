@@ -6,16 +6,16 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Media Mibaso">
-<meta name="theme-color" content="#9C4A3A">
+<meta name="theme-color" content="#3E7CB1">
 <meta name="description" content="Meine Digital-Werkstatt für die Hosentasche: Vorträge und Kursmaterialien rund um digitale Medien, KI und den Alltag im Netz – von Michael Baur.">
 <title>Media Mibaso — Vorträge &amp; Kursmaterialien</title>
 <link rel="manifest" href="/manifest.webmanifest">
-<link rel="icon" href="/assets/icon.svg?v=2" type="image/svg+xml">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png?v=2">
-<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=2">
+<link rel="icon" href="/assets/icon.svg?v=3" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png?v=3">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=3">
 <style>
   :root{
-    --terra:#9C4A3A; --terra-tief:#7C3A2E; --terra-hell:#C98A7A;
+    --terra:#3E7CB1; --terra-tief:#2A5C86; --terra-hell:#A9C8E2;
     --creme:#F7F3E8; --creme-tief:#EEE7D5; --creme-tile:#FCFAF3;
     --honig:#C28A3A; --ink:#33302B; --ink-soft:#6A645B; --linie:#E3D8C4;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
@@ -37,7 +37,7 @@
   .app-head .logo{width:64px;height:64px;margin:0 auto 10px;display:block;
     border-radius:16px;background:var(--creme);padding:4px;box-shadow:0 3px 10px rgba(0,0,0,.2)}
   .app-head h1{margin:0;font-size:clamp(28px,8vw,40px);font-weight:normal;letter-spacing:.02em;line-height:1.15}
-  .app-head .untertitel{font-style:italic;color:#f0dfd8;margin-top:8px;
+  .app-head .untertitel{font-style:italic;color:#dfeaf3;margin-top:8px;
     font-size:clamp(12px,3.6vw,16px);line-height:1.4}
   @media (display-mode:standalone){
     .app-head{padding-top:max(42px,calc(env(safe-area-inset-top) + 10px))}
@@ -51,15 +51,18 @@
   nav.menu a:hover{background:var(--creme-tile);color:var(--terra-tief)}
 
   section{padding:28px 0 6px}
-  section h2{font-size:22px;margin:0 0 14px;color:var(--terra-tief);
-    border-bottom:2px solid var(--linie);padding-bottom:6px}
+  section h2{font-size:21px;margin:0 0 14px;color:var(--terra-tief);font-weight:normal;
+    border-bottom:2px solid var(--linie);padding-bottom:6px;display:flex;align-items:center;gap:9px}
+  section h2 .hic{font-size:18px;line-height:1;flex:none}
   .lead{font-size:19px}
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px}
+  .grid2 .dl{margin-bottom:0}
 
   /* Chips */
   .start-chips{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:18px 0 2px}
   .start-chip{display:inline-flex;align-items:center;gap:7px;background:var(--creme-tile);
     border:1px solid var(--linie);border-radius:999px;padding:8px 16px;font-size:14px;color:var(--terra-tief);
-    font-family:var(--sans);cursor:pointer;line-height:1;text-decoration:none;box-shadow:0 1px 4px rgba(124,58,46,.06)}
+    font-family:var(--sans);cursor:pointer;line-height:1;text-decoration:none;box-shadow:0 1px 4px rgba(42,92,134,.06)}
   .start-chip:hover{border-color:var(--terra-hell)}
 
   /* großer Knopf */
@@ -72,14 +75,14 @@
   .install-bubble{display:none;text-align:center;margin:18px 0 2px}
   .bubble-trigger{display:inline-flex;align-items:center;gap:8px;background:var(--terra);color:#FBF7EE;
     border:none;border-radius:999px;padding:9px 16px 9px 14px;font-size:14px;font-family:var(--sans);
-    cursor:pointer;box-shadow:0 3px 12px rgba(124,58,46,.18);line-height:1.2}
+    cursor:pointer;box-shadow:0 3px 12px rgba(42,92,134,.18);line-height:1.2}
   .bubble-trigger:hover{background:var(--terra-tief)}
   .bubble-trigger svg{width:18px;height:18px;flex-shrink:0}
   .bubble-trigger .chevron{transition:transform .2s;font-size:.8rem;margin-left:2px}
   .bubble-trigger[aria-expanded="true"] .chevron{transform:rotate(180deg)}
   .bubble-content{display:none;background:var(--creme-tile);border:1px solid var(--linie);border-radius:16px;
     padding:16px 20px 14px;margin:10px auto 0;max-width:560px;text-align:left;font-family:var(--sans);
-    font-size:15px;line-height:1.5;color:var(--ink);box-shadow:0 4px 16px rgba(124,58,46,.10)}
+    font-size:15px;line-height:1.5;color:var(--ink);box-shadow:0 4px 16px rgba(42,92,134,.10)}
   .bubble-content.open{display:block}
   .bubble-content h4{margin:0 0 6px;font-size:16px;color:var(--terra-tief)}
   .bubble-content p{margin:10px 0 4px}
@@ -90,11 +93,11 @@
 
   /* Kacheln Vorträge */
   .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:6px}
-  .tile{background:var(--creme-tile);border:1px solid var(--linie);border-radius:14px;padding:16px 18px;
-    cursor:pointer;transition:transform .08s,box-shadow .08s}
-  .tile:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(124,58,46,.12)}
-  .tile h3{margin:0 0 4px;font-size:19px;color:var(--terra-tief)}
-  .tile p{margin:0;font-size:15px;color:var(--ink-soft);font-family:var(--sans)}
+  .tile{background:var(--creme-tile);border:1px solid var(--linie);border-radius:14px;padding:14px 16px;
+    cursor:pointer;transition:transform .08s,box-shadow .08s;display:flex;align-items:center;gap:10px}
+  .tile:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(42,92,134,.12)}
+  .tile h3{margin:0;font-size:17px;color:var(--terra-tief);flex:1;line-height:1.25}
+  .tile .chev{color:var(--terra);font-size:22px;flex:none;line-height:1}
 
   /* Termine */
   ul.termine{list-style:none;padding:0;margin:0}
@@ -147,19 +150,19 @@
   .tour-buttons{display:flex;align-items:center;justify-content:space-between;gap:10px}
   .tour-skip{background:none;border:none;color:var(--ink-soft);cursor:pointer;font-family:var(--sans);font-size:.9rem;padding:8px 4px}
   .tour-weiter{background:var(--terra);color:#FBF7EE;border:none;border-radius:999px;padding:10px 22px;
-    font-family:var(--sans);font-weight:600;cursor:pointer;box-shadow:0 2px 6px rgba(124,58,46,.3)}
+    font-family:var(--sans);font-weight:600;cursor:pointer;box-shadow:0 2px 6px rgba(42,92,134,.3)}
   .tour-weiter:hover{background:var(--terra-tief)}
   .tour-help{position:fixed;bottom:max(16px,env(safe-area-inset-bottom));right:max(16px,env(safe-area-inset-right));
     width:46px;height:46px;border-radius:50%;background:#fff;color:var(--terra-tief);border:1px solid var(--linie);
     font-family:Georgia,serif;font-size:1.35rem;font-weight:700;cursor:pointer;
-    box-shadow:0 4px 14px rgba(124,58,46,.18);z-index:100;display:flex;align-items:center;justify-content:center}
+    box-shadow:0 4px 14px rgba(42,92,134,.18);z-index:100;display:flex;align-items:center;justify-content:center}
   .tour-help:hover{background:var(--terra);color:var(--creme)}
 </style>
 </head>
 <body>
 
 <header class="app-head">
-  <img class="logo" src="/assets/icon.svg?v=2" alt="Media Mibaso Logo">
+  <img class="logo" src="/assets/icon.svg?v=3" alt="Media Mibaso Logo">
   <h1>Media Mibaso</h1>
   <div class="untertitel">Meine Digital-Werkstatt für die Hosentasche.</div>
 </header>
@@ -182,10 +185,10 @@
       <a class="start-chip" href="https://fauna.mibaso.de">🦋 Fauna</a>
     </div>
 
-    <p class="lead">Herzlich willkommen. Hier finden Sie Infos zu meinen
-    Vorträgen und VHS-Kursen. Die <strong>kursbegleitenden Materialien</strong>
-    (Folien, Handouts, Übungen) liegen im geschützten Bereich – das Passwort
-    bekommen Sie von mir im Kurs.</p>
+    <p class="lead">Hier gibt's jede Menge Infos zu meinen Vorträgen und
+    VHS-Kursen. Die <strong>kursbegleitenden Materialien</strong> (Folien,
+    Handouts, Übungen) liegen im geschützten Bereich – das Passwort bekommen
+    Sie von mir.</p>
     <a class="cta" href="/kurse/">Zu den Kursmaterialien
       <small>geschützter Bereich · Passwort erforderlich</small></a>
 
@@ -229,13 +232,13 @@
   </section>
 
   <section id="vortraege">
-    <h2>Meine Vorträge</h2>
+    <h2><span class="hic" aria-hidden="true">🎤</span>Meine Vorträge</h2>
     <p>Zehn Themen – tippen Sie auf eine Kachel für die Kurzbeschreibung.</p>
     <div class="tiles" id="vortragsTiles"></div>
   </section>
 
   <section id="termine">
-    <h2>Aktuelle Termine &amp; Anmeldung</h2>
+    <h2><span class="hic" aria-hidden="true">📅</span>Aktuelle Termine &amp; Anmeldung</h2>
     <p>Meine aktuellen Kurse finden Sie direkt bei den Volkshochschulen –
     dort können Sie sich auch gleich online anmelden:</p>
     <a class="dl" href="https://www.vhs-kreis-giessen.de/bildungsangebote/kw/kathaupt/26/?suchesetzen=false&amp;clearallkatfilter=true&amp;kfs_stichwort_schlagwort=baur" target="_blank" rel="noopener">
@@ -245,8 +248,9 @@
   </section>
 
   <section id="tipps">
-    <h2>Tipps für den Einstieg</h2>
+    <h2><span class="hic" aria-hidden="true">💡</span>Tipps für den Einstieg</h2>
     <p>Frei zugängliche Hilfen zum Herunterladen – für alle, die gerade anfangen:</p>
+    <div class="grid2">
     <a class="dl" href="https://mibaso.de/wp-content/uploads/2025/11/Tipps.pdf" target="_blank" rel="noopener">
       <span class="ico">PDF</span><span class="titel">Tipps für den Einstieg</span><span class="pfeil">öffnen &rarr;</span></a>
     <a class="dl" href="https://mibaso.de/wp-content/uploads/2025/11/Passwoerter.pdf" target="_blank" rel="noopener">
@@ -267,10 +271,11 @@
       <span class="ico">PDF</span><span class="titel">Google-Kalender</span><span class="pfeil">öffnen &rarr;</span></a>
     <a class="dl" href="https://mibaso.de/wp-content/uploads/2025/11/Google-Fotos-neu.pdf" target="_blank" rel="noopener">
       <span class="ico">PDF</span><span class="titel">Google-Fotos</span><span class="pfeil">öffnen &rarr;</span></a>
+    </div>
   </section>
 
   <section id="links">
-    <h2>Linkliste</h2>
+    <h2><span class="hic" aria-hidden="true">🔗</span>Linkliste</h2>
     <ul class="links">
       <li><a href="https://flora.mibaso.de" target="_blank" rel="noopener">flora.mibaso.de</a> – Pflanzen &amp; Bestäubung</li>
       <li><a href="https://fauna.mibaso.de" target="_blank" rel="noopener">fauna.mibaso.de</a> – Insekten &amp; Schmetterlinge</li>
@@ -279,7 +284,7 @@
   </section>
 
   <section id="ueber">
-    <h2>Über mich</h2>
+    <h2><span class="hic" aria-hidden="true">👤</span>Über mich</h2>
     <div class="ueber-text">
       <p>35 Jahre lang arbeitete ich als Oberstudienrat an der Gesamtschule in
       Hungen und für das Land Hessen in der Redaktion des Hessischen
@@ -309,7 +314,7 @@
   <div class="houses">
     <a class="house" href="https://flora.mibaso.de"><b style="background:#2F4F3E"></b>Flora</a>
     <a class="house" href="https://fauna.mibaso.de"><b style="background:#233D5C"></b>Fauna</a>
-    <a class="house" href="#" onclick="showHome();return false;"><b style="background:#9C4A3A"></b>Media</a>
+    <a class="house" href="#" onclick="showHome();return false;"><b style="background:#3E7CB1"></b>Media</a>
   </div>
   <div class="copy">© <span id="jahr"></span> mibaso.de · Michael Baur</div>
 </div></footer>
@@ -377,12 +382,12 @@ function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>'
 
 function renderVortraege(){
   document.getElementById('vortragsTiles').innerHTML = vortraege.map((v,i)=>
-    `<div class="tile" onclick="showDetail(${i})"><h3>${esc(v.t)}</h3><p>${esc(v.kurz)}</p></div>`).join('');
+    `<div class="tile" onclick="showDetail(${i})"><h3>${esc(v.t)}</h3><span class="chev" aria-hidden="true">›</span></div>`).join('');
 }
 function showDetail(i){
   const v = vortraege[i];
   document.getElementById('detailInhalt').innerHTML =
-    `<h2>${esc(v.t)}</h2><dl>
+    `<h2>${esc(v.t)}</h2><p style="font-size:17px;color:var(--ink-soft);margin:0 0 12px">${esc(v.kurz)}</p><dl>
        <dt>Worum geht's?</dt><dd>${esc(v.worum)}</dd>
        <dt>Für wen?</dt><dd>${esc(v.fuerWen)}</dd>
        <dt>Was nehme ich mit?</dt><dd>${esc(v.mitnehmen)}</dd>

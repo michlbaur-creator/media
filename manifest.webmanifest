@@ -8,7 +8,7 @@
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#F5EFE2",
-  "theme_color": "#9C4A3A",
+  "theme_color": "#3E7CB1",
   "categories": ["education", "books"],
   "icons": [
     {"src": "assets/icon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any"},

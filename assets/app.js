@@ -3,13 +3,13 @@
    Einbinden mit:  <script src="/assets/app.js" defer></script>  */
 (function () {
   var css =
-    '.fl-update-banner{position:fixed;top:0;left:0;right:0;background:#9C4A3A;color:#fff;' +
+    '.fl-update-banner{position:fixed;top:0;left:0;right:0;background:#3E7CB1;color:#fff;' +
     'padding:max(50px,calc(env(safe-area-inset-top) + 6px)) 14px 8px;display:none;align-items:center;' +
     'justify-content:center;gap:12px;font-size:.92rem;font-family:Georgia,serif;z-index:9999;' +
     'box-shadow:0 2px 8px rgba(0,0,0,.18)}' +
     '.fl-update-banner.aktiv{display:flex;flex-wrap:wrap}' +
     '.fl-update-banner .fl-update-text{flex:1 1 auto;text-align:center;min-width:0}' +
-    '.fl-update-banner button{background:#fff;color:#9C4A3A;border:none;padding:6px 14px;' +
+    '.fl-update-banner button{background:#fff;color:#3E7CB1;border:none;padding:6px 14px;' +
     'border-radius:7px;font-family:inherit;font-size:inherit;font-weight:600;cursor:pointer;' +
     'white-space:nowrap;box-shadow:0 2px 4px rgba(0,0,0,.15)}';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
