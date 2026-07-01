@@ -66,7 +66,7 @@
   .bereich-titel{font-size:25px;color:var(--leit-dark);margin:4px 0 2px}
   .bereich-unter{color:var(--ink-soft);font-family:var(--sans);font-size:14px;margin:0 0 6px}
   .gruppe h3{font-family:Georgia,serif;color:var(--leit-dark);font-size:20px;font-weight:normal;margin:22px 0 12px;line-height:1.15}
-  .gruppe h3::after{content:"";display:block;width:40px;height:3px;margin-top:7px;background:var(--leit);border-radius:2px}
+  .gruppe h3::after{content:"";display:block;width:40px;height:3px;margin-top:7px;background:currentColor;border-radius:2px}
   .mat{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:10px;
     padding:11px 14px;margin-bottom:8px;text-decoration:none;color:var(--ink)}
   .mat:hover{border-color:var(--leit)}
@@ -119,6 +119,27 @@
             {"titel":"Kalender – Demo","typ":"video","url":"https://mibaso.de/wp-content/uploads/2025/12/Kalender.mp4"},
             {"titel":"Kalender – Überblick","typ":"pdf","url":"https://mibaso.de/wp-content/uploads/2025/11/Kalender.pdf"},
             {"titel":"Schritt-für-Schritt","typ":"pdf","url":"https://mibaso.de/wp-content/uploads/2025/12/Google-Kalender-1.pdf"}
+          ]
+        }
+      ]
+    },
+    {
+      "titel": "Internet & Sicherheit",
+      "untertitel": "Grundlagen: sicher unterwegs im Netz",
+      "icon": "🔒",
+      "gruppen": [
+        {
+          "name": "Internet",
+          "materialien": [
+            {"titel":"Vortrag: Begriffe rund ums Internet","typ":"video","url":"https://youtu.be/VOF_xR0vt4Y"},
+            {"titel":"Quiz zum Internet","typ":"link","url":"https://www.revisely.com/quiz/Nbsf2E"}
+          ]
+        },
+        {
+          "name": "Sicher im Netz",
+          "materialien": [
+            {"titel":"Sichere Passwörter","typ":"pdf","url":"https://mibaso.de/wp-content/uploads/2025/11/Passwoerter.pdf"},
+            {"titel":"Quiz zur Sicherheit","typ":"link","url":"https://revisely.com/quiz/19gE3p"}
           ]
         }
       ]
@@ -259,9 +280,12 @@ function oeffne(i){
   offen=i; const b=bereiche[i];
   let html=`<h2 class="bereich-titel">${esc(b.titel)}</h2>
     <p class="bereich-unter">${esc(b.untertitel||'')}</p>`;
+  const PALETTE=['#3E7CB1','#C4603A','#C28A3A','#2C7A6A','#5A6B7A'];
+  let gi=0;
   b.gruppen.forEach(g=>{
     if(!g.materialien.length) return;
-    html+=`<div class="gruppe"><h3>${esc(g.name)}</h3>`;
+    const col=PALETTE[gi % PALETTE.length]; gi++;
+    html+=`<div class="gruppe"><h3 style="color:${col}">${esc(g.name)}</h3>`;
     g.materialien.forEach(m=>{
       const t=TYP[m.typ]||TYP.link;
       html+=`<a class="mat" href="${encodeURI(m.url)}" target="_blank" rel="noopener">
