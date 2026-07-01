@@ -76,6 +76,7 @@
   .ico.video{background:#5B4E9E}
   .ico.link{background:#3d6b4a}
   .ico.bild{background:#2C7A6A}
+  .ico.buch{background:#B5792B}
   .mat .titel{flex:1;font-size:16.5px}
   .mat .pfeil{color:var(--ink-soft);font-size:14px;font-family:var(--sans)}
 
@@ -140,6 +141,39 @@
           "materialien": [
             {"titel":"Sichere Passwörter","typ":"pdf","url":"https://mibaso.de/wp-content/uploads/2025/11/Passwoerter.pdf"},
             {"titel":"Quiz zur Sicherheit","typ":"link","url":"https://revisely.com/quiz/19gE3p"}
+          ]
+        }
+      ]
+    },
+    {
+      "titel": "KI & ChatGPT",
+      "untertitel": "Künstliche Intelligenz verstehen und ausprobieren",
+      "icon": "🤖",
+      "gruppen": [
+        {
+          "name": "Das Buch zum Kurs",
+          "materialien": [
+            {"titel":"Das Buch zum Kurs (Flipbook)","typ":"buch","url":"https://publuu.com/flip-book/854550/1876767"}
+          ]
+        },
+        {
+          "name": "Quizze",
+          "materialien": [
+            {"titel":"Quiz: ChatGPT & Co","typ":"link","url":"https://revisely.com/quiz/TffVux"},
+            {"titel":"Quiz: Rund um die KI","typ":"link","url":"https://revisely.com/quiz/jWSDYr"}
+          ]
+        }
+      ]
+    },
+    {
+      "titel": "Evaluation",
+      "untertitel": "Ihre Rückmeldung zum Kurs",
+      "icon": "✍️",
+      "gruppen": [
+        {
+          "name": "Rückmeldung",
+          "materialien": [
+            {"titel":"Wie war's? – Lob & Kritik","typ":"link","url":"https://forms.office.com/r/S5XLtJESa9?origin=lprLink"}
           ]
         }
       ]
@@ -243,7 +277,8 @@ const TYP = {
   pdf:  {kl:'pdf',  label:'PDF'},
   video:{kl:'video',label:'▶'},
   link: {kl:'link', label:'WEB'},
-  bild: {kl:'bild', label:'BILD'}
+  bild: {kl:'bild', label:'BILD'},
+  buch: {kl:'buch', label:'BUCH'}
 };
 function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function anzahl(b){return b.gruppen.reduce((n,g)=>n+g.materialien.length,0);}
