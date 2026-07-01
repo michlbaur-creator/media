@@ -99,7 +99,9 @@
   .tile{background:var(--creme-tile);border:1px solid var(--linie);border-radius:14px;padding:14px 16px;
     cursor:pointer;transition:transform .08s,box-shadow .08s;display:flex;align-items:center;gap:10px}
   .tile:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(42,92,134,.12)}
-  .tile h3{margin:0;font-size:16px;font-weight:normal;color:var(--terra-tief);flex:1;line-height:1.25}
+  .tile .tt{flex:1;min-width:0}
+  .tile h3{margin:0;font-size:16px;font-weight:bold;color:var(--terra-tief);line-height:1.2}
+  .tile .tsub{margin:2px 0 0;font-size:12.5px;color:var(--ink-soft);font-family:var(--sans);line-height:1.25}
   .tile .tic{font-size:20px;flex:none;line-height:1}
   .tile .chev{color:var(--terra);font-size:22px;flex:none;line-height:1}
 
@@ -340,35 +342,35 @@
 <script>
 /* ====== Inhalte (öffentliche Texte hier pflegen) ====== */
 const vortraege = [
-  {t:"Das Internet – unendliche Weiten …", k:"Das Internet", ic:"🌐", kurz:"Eine Reise durch das Netz und seine Möglichkeiten.",
+  {t:"Das Internet – unendliche Weiten …", k:"Das Internet", ic:"🌐", sub:"Unendliche Weiten und Möglichkeiten", kurz:"Eine Reise durch das Netz und seine Möglichkeiten.",
    worum:"Was das Internet eigentlich ist, wie es entstand und welche Welten es uns öffnet.",
    fuerWen:"Alle, die neugierig sind und das große Ganze verstehen möchten.",
    mitnehmen:"Ein Gefühl dafür, was hinter dem Netz steckt – und Lust, es zu erkunden."},
-  {t:"Internet ohne Angst – Wie agiere ich sicher im Netz?", k:"Internet ohne Angst", ic:"🔒", kurz:"Sicher unterwegs, ohne die Freude zu verlieren.",
+  {t:"Internet ohne Angst – Wie agiere ich sicher im Netz?", k:"Internet ohne Angst", ic:"🔒", sub:"Sicher agieren im Netz", kurz:"Sicher unterwegs, ohne die Freude zu verlieren.",
    worum:"Betrug, Passwörter, Datenschutz: die häufigsten Fallen und wie man sie umgeht.",
    fuerWen:"Alle, die sich im Netz sicherer fühlen möchten.",
    mitnehmen:"Konkrete Handgriffe für mehr Sicherheit – ganz ohne Panikmache."},
-  {t:"Künstliche Intelligenz – Chance und Risiko", k:"Künstliche Intelligenz", ic:"🤖", kurz:"Was KI kann, was nicht – und was das für uns bedeutet.",
+  {t:"Künstliche Intelligenz – Chance und Risiko", k:"Künstliche Intelligenz", ic:"🤖", sub:"Chance und Risiko", kurz:"Was KI kann, was nicht – und was das für uns bedeutet.",
    worum:"Chatbots wie ChatGPT verständlich erklärt, mit ehrlicher Einordnung von Nutzen und Grenzen.",
    fuerWen:"Neugierige ohne Vorkenntnisse, die mitreden und ausprobieren wollen.",
    mitnehmen:"Ein klarer Blick auf Chancen und Risiken – und ein erstes eigenes Ausprobieren."},
-  {t:"Musik-Streaming – Digitaler Musikgenuss, jederzeit und überall", k:"Musik-Streaming", ic:"🎵", kurz:"Die ganze Musikwelt in der Hosentasche.",
+  {t:"Musik-Streaming – Digitaler Musikgenuss, jederzeit und überall", k:"Musik-Streaming", ic:"🎵", sub:"Musikgenuss, jederzeit und überall", kurz:"Die ganze Musikwelt in der Hosentasche.",
    worum:"Wie Streaming-Dienste funktionieren, was sie kosten und wie man sie bedient.",
    fuerWen:"Musikliebhaber, die vom Plattenschrank ins digitale Zeitalter wechseln möchten.",
    mitnehmen:"Das Rüstzeug, um jederzeit die eigene Lieblingsmusik zu finden und zu hören."},
-  {t:"Über die Kostbarkeit des Alters – Wir schauen gemeinsam zurück und von hier aus nach vorn", k:"Kostbarkeit des Alters", ic:"🕰️", kurz:"Ein nachdenklicher Blick zurück und nach vorn.",
+  {t:"Über die Kostbarkeit des Alters – Wir schauen gemeinsam zurück und von hier aus nach vorn", k:"Kostbarkeit des Alters", ic:"🕰️", sub:"Zurückschauen und nach vorn", kurz:"Ein nachdenklicher Blick zurück und nach vorn.",
    worum:"Ein persönlicher Vortrag über das Älterwerden, Erinnerungen und neue Möglichkeiten.",
    fuerWen:"Alle, die innehalten und den eigenen Lebensweg neu betrachten möchten.",
    mitnehmen:"Ermutigung, das Alter als kostbare, gestaltbare Zeit zu sehen."},
-  {t:"Klicks statt Krempel – Scannen, speichern, sortieren", k:"Klicks statt Krempel", ic:"🗂️", kurz:"Mit digitalen Ablagesystemen dem Papierchaos ein Schnippchen schlagen.",
+  {t:"Klicks statt Krempel – Scannen, speichern, sortieren", k:"Klicks statt Krempel", ic:"🗂️", sub:"Scannen, speichern, sortieren", kurz:"Mit digitalen Ablagesystemen dem Papierchaos ein Schnippchen schlagen.",
    worum:"Papierberge digitalisieren: scannen, sinnvoll benennen und jederzeit wiederfinden.",
    fuerWen:"Alle, die Ordner voller Papier in den Griff bekommen möchten.",
    mitnehmen:"Ein einfaches System, mit dem Belege und Unterlagen digital griffbereit sind."},
-  {t:"Fernsehen – eine Zeitreise", k:"Fernsehen – eine Zeitreise", ic:"📺", kurz:"Nostalgie trifft Smart TV.",
+  {t:"Fernsehen – eine Zeitreise", k:"Fernsehen – eine Zeitreise", ic:"📺", sub:"Nostalgie trifft Smart TV", kurz:"Nostalgie trifft Smart TV.",
    worum:"Vom Röhrengerät zum Streaming: wie sich das Fernsehen gewandelt hat und heute funktioniert.",
    fuerWen:"Alle, die den Fernseher von früher lieben und das Heute verstehen möchten.",
    mitnehmen:"Überblick über Mediatheken, Streaming und die Bedienung des Smart TV."},
-  {t:"Der digitale Nachlass – unsere Daten sind unsterblich", k:"Digitaler Nachlass", ic:"🗝️", kurz:"Was von uns im Netz bleibt – und wie man vorsorgt.",
+  {t:"Der digitale Nachlass – unsere Daten sind unsterblich", k:"Digitaler Nachlass", ic:"🗝️", sub:"Unsere Daten sind unsterblich", kurz:"Was von uns im Netz bleibt – und wie man vorsorgt.",
    worum:"Konten, Passwörter und Erinnerungen im Netz vorausschauend regeln.",
    fuerWen:"Alle, die für sich und ihre Angehörigen vorsorgen möchten.",
    mitnehmen:"Eine Checkliste, um den digitalen Nachlass rechtzeitig zu ordnen."}
@@ -378,7 +380,7 @@ function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>'
 
 function renderVortraege(){
   document.getElementById('vortragsTiles').innerHTML = vortraege.map((v,i)=>
-    `<div class="tile" onclick="showDetail(${i})"><span class="tic" aria-hidden="true">${v.ic}</span><h3>${esc(v.k)}</h3><span class="chev" aria-hidden="true">›</span></div>`).join('');
+    `<div class="tile" onclick="showDetail(${i})"><span class="tic" aria-hidden="true">${v.ic}</span><div class="tt"><h3>${esc(v.k)}</h3><p class="tsub">${esc(v.sub)}</p></div><span class="chev" aria-hidden="true">›</span></div>`).join('');
 }
 function showDetail(i){
   const v = vortraege[i];
