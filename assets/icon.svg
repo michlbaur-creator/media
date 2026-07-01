@@ -1,5 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="96" fill="#9C4A3A"/>
-  <text x="256" y="352" font-family="Georgia, serif" font-size="300"
-        font-weight="bold" fill="#F5EFE2" text-anchor="middle">M</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Media Mibaso">
+  <rect width="512" height="512" rx="112" fill="#9C4A3A"/>
+  <rect x="171" y="92" width="170" height="328" rx="34" fill="#F7F3E8"/>
+  <rect x="236" y="118" width="40" height="9" rx="4.5" fill="#9C4A3A" opacity="0.45"/>
+  <path d="M231 196 L231 316 L323 256 Z" fill="#9C4A3A"/>
+  <rect x="226" y="392" width="60" height="9" rx="4.5" fill="#9C4A3A" opacity="0.45"/>
 </svg>
