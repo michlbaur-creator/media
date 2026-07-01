@@ -169,6 +169,7 @@
   <a href="#vortraege" onclick="showHome()">Vorträge</a>
   <a href="#termine" onclick="showHome()">Termine</a>
   <a href="#tipps" onclick="showHome()">Tipps</a>
+  <a href="#handzettel" onclick="showHome()">Handzettel</a>
   <a href="#links" onclick="showHome()">Links</a>
   <a href="#ueber" onclick="showHome()">Über mich</a>
 </div></nav>
@@ -235,8 +236,13 @@
   </section>
 
   <section id="termine">
-    <h2>Aktuelle Termine</h2>
-    <ul class="termine" id="termineListe"></ul>
+    <h2>Aktuelle Termine &amp; Anmeldung</h2>
+    <p>Meine aktuellen Kurse finden Sie direkt bei den Volkshochschulen –
+    dort können Sie sich auch gleich online anmelden:</p>
+    <a class="dl" href="https://www.vhs-kreis-giessen.de/bildungsangebote/kw/kathaupt/26/?suchesetzen=false&amp;clearallkatfilter=true&amp;kfs_stichwort_schlagwort=baur" target="_blank" rel="noopener">
+      <span class="ico" style="background:#3d6b4a">VHS</span><span class="titel">CBES in Lollar · VHS Kreis Gießen</span><span class="pfeil">öffnen &rarr;</span></a>
+    <a class="dl" href="https://www.vhs-marburg-biedenkopf.de/index.php?id=9&amp;kathaupt=26%3B&amp;suchesetzen=false%3B&amp;kfs_stichwort_schlagwort=baur&amp;tx_indexedsearch%5Bsubmit_button%5D=" target="_blank" rel="noopener">
+      <span class="ico" style="background:#3d6b4a">VHS</span><span class="titel">Marburg / Wittelsberg · VHS Marburg-Biedenkopf</span><span class="pfeil">öffnen &rarr;</span></a>
   </section>
 
   <section id="tipps">
@@ -254,6 +260,23 @@
       <span class="ico">PDF</span><span class="titel">Speicher &amp; Freigaben</span><span class="pfeil">öffnen &rarr;</span></a>
     <a class="dl" href="https://mibaso.de/wp-content/uploads/2025/11/Linkliste-QR.pdf" target="_blank" rel="noopener">
       <span class="ico">PDF</span><span class="titel">Linkliste mit QR-Codes</span><span class="pfeil">öffnen &rarr;</span></a>
+  </section>
+
+  <section id="handzettel">
+    <h2>Aktuelle Handzettel</h2>
+    <p>Kurze Anleitungen zum kostenlosen Herunterladen:</p>
+    <a class="dl" href="https://mibaso.de/wp-content/uploads/2025/08/WhatsAPP-Datenschutz.pdf" target="_blank" rel="noopener">
+      <span class="ico">PDF</span><span class="titel">Erweiterter Chat-Datenschutz bei WhatsApp</span><span class="pfeil">öffnen &rarr;</span></a>
+    <a class="dl" href="https://mibaso.de/wp-content/uploads/2025/08/ChatGPT-Einfuehrung.pdf" target="_blank" rel="noopener">
+      <span class="ico">PDF</span><span class="titel">Einrichten von ChatGPT</span><span class="pfeil">öffnen &rarr;</span></a>
+    <a class="dl" href="https://mibaso.de/wp-content/uploads/2025/08/KI-Generatoren.pdf" target="_blank" rel="noopener">
+      <span class="ico">PDF</span><span class="titel">KI-Generatoren</span><span class="pfeil">öffnen &rarr;</span></a>
+    <a class="dl" href="https://mibaso.de/wp-content/uploads/2025/10/Google-Oberflaeche.pdf" target="_blank" rel="noopener">
+      <span class="ico">PDF</span><span class="titel">Google KI-Oberfläche</span><span class="pfeil">öffnen &rarr;</span></a>
+    <a class="dl" href="https://mibaso.de/wp-content/uploads/2025/11/Kalender.pdf" target="_blank" rel="noopener">
+      <span class="ico">PDF</span><span class="titel">Google-Kalender</span><span class="pfeil">öffnen &rarr;</span></a>
+    <a class="dl" href="https://mibaso.de/wp-content/uploads/2025/11/Google-Fotos-neu.pdf" target="_blank" rel="noopener">
+      <span class="ico">PDF</span><span class="titel">Google-Fotos</span><span class="pfeil">öffnen &rarr;</span></a>
   </section>
 
   <section id="links">
@@ -360,21 +383,11 @@ const vortraege = [
    mitnehmen:"Eine abgewogene Sicht – Bequemlichkeit gegen Preis, Datenschutz und Fairness."}
 ];
 
-const termine = [
-  {datum:"18.09.2026", ort:"VHS Ebsdorfergrund", thema:"KI & ChatGPT – Einstieg für alle"},
-  {datum:"09.10.2026", ort:"VHS Ebsdorfergrund", thema:"Digitale Ordnung: Fotos & Dateien"},
-  {datum:"06.11.2026", ort:"Grundtreff Wittelsberg", thema:"Digitaler Nachlass – rechtzeitig vorsorgen"}
-];
-
 function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 
 function renderVortraege(){
   document.getElementById('vortragsTiles').innerHTML = vortraege.map((v,i)=>
     `<div class="tile" onclick="showDetail(${i})"><h3>${esc(v.t)}</h3><p>${esc(v.kurz)}</p></div>`).join('');
-}
-function renderTermine(){
-  document.getElementById('termineListe').innerHTML = termine.map(t=>
-    `<li><span class="datum">${esc(t.datum)}</span><span>${esc(t.thema)}</span><span class="ort">· ${esc(t.ort)}</span></li>`).join('');
 }
 function showDetail(i){
   const v = vortraege[i];
@@ -396,7 +409,6 @@ function showHome(){
 }
 document.getElementById('jahr').textContent = new Date().getFullYear();
 renderVortraege();
-renderTermine();
 </script>
 
 <!-- Installations-Sprechblasen: passende Variante je Gerät -->
