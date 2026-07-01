@@ -172,6 +172,7 @@
     <p>Dieser Bereich ist den Kursteilnehmern vorbehalten.
        Bitte das im Kurs genannte Passwort eingeben.</p>
     <input id="pw" type="password" placeholder="Passwort" autocomplete="off"
+           autocapitalize="none" autocorrect="off" spellcheck="false"
            onkeydown="if(event.key==='Enter')pruefe()">
     <button onclick="pruefe()">Öffnen</button>
     <div id="pwFehler"></div>
@@ -259,18 +260,69 @@
    und den Wert unten bei PW_HASH eintragen. */
 const PW_HASH = "da5360a60fe7d345efa6b8d46f5e2fee4efb3550652e4e007c742836366ff77d";
 
+/* SHA-256: bevorzugt die eingebaute Krypto-Funktion; wenn diese fehlt oder
+   zickt (kommt auf manchen iPhones vor), wird die reine-JavaScript-Variante
+   unten benutzt. So funktioniert der Login überall. */
 async function hashe(text){
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
-  return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+  try{
+    if(window.crypto && crypto.subtle && crypto.subtle.digest){
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+      return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+    }
+  }catch(e){ /* fällt auf die JS-Variante zurück */ }
+  return sha256(text);
 }
+
+/* Reine-JavaScript-SHA-256 (Ausweichlösung, geprüft identisch zur Standardfunktion) */
+function sha256(ascii){
+  function rr(n,x){return (x>>>n)|(x<<(32-n));}
+  var H=[1779033703,3144134277,1013904242,2773480762,1359893119,2600822924,528734635,1541459225];
+  var K=[1116352408,1899447441,3049323471,3921009573,961987163,1508970993,2453635748,2870763221,3624381080,310598401,607225278,1426881987,1925078388,2162078206,2614888103,3248222580,3835390401,4022224774,264347078,604807628,770255983,1249150122,1555081692,1996064986,2554220882,2821834349,2952996808,3210313671,3336571891,3584528711,113926993,338241895,666307205,773529912,1294757372,1396182291,1695183700,1986661051,2177026350,2456956037,2730485921,2820302411,3259730800,3345764771,3516065817,3600352804,4094571909,275423344,430227734,506948616,659060556,883997877,958139571,1322822218,1537002063,1747873779,1955562222,2024104815,2227730452,2361852424,2428436474,2756734187,3204031479,3329325298];
+  ascii=unescape(encodeURIComponent(ascii));
+  var words=[],l=ascii.length,i;
+  for(i=0;i<l;i++) words[i>>2]|=ascii.charCodeAt(i)<<((3-(i&3))*8);
+  words[l>>2]|=0x80<<((3-(l&3))*8);
+  words[((l+8>>6)+1<<4)-1]=l*8;
+  var w=[],a,b,c,d,e,f,g,h,j,t1,t2;
+  for(i=0;i<words.length;i+=16){
+    a=H[0];b=H[1];c=H[2];d=H[3];e=H[4];f=H[5];g=H[6];h=H[7];
+    for(j=0;j<64;j++){
+      if(j<16) w[j]=words[i+j]|0;
+      else{
+        var s0=rr(7,w[j-15])^rr(18,w[j-15])^(w[j-15]>>>3);
+        var s1=rr(17,w[j-2])^rr(19,w[j-2])^(w[j-2]>>>10);
+        w[j]=(w[j-16]+s0+w[j-7]+s1)|0;
+      }
+      var S1=rr(6,e)^rr(11,e)^rr(25,e);
+      var ch=(e&f)^(~e&g);
+      t1=(h+S1+ch+K[j]+w[j])|0;
+      var S0=rr(2,a)^rr(13,a)^rr(22,a);
+      var maj=(a&b)^(a&c)^(b&c);
+      t2=(S0+maj)|0;
+      h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0;
+    }
+    H[0]=(H[0]+a)|0;H[1]=(H[1]+b)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+d)|0;
+    H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0;
+  }
+  var out='';
+  for(i=0;i<8;i++) out+=('00000000'+(H[i]>>>0).toString(16)).slice(-8);
+  return out;
+}
+
 async function pruefe(){
-  const eingabe = document.getElementById('pw').value;
-  if(await hashe(eingabe) === PW_HASH){
-    document.getElementById('vorhang').classList.add('hidden');
-    document.getElementById('app').classList.remove('hidden');
-    start();
-  } else {
-    document.getElementById('pwFehler').textContent = 'Passwort stimmt nicht. Bitte noch einmal versuchen.';
+  var fehler=document.getElementById('pwFehler');
+  fehler.textContent='';
+  try{
+    var eingabe=document.getElementById('pw').value;
+    if(await hashe(eingabe) === PW_HASH){
+      document.getElementById('vorhang').classList.add('hidden');
+      document.getElementById('app').classList.remove('hidden');
+      start();
+    } else {
+      fehler.textContent='Passwort stimmt nicht. Bitte noch einmal versuchen.';
+    }
+  }catch(e){
+    fehler.textContent='Es gab ein technisches Problem. Bitte die Seite einmal neu laden.';
   }
 }
 
