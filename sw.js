@@ -18,6 +18,8 @@ const CORE = [
   './index.html',
   './kurse/',
   './kurse/index.html',
+  './impressum/',
+  './impressum/index.html',
   './manifest.webmanifest',
   './assets/app.js',
   './assets/icon.svg'
