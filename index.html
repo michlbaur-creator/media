@@ -230,7 +230,7 @@
 
   <section id="vortraege">
     <h2>Meine Vorträge</h2>
-    <p>Sechs Themen – tippen Sie auf eine Kachel für die Kurzbeschreibung.</p>
+    <p>Zehn Themen – tippen Sie auf eine Kachel für die Kurzbeschreibung.</p>
     <div class="tiles" id="vortragsTiles"></div>
   </section>
 
@@ -341,7 +341,23 @@ const vortraege = [
   {t:"Über die Kostbarkeit des Alters – Wir schauen gemeinsam zurück und von hier aus nach vorn", kurz:"Ein nachdenklicher Blick zurück und nach vorn.",
    worum:"Ein persönlicher Vortrag über das Älterwerden, Erinnerungen und neue Möglichkeiten.",
    fuerWen:"Alle, die innehalten und den eigenen Lebensweg neu betrachten möchten.",
-   mitnehmen:"Ermutigung, das Alter als kostbare, gestaltbare Zeit zu sehen."}
+   mitnehmen:"Ermutigung, das Alter als kostbare, gestaltbare Zeit zu sehen."},
+  {t:"Klicks statt Krempel – Scannen, speichern, sortieren", kurz:"Mit digitalen Ablagesystemen dem Papierchaos ein Schnippchen schlagen.",
+   worum:"Papierberge digitalisieren: scannen, sinnvoll benennen und jederzeit wiederfinden.",
+   fuerWen:"Alle, die Ordner voller Papier in den Griff bekommen möchten.",
+   mitnehmen:"Ein einfaches System, mit dem Belege und Unterlagen digital griffbereit sind."},
+  {t:"Fernsehen – eine Zeitreise", kurz:"Nostalgie trifft Smart TV.",
+   worum:"Vom Röhrengerät zum Streaming: wie sich das Fernsehen gewandelt hat und heute funktioniert.",
+   fuerWen:"Alle, die den Fernseher von früher lieben und das Heute verstehen möchten.",
+   mitnehmen:"Überblick über Mediatheken, Streaming und die Bedienung des Smart TV."},
+  {t:"Der digitale Nachlass – unsere Daten sind unsterblich", kurz:"Was von uns im Netz bleibt – und wie man vorsorgt.",
+   worum:"Konten, Passwörter und Erinnerungen im Netz vorausschauend regeln.",
+   fuerWen:"Alle, die für sich und ihre Angehörigen vorsorgen möchten.",
+   mitnehmen:"Eine Checkliste, um den digitalen Nachlass rechtzeitig zu ordnen."},
+  {t:"Amazon – Pro & Contra", kurz:"Bequemer Riese mit zwei Gesichtern.",
+   worum:"Wie Amazon funktioniert, welche Vorteile es bietet und welche Schattenseiten es hat.",
+   fuerWen:"Alle, die bewusst entscheiden möchten, ob und wie sie Amazon nutzen.",
+   mitnehmen:"Eine abgewogene Sicht – Bequemlichkeit gegen Preis, Datenschutz und Fairness."}
 ];
 
 const termine = [
@@ -418,7 +434,7 @@ renderTermine();
     { titel:'Willkommen bei Media Mibaso!',
       text:'In ein paar Sätzen zeige ich Ihnen, was Sie hier finden.' },
     { titel:'Meine Vorträge',
-      text:'Sechs Themen rund um digitale Medien – von Internet über KI bis zum Musik-Streaming. Tippen Sie eine Kachel für die Kurzbeschreibung an.' },
+      text:'Zehn Themen rund um digitale Medien – von Internet über KI bis zu Smart TV und Amazon. Tippen Sie eine Kachel für die Kurzbeschreibung an.' },
     { titel:'Kursmaterialien',
       text:'Hinter dem Knopf „Zu den Kursmaterialien" liegen Folien, Handouts und Übungen für meine Kurse – geschützt durch ein Passwort, das Sie von mir bekommen.' },
     { titel:'Tipps für den Einstieg',
