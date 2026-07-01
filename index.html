@@ -16,7 +16,7 @@
 <style>
   :root{
     --terra:#3E7CB1; --terra-tief:#2A5C86; --terra-hell:#A9C8E2;
-    --creme:#F7F3E8; --creme-tief:#EEE7D5; --creme-tile:#FCFAF3;
+    --creme:#F7F3E8; --creme-tief:#EEE7D5; --creme-tile:#FFFFFF;
     --honig:#C28A3A; --ink:#33302B; --ink-soft:#6A645B; --linie:#E3D8C4;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   }
@@ -51,8 +51,14 @@
   nav.menu a:hover{background:var(--creme-tile);color:var(--terra-tief)}
 
   section{padding:28px 0 6px}
-  section h2{font-family:var(--sans);font-size:12px;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--honig);font-weight:bold;margin:0 0 14px;padding-bottom:8px;border-bottom:1px solid var(--linie)}
+  section h2{font-family:Georgia,"Times New Roman",serif;font-size:25px;font-weight:normal;
+    margin:0 0 16px;line-height:1.15;border:none;padding:0}
+  section h2::after{content:"";display:block;width:46px;height:3px;margin-top:8px;background:currentColor;border-radius:2px}
+  .h-blau{color:#3E7CB1}
+  .h-gold{color:#C28A3A}
+  .h-teal{color:#2C7A6A}
+  .h-coral{color:#C4603A}
+  .h-slate{color:#5A6B7A}
   .lead{font-size:19px}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .grid2 .dl{margin-bottom:0;padding:10px 11px;gap:9px}
@@ -237,23 +243,23 @@
   </section>
 
   <section id="vortraege">
-    <h2>Meine Vorträge</h2>
+    <h2 class="h-blau">Meine Vorträge</h2>
     <p>Acht Themen – tippen Sie auf eine Kachel für die Kurzbeschreibung.</p>
     <div class="tiles" id="vortragsTiles"></div>
   </section>
 
   <section id="termine">
-    <h2>Aktuelle Termine &amp; Anmeldung</h2>
+    <h2 class="h-gold">Aktuelle Termine &amp; Anmeldung</h2>
     <p>Meine aktuellen Kurse finden Sie direkt bei den Volkshochschulen –
     dort können Sie sich auch gleich online anmelden:</p>
     <a class="dl" href="https://www.vhs-kreis-giessen.de/bildungsangebote/kw/kathaupt/26/?suchesetzen=false&amp;clearallkatfilter=true&amp;kfs_stichwort_schlagwort=baur" target="_blank" rel="noopener">
-      <span class="ico" style="background:#3d6b4a">VHS</span><span class="titel">CBES in Lollar · VHS Kreis Gießen</span><span class="pfeil">öffnen &rarr;</span></a>
+      <span class="ico" style="background:#16386A">VHS</span><span class="titel">CBES in Lollar · VHS Kreis Gießen</span><span class="pfeil">öffnen &rarr;</span></a>
     <a class="dl" href="https://www.vhs-marburg-biedenkopf.de/index.php?id=9&amp;kathaupt=26%3B&amp;suchesetzen=false%3B&amp;kfs_stichwort_schlagwort=baur&amp;tx_indexedsearch%5Bsubmit_button%5D=" target="_blank" rel="noopener">
-      <span class="ico" style="background:#3d6b4a">VHS</span><span class="titel">Marburg / Wittelsberg · VHS Marburg-Biedenkopf</span><span class="pfeil">öffnen &rarr;</span></a>
+      <span class="ico" style="background:#16386A">VHS</span><span class="titel">Marburg / Wittelsberg · VHS Marburg-Biedenkopf</span><span class="pfeil">öffnen &rarr;</span></a>
   </section>
 
   <section id="tipps">
-    <h2>Tipps für den Einstieg</h2>
+    <h2 class="h-teal">Tipps für den Einstieg</h2>
     <p>Frei zugängliche Hilfen zum Herunterladen – für alle, die gerade anfangen:</p>
     <div class="grid2">
     <a class="dl" href="https://mibaso.de/wp-content/uploads/2025/11/Tipps.pdf" target="_blank" rel="noopener">
@@ -280,7 +286,7 @@
   </section>
 
   <section id="links">
-    <h2>Linkliste</h2>
+    <h2 class="h-coral">Linkliste</h2>
     <ul class="links">
       <li><a href="https://flora.mibaso.de" target="_blank" rel="noopener">flora.mibaso.de</a> – Pflanzen &amp; Bestäubung</li>
       <li><a href="https://fauna.mibaso.de" target="_blank" rel="noopener">fauna.mibaso.de</a> – Insekten &amp; Schmetterlinge</li>
@@ -289,7 +295,7 @@
   </section>
 
   <section id="ueber">
-    <h2>Über mich</h2>
+    <h2 class="h-slate">Über mich</h2>
     <div class="ueber-text">
       <p>35 Jahre lang arbeitete ich als Oberstudienrat an der Gesamtschule in
       Hungen und für das Land Hessen in der Redaktion des Hessischen
