@@ -1,0 +1,19 @@
+{
+  "name": "Media Mibaso",
+  "short_name": "Media",
+  "description": "Vorträge und Kursmaterialien rund um digitale Medien – von Michael Baur.",
+  "lang": "de",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#F5EFE2",
+  "theme_color": "#9C4A3A",
+  "categories": ["education", "books"],
+  "icons": [
+    {"src": "assets/icon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any"},
+    {"src": "assets/icon-192.png", "type": "image/png", "sizes": "192x192", "purpose": "any"},
+    {"src": "assets/icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "any"},
+    {"src": "assets/icon-512-maskable.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable"}
+  ]
+}
