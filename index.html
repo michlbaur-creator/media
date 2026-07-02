@@ -69,7 +69,7 @@
   /* Chips */
   .start-chips{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:18px 0 2px}
   .start-chip{display:inline-flex;align-items:center;gap:7px;background:var(--creme-tile);
-    border:1px solid var(--linie);border-radius:999px;padding:8px 16px;font-size:14px;color:var(--terra-tief);
+    border:1px solid var(--linie);border-radius:999px;padding:5px 11px;font-size:13px;color:var(--terra-tief);
     font-family:var(--sans);cursor:pointer;line-height:1;text-decoration:none;box-shadow:0 1px 4px rgba(42,92,134,.06)}
   .start-chip:hover{border-color:var(--terra-hell)}
 
@@ -144,8 +144,8 @@
   footer.discover{margin-top:36px;background:var(--creme-tile);border-top:1px solid var(--linie)}
   footer.discover .row{max-width:720px;margin:0 auto;padding:22px 20px;text-align:center;font-family:var(--sans);font-size:15px}
   footer.discover .houses{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:10px 0}
-  footer.discover a.house{text-decoration:none;padding:8px 16px;border-radius:20px;border:1px solid var(--linie);
-    background:var(--creme);color:var(--ink);font-size:15px}
+  footer.discover a.house{text-decoration:none;padding:6px 12px;border-radius:20px;border:1px solid var(--linie);
+    background:var(--creme);color:var(--ink);font-size:13.5px}
   footer.discover a.house b{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:7px;vertical-align:middle}
   .copy{color:var(--ink-soft);font-size:13px;margin-top:12px}
 
@@ -191,9 +191,9 @@
 
   <section id="start">
     <div class="start-chips">
-      <button class="start-chip" id="chip-tour" type="button">📖 Neu hier?</button>
       <a class="start-chip" href="https://flora.mibaso.de">🌼 Flora</a>
       <a class="start-chip" href="https://fauna.mibaso.de">🦋 Fauna</a>
+      <a class="start-chip" href="https://kochen.mibaso.de">🍳 Kochen</a>
     </div>
 
     <p class="lead">Hier gibt's jede Menge Infos zu meinen Vorträgen und
@@ -325,6 +325,7 @@
   <div class="houses">
     <a class="house" href="https://flora.mibaso.de"><b style="background:#2F4F3E"></b>Flora</a>
     <a class="house" href="https://fauna.mibaso.de"><b style="background:#233D5C"></b>Fauna</a>
+    <a class="house" href="https://kochen.mibaso.de"><b style="background:#6E2A3A"></b>Kochen</a>
     <a class="house" href="#" onclick="showHome();return false;"><b style="background:#3E7CB1"></b>Media</a>
   </div>
   <div class="copy">Hinweise &amp; Korrekturen: <a href="mailto:mibaur@me.com">mibaur@me.com</a></div>
@@ -456,8 +457,7 @@ renderVortraege();
   var overlay=document.getElementById('tour-overlay');
   var elZ=document.getElementById('tour-zaehler'), elT=document.getElementById('tour-titel'),
       elX=document.getElementById('tour-text'), elNext=document.getElementById('tour-weiter'),
-      elSkip=document.getElementById('tour-skip'), elHelp=document.getElementById('tour-help'),
-      elChip=document.getElementById('chip-tour');
+      elSkip=document.getElementById('tour-skip'), elHelp=document.getElementById('tour-help');
   var idx=0;
   function zeige(i){
     idx=i; var s=TOUR[i];
@@ -472,7 +472,6 @@ renderVortraege();
   elSkip.addEventListener('click',beende);
   overlay.addEventListener('click',function(e){ if(e.target===overlay) beende(); });
   elHelp.addEventListener('click',starte);
-  if(elChip) elChip.addEventListener('click',starte);
   try{ if(!localStorage.getItem('media-tour-gesehen')) setTimeout(starte,700); }catch(e){}
 })();
 </script>
