@@ -9,3 +9,5 @@ Vorträge (öffentlich) und VHS-Kursmaterialien (geschützt) rund um digitale Me
 - `CNAME` – Custom Domain für GitHub Pages: media.mibaso.de
 
 Hausstil: Creme, Georgia, Kacheln; Leitfarbe Terrakotta #9C4A3A.
+
+<!-- Veröffentlichungs-Anstoß: 2026-07-03 10:11 -->
