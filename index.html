@@ -419,6 +419,20 @@ function showHome(){
 }
 var _jahr=document.getElementById('jahr'); if(_jahr) _jahr.textContent = new Date().getFullYear();
 renderVortraege();
+
+/* Wisch-Geste: von links nach rechts = zurück zur Übersicht (wie der Zurück-Knopf) */
+(function(){
+  var _wx=null,_wy=null;
+  document.addEventListener("touchstart",function(ev){var b=ev.touches[0];_wx=b.clientX;_wy=b.clientY;},{passive:true});
+  document.addEventListener("touchend",function(ev){
+    if(_wx===null)return;
+    var b=ev.changedTouches[0];
+    var dx=b.clientX-_wx, dy=b.clientY-_wy;
+    _wx=null;_wy=null;
+    if(dx<90||Math.abs(dy)>70)return;               /* nur klare Rechts-Wische */
+    if(document.getElementById("detail").style.display==="block"){ showHome(); window.scrollTo(0,0); }
+  },{passive:true});
+})();
 </script>
 
 <!-- Installations-Sprechblasen: passende Variante je Gerät -->
