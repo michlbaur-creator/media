@@ -74,13 +74,23 @@ def zeilen():
     ausgabe = []
     for schluessel, titel, datumstext, pfad in eintraege:
         zusatz = " · ".join(x for x in ("PDF", groesse(pfad.stat().st_size), datumstext) if x)
+        adresse = f"broschueren/{quote(pfad.name)}"
+        sicher = html.escape(titel)
         ausgabe.append(
-            f'    <a class="dl" href="broschueren/{quote(pfad.name)}" '
-            f'target="_blank" rel="noopener">\n'
-            f'      <span class="ico">PDF</span>'
-            f'<span class="titel">{html.escape(titel)}'
+            f'    <div class="dlbox">\n'
+            f'      <a class="dl" href="{adresse}" target="_blank" rel="noopener">\n'
+            f'        <span class="ico">PDF</span>'
+            f'<span class="titel">{sicher}'
             f'<small>{html.escape(zusatz)}</small></span>'
-            f'<span class="pfeil">öffnen &rarr;</span></a>'
+            f'<span class="pfeil">öffnen &rarr;</span></a>\n'
+            f'      <button type="button" class="druck" data-pdf="{adresse}" '
+            f'title="Ausdrucken" aria-label="{sicher} ausdrucken">'
+            f'<svg viewBox="0 0 24 24" aria-hidden="true">'
+            f'<rect class="p" x="7" y="2.5" width="10" height="5.5" rx="1"/>'
+            f'<rect x="3" y="8" width="18" height="8" rx="2"/>'
+            f'<rect class="p" x="7" y="13" width="10" height="8.5" rx="1"/>'
+            f'<circle cx="17.6" cy="11" r="1"/></svg></button>\n'
+            f'    </div>'
         )
     return ausgabe
 
