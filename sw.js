@@ -10,7 +10,7 @@
    „Neue Version verfügbar"-Banner aus.
 */
 
-const SHELL_CACHE = 'media-shell-v4';
+const SHELL_CACHE = 'media-shell-v5';
 const MEDIA_CACHE = 'media-media-v1';
 
 const CORE = [

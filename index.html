@@ -199,7 +199,6 @@
   <a href="#vortraege" onclick="showHome()">Vorträge</a>
   <a href="#termine" onclick="showHome()">Termine</a>
   <a href="#tipps" onclick="showHome()">Tipps</a>
-  <a href="#links" onclick="showHome()">Links</a>
 </div></nav>
 
 <main class="huelle" id="home">
@@ -255,7 +254,7 @@
 
   <section id="vortraege">
     <h2 class="h-blau">Meine Vorträge</h2>
-    <p>Acht Themen – tippe auf eine Kachel für die Kurzbeschreibung.</p>
+    <p>Sechs Themen – tippe auf eine Kachel für die Kurzbeschreibung.</p>
     <div class="tiles" id="vortragsTiles"></div>
   </section>
 
@@ -332,27 +331,8 @@
         <span class="ico">PDF</span><span class="titel">KI-Generatoren<small>PDF · 331 KB · 08/2025</small></span><span class="pfeil">öffnen &rarr;</span></a>
       <button type="button" class="druck" data-pdf="broschueren/2025-08_KI-Generatoren.pdf" data-titel="KI-Generatoren" title="Ausdrucken" aria-label="KI-Generatoren ausdrucken"><svg viewBox="0 0 24 24" aria-hidden="true"><rect class="p" x="7" y="2.5" width="10" height="5.5" rx="1"/><rect x="3" y="8" width="18" height="8" rx="2"/><rect class="p" x="7" y="13" width="10" height="8.5" rx="1"/><circle cx="17.6" cy="11" r="1"/></svg></button>
     </div>
-    <div class="dlbox">
-      <a class="dl" href="broschueren/2025-08_Erweiterter_Chat-Datenschutz_bei_WhatsApp.pdf" target="_blank" rel="noopener">
-        <span class="ico">PDF</span><span class="titel">Erweiterter Chat-Datenschutz bei WhatsApp<small>PDF · 115 KB · 08/2025</small></span><span class="pfeil">öffnen &rarr;</span></a>
-      <button type="button" class="druck" data-pdf="broschueren/2025-08_Erweiterter_Chat-Datenschutz_bei_WhatsApp.pdf" data-titel="Erweiterter Chat-Datenschutz bei WhatsApp" title="Ausdrucken" aria-label="Erweiterter Chat-Datenschutz bei WhatsApp ausdrucken"><svg viewBox="0 0 24 24" aria-hidden="true"><rect class="p" x="7" y="2.5" width="10" height="5.5" rx="1"/><rect x="3" y="8" width="18" height="8" rx="2"/><rect class="p" x="7" y="13" width="10" height="8.5" rx="1"/><circle cx="17.6" cy="11" r="1"/></svg></button>
-    </div>
-    <div class="dlbox">
-      <a class="dl" href="broschueren/2025-08_Einrichten_von_ChatGPT.pdf" target="_blank" rel="noopener">
-        <span class="ico">PDF</span><span class="titel">Einrichten von ChatGPT<small>PDF · 308 KB · 08/2025</small></span><span class="pfeil">öffnen &rarr;</span></a>
-      <button type="button" class="druck" data-pdf="broschueren/2025-08_Einrichten_von_ChatGPT.pdf" data-titel="Einrichten von ChatGPT" title="Ausdrucken" aria-label="Einrichten von ChatGPT ausdrucken"><svg viewBox="0 0 24 24" aria-hidden="true"><rect class="p" x="7" y="2.5" width="10" height="5.5" rx="1"/><rect x="3" y="8" width="18" height="8" rx="2"/><rect class="p" x="7" y="13" width="10" height="8.5" rx="1"/><circle cx="17.6" cy="11" r="1"/></svg></button>
-    </div>
     <!-- HANDZETTEL:ENDE -->
     </div>
-  </section>
-
-  <section id="links">
-    <h2 class="h-coral">Linkliste</h2>
-    <ul class="links">
-      <li><a href="https://flora.mibaso.de" target="_blank" rel="noopener">flora.mibaso.de</a> – Pflanzen &amp; Bestäubung</li>
-      <li><a href="https://fauna.mibaso.de" target="_blank" rel="noopener">fauna.mibaso.de</a> – Insekten &amp; Schmetterlinge</li>
-      <li><a href="https://privat.mibaso.de" target="_blank" rel="noopener">privat.mibaso.de</a> – meine Hauptseite</li>
-    </ul>
   </section>
 
 </main>
@@ -411,18 +391,10 @@ const vortraege = [
    worum:"Chatbots wie ChatGPT verständlich erklärt, mit ehrlicher Einordnung von Nutzen und Grenzen.",
    fuerWen:"Neugierige ohne Vorkenntnisse, die mitreden und ausprobieren wollen.",
    mitnehmen:"Ein klarer Blick auf Chancen und Risiken – und ein erstes eigenes Ausprobieren."},
-  {t:"Musik-Streaming – Digitaler Musikgenuss, jederzeit und überall", k:"Musik-Streaming", ic:"🎵", sub:"Musikgenuss, jederzeit und überall", kurz:"Die ganze Musikwelt in der Hosentasche.",
-   worum:"Wie Streaming-Dienste funktionieren, was sie kosten und wie man sie bedient.",
-   fuerWen:"Musikliebhaber, die vom Plattenschrank ins digitale Zeitalter wechseln möchten.",
-   mitnehmen:"Das Rüstzeug, um jederzeit die eigene Lieblingsmusik zu finden und zu hören."},
   {t:"Über die Kostbarkeit des Alters – Wir schauen gemeinsam zurück und von hier aus nach vorn", k:"Kostbarkeit des Alters", ic:"🕰️", sub:"Zurückschauen und nach vorn", kurz:"Ein nachdenklicher Blick zurück und nach vorn.",
    worum:"Ein persönlicher Vortrag über das Älterwerden, Erinnerungen und neue Möglichkeiten.",
    fuerWen:"Alle, die innehalten und den eigenen Lebensweg neu betrachten möchten.",
    mitnehmen:"Ermutigung, das Alter als kostbare, gestaltbare Zeit zu sehen."},
-  {t:"Klicks statt Krempel – Scannen, speichern, sortieren", k:"Klicks statt Krempel", ic:"🗂️", sub:"Scannen, speichern, sortieren", kurz:"Mit digitalen Ablagesystemen dem Papierchaos ein Schnippchen schlagen.",
-   worum:"Papierberge digitalisieren: scannen, sinnvoll benennen und jederzeit wiederfinden.",
-   fuerWen:"Alle, die Ordner voller Papier in den Griff bekommen möchten.",
-   mitnehmen:"Ein einfaches System, mit dem Belege und Unterlagen digital griffbereit sind."},
   {t:"Fernsehen – eine Zeitreise", k:"Fernsehen – eine Zeitreise", ic:"📺", sub:"Nostalgie trifft Smart TV", kurz:"Nostalgie trifft Smart TV.",
    worum:"Vom Röhrengerät zum Streaming: wie sich das Fernsehen gewandelt hat und heute funktioniert.",
    fuerWen:"Alle, die den Fernseher von früher lieben und das Heute verstehen möchten.",
@@ -510,11 +482,11 @@ renderVortraege();
     { titel:'Willkommen bei Media Mibaso!',
       text:'In ein paar Sätzen zeige ich dir, was du hier findest.' },
     { titel:'Meine Vorträge',
-      text:'Acht Themen rund um digitale Medien – von Internet über KI bis zu Musik-Streaming und Fernsehen. Tippe eine Kachel für die Kurzbeschreibung an.' },
+      text:'Sechs Themen rund um digitale Medien – von Internet über KI bis zum digitalen Nachlass. Tippe eine Kachel für die Kurzbeschreibung an.' },
     { titel:'Kursmaterialien',
       text:'Hinter dem Knopf „Zu den Kursmaterialien" liegen Folien, Handouts und Übungen für meine Kurse – geschützt durch ein Passwort, das du von mir bekommst.' },
     { titel:'Tipps für den Einstieg',
-      text:'Unter „Tipps" gibt es frei herunterladbare Hilfen als PDF – etwa zu sicheren Passwörtern, WhatsApp-Datenschutz und dem Einrichten von ChatGPT.' },
+      text:'Unter „Tipps" gibt es frei herunterladbare Hilfen als PDF – etwa zu sicheren Passwörtern, Google-Fotos und WhatsApp.' },
     { titel:'Als App speichern',
       text:'Über das Teilen-Symbol → „Zum Home-Bildschirm" liegt Media wie eine echte App auf deinem Handy.' }
   ];

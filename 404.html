@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Seite nicht gefunden · Media Mibaso</title>
+<!-- Weiterleitung alter Adressen.
+     media.mibaso.de liegt auf GitHub Pages; dort gibt es keine .htaccess und
+     keine echten 301-Weiterleitungen. GitHub Pages liefert für jede unbekannte
+     Adresse diese Seite aus. Das Skript unten schickt Besucher von hier
+     an die passende Stelle weiter - im Ergebnis dasselbe wie eine
+     Weiterleitung, nur einen Wimpernschlag später. -->
+<style>
+  body{margin:0;background:#F7F3E8;color:#2E2A24;font-family:Georgia,'Times New Roman',serif;
+       display:flex;min-height:100vh;align-items:center;justify-content:center;padding:24px}
+  .karte{max-width:520px;background:#fff;border:1px solid #E2D9C4;border-radius:14px;padding:26px 28px}
+  h1{margin:0 0 10px;font-size:22px;color:#2A5C86}
+  p{margin:0 0 14px;line-height:1.6;font-size:16px}
+  a{color:#2A5C86}
+</style>
+</head>
+<body>
+<div class="karte">
+  <h1>Diese Seite gibt es nicht mehr</h1>
+  <p>Einen Augenblick – ich bringe Sie zur passenden Übersicht.</p>
+  <p>Falls nichts geschieht:
+     <a href="/#tipps">Tipps für den Einstieg</a> ·
+     <a href="/#vortraege">Vorträge</a> ·
+     <a href="/">Startseite</a></p>
+</div>
+<script>
+(function () {
+  var pfad = (location.pathname || '').toLowerCase();
+  var ziel = '/';
+  if (pfad.indexOf('/broschueren/') === 0 || pfad.indexOf('/tipps') === 0) {
+    ziel = '/#tipps';                 // geloeschte Handzettel -> Tipps-Uebersicht
+  } else if (pfad.indexOf('/vortr') === 0 || pfad.indexOf('/vortraege') === 0) {
+    ziel = '/#vortraege';             // geloeschte Vortraege -> Vortraege-Uebersicht
+  } else if (pfad.indexOf('/link') === 0) {
+    ziel = '/';                       // Linkliste -> Startseite
+  }
+  location.replace(ziel);
+})();
+</script>
+</body>
+</html>
