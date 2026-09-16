@@ -84,6 +84,7 @@ def zeilen():
             f'<small>{html.escape(zusatz)}</small></span>'
             f'<span class="pfeil">öffnen &rarr;</span></a>\n'
             f'      <button type="button" class="druck" data-pdf="{adresse}" '
+            f'data-titel="{sicher}" '
             f'title="Ausdrucken" aria-label="{sicher} ausdrucken">'
             f'<svg viewBox="0 0 24 24" aria-hidden="true">'
             f'<rect class="p" x="7" y="2.5" width="10" height="5.5" rx="1"/>'
