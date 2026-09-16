@@ -28,6 +28,9 @@ jobs:
       - name: Dateien holen
         uses: actions/checkout@v4
 
+      - name: Downloadliste aus dem Ordner broschueren bauen
+        run: python3 tools/liste_bauen.py
+
       - name: Versionsnummer in sw.js stempeln
         run: |
           STAMP="${GITHUB_SHA::7}-$(date -u +%Y%m%d%H%M%S)"

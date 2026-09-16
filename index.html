@@ -61,6 +61,7 @@
   .h-slate{color:#5A6B7A}
   .lead{font-size:19px}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  @media (max-width:480px){.grid2{grid-template-columns:1fr}}
   .grid2 .dl{margin-bottom:0;padding:10px 11px;gap:9px}
   .grid2 .dl .titel{font-size:15px}
   .grid2 .dl .pfeil{display:none}
@@ -124,7 +125,9 @@
   .dl .ico{width:34px;height:34px;flex:none;border-radius:7px;background:#b23b2e;color:#fff;
     display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:bold;font-family:var(--sans)}
   .dl .titel{flex:1}
+  .dl .titel small{display:block;margin-top:2px;color:var(--ink-soft);font-size:13px;font-family:var(--sans)}
   .dl .pfeil{color:var(--ink-soft);font-size:15px;font-family:var(--sans)}
+  p.hinweis{grid-column:1/-1;color:var(--ink-soft);font-style:italic}
 
   ul.links{padding-left:20px;margin:0}
   ul.links li{margin-bottom:8px}
@@ -257,26 +260,31 @@
     <h2 class="h-teal">Tipps für den Einstieg</h2>
     <p>Frei zugängliche Hilfen zum Herunterladen – für alle, die gerade anfangen:</p>
     <div class="grid2">
-    <a class="dl" href="https://privat.mibaso.de/wp-content/uploads/2025/11/Tipps.pdf" target="_blank" rel="noopener">
-      <span class="ico">PDF</span><span class="titel">Tipps für den Einstieg</span><span class="pfeil">öffnen &rarr;</span></a>
-    <a class="dl" href="https://privat.mibaso.de/wp-content/uploads/2025/11/Passwoerter.pdf" target="_blank" rel="noopener">
-      <span class="ico">PDF</span><span class="titel">Sichere Passwörter</span><span class="pfeil">öffnen &rarr;</span></a>
-    <a class="dl" href="https://privat.mibaso.de/wp-content/uploads/2025/11/Speicher-Freigabe.pdf" target="_blank" rel="noopener">
-      <span class="ico">PDF</span><span class="titel">Speicher &amp; Freigaben</span><span class="pfeil">öffnen &rarr;</span></a>
-    <a class="dl" href="https://privat.mibaso.de/wp-content/uploads/2025/11/Linkliste-QR.pdf" target="_blank" rel="noopener">
-      <span class="ico">PDF</span><span class="titel">Linkliste mit QR-Codes</span><span class="pfeil">öffnen &rarr;</span></a>
-    <a class="dl" href="https://privat.mibaso.de/wp-content/uploads/2025/08/WhatsAPP-Datenschutz.pdf" target="_blank" rel="noopener">
-      <span class="ico">PDF</span><span class="titel">Erweiterter Chat-Datenschutz bei WhatsApp</span><span class="pfeil">öffnen &rarr;</span></a>
-    <a class="dl" href="https://privat.mibaso.de/wp-content/uploads/2025/08/ChatGPT-Einfuehrung.pdf" target="_blank" rel="noopener">
-      <span class="ico">PDF</span><span class="titel">Einrichten von ChatGPT</span><span class="pfeil">öffnen &rarr;</span></a>
-    <a class="dl" href="https://privat.mibaso.de/wp-content/uploads/2025/08/KI-Generatoren.pdf" target="_blank" rel="noopener">
-      <span class="ico">PDF</span><span class="titel">KI-Generatoren</span><span class="pfeil">öffnen &rarr;</span></a>
-    <a class="dl" href="https://privat.mibaso.de/wp-content/uploads/2025/10/Google-Oberflaeche.pdf" target="_blank" rel="noopener">
-      <span class="ico">PDF</span><span class="titel">Google KI-Oberfläche</span><span class="pfeil">öffnen &rarr;</span></a>
-    <a class="dl" href="https://privat.mibaso.de/wp-content/uploads/2025/11/Kalender.pdf" target="_blank" rel="noopener">
-      <span class="ico">PDF</span><span class="titel">Google-Kalender</span><span class="pfeil">öffnen &rarr;</span></a>
-    <a class="dl" href="https://privat.mibaso.de/wp-content/uploads/2025/11/Google-Fotos-neu.pdf" target="_blank" rel="noopener">
-      <span class="ico">PDF</span><span class="titel">Google-Fotos</span><span class="pfeil">öffnen &rarr;</span></a>
+    <!-- Diese Liste baut sich bei jeder Veröffentlichung selbst aus dem Ordner
+         "broschueren" (siehe tools/liste_bauen.py). Zwischen den beiden Marken
+         also bitte nichts von Hand ändern – es wird überschrieben. -->
+    <!-- HANDZETTEL:START -->
+    <a class="dl" href="broschueren/2025-11_Tipps_f%C3%BCr_den_Einstieg.pdf" target="_blank" rel="noopener">
+      <span class="ico">PDF</span><span class="titel">Tipps für den Einstieg<small>PDF · 237 KB · 11/2025</small></span><span class="pfeil">öffnen &rarr;</span></a>
+    <a class="dl" href="broschueren/2025-11_Speicher_und_Freigaben.pdf" target="_blank" rel="noopener">
+      <span class="ico">PDF</span><span class="titel">Speicher und Freigaben<small>PDF · 116 KB · 11/2025</small></span><span class="pfeil">öffnen &rarr;</span></a>
+    <a class="dl" href="broschueren/2025-11_Sichere_Passw%C3%B6rter.pdf" target="_blank" rel="noopener">
+      <span class="ico">PDF</span><span class="titel">Sichere Passwörter<small>PDF · 96 KB · 11/2025</small></span><span class="pfeil">öffnen &rarr;</span></a>
+    <a class="dl" href="broschueren/2025-11_Linkliste_mit_QR-Codes.pdf" target="_blank" rel="noopener">
+      <span class="ico">PDF</span><span class="titel">Linkliste mit QR-Codes<small>PDF · 181 KB · 11/2025</small></span><span class="pfeil">öffnen &rarr;</span></a>
+    <a class="dl" href="broschueren/2025-11_Google-Kalender.pdf" target="_blank" rel="noopener">
+      <span class="ico">PDF</span><span class="titel">Google-Kalender<small>PDF · 199 KB · 11/2025</small></span><span class="pfeil">öffnen &rarr;</span></a>
+    <a class="dl" href="broschueren/2025-11_Google-Fotos.pdf" target="_blank" rel="noopener">
+      <span class="ico">PDF</span><span class="titel">Google-Fotos<small>PDF · 237 KB · 11/2025</small></span><span class="pfeil">öffnen &rarr;</span></a>
+    <a class="dl" href="broschueren/2025-10_Google_KI-Oberfl%C3%A4che.pdf" target="_blank" rel="noopener">
+      <span class="ico">PDF</span><span class="titel">Google KI-Oberfläche<small>PDF · 584 KB · 10/2025</small></span><span class="pfeil">öffnen &rarr;</span></a>
+    <a class="dl" href="broschueren/2025-08_KI-Generatoren.pdf" target="_blank" rel="noopener">
+      <span class="ico">PDF</span><span class="titel">KI-Generatoren<small>PDF · 331 KB · 08/2025</small></span><span class="pfeil">öffnen &rarr;</span></a>
+    <a class="dl" href="broschueren/2025-08_Erweiterter_Chat-Datenschutz_bei_WhatsApp.pdf" target="_blank" rel="noopener">
+      <span class="ico">PDF</span><span class="titel">Erweiterter Chat-Datenschutz bei WhatsApp<small>PDF · 115 KB · 08/2025</small></span><span class="pfeil">öffnen &rarr;</span></a>
+    <a class="dl" href="broschueren/2025-08_Einrichten_von_ChatGPT.pdf" target="_blank" rel="noopener">
+      <span class="ico">PDF</span><span class="titel">Einrichten von ChatGPT<small>PDF · 308 KB · 08/2025</small></span><span class="pfeil">öffnen &rarr;</span></a>
+    <!-- HANDZETTEL:ENDE -->
     </div>
   </section>
 
