@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Digital-Quiz – KI und Sprachmodelle</title>
+<style>
+  /* Farben wie media.mibaso.de */
+  :root{
+    --bg:#F7F3E8; --card:#FFFFFF; --ink:#33302B; --muted:#6A645B;
+    --line:#E3D8C4; --accent:#3E7CB1; --accent-tief:#2A5C86; --accent-soft:#E8F0F7;
+    --wrong:#A8442F; --wrong-soft:#F7E9E4; --shadow:0 2px 10px rgba(0,0,0,.07);
+    --fs:1.14rem; --radius:12px;
+  }
+  @media (min-width:620px){ :root{ --fs:1.25rem; } }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size:var(--fs); line-height:1.5;
+    padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  .wrap{max-width:760px; margin:0 auto; padding:26px 14px 30px}
+  body.mit-leiste .wrap{padding-bottom:110px}
+  header{margin-bottom:20px}
+  h1{font-size:1.15em; margin:0; letter-spacing:-.01em; display:inline}
+  .sub{color:var(--muted); font-size:.78em; display:inline; margin-left:6px}
+  button{font:inherit; cursor:pointer}
+  .ghost{
+    background:transparent; color:var(--muted); border:2px solid var(--line);
+    border-radius:999px; padding:5px 12px; font-size:.75em;
+  }
+  .ghost:hover{border-color:var(--accent); color:var(--accent)}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px; margin-bottom:14px}
+  .blocks{display:grid; gap:10px}
+  .block{
+    display:block; width:100%; text-align:left; background:var(--card); color:var(--ink);
+    border:2px solid var(--line); border-radius:var(--radius); padding:14px 16px; box-shadow:var(--shadow);
+  }
+  .block:hover{border-color:var(--accent)}
+  .block b{display:block; font-size:1.02em}
+  .block span{display:block; color:var(--muted); font-size:.8em; margin-top:2px}
+  .bar{height:6px; background:var(--line); border-radius:999px; overflow:hidden; margin-bottom:7px}
+  .bar>i{display:block; height:100%; background:var(--accent); width:0%; transition:width .3s}
+  .meta{display:flex; justify-content:space-between; color:var(--muted); font-size:.75em; margin-bottom:14px}
+  .frage{font-size:1.02em; font-weight:600; margin:0 0 14px; line-height:1.4}
+  .opts{display:grid; gap:7px}
+  .opt{
+    display:flex; gap:10px; align-items:flex-start; width:100%; text-align:left;
+    background:var(--card); color:var(--ink); border:2px solid var(--line);
+    border-radius:var(--radius); padding:9px 12px; line-height:1.35;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent); background:var(--accent-soft)}
+  .opt:disabled{cursor:default}
+  .key{
+    flex:0 0 auto; width:1.6em; height:1.6em; border-radius:50%; background:var(--line); color:var(--ink);
+    display:grid; place-items:center; font-size:.78em; font-weight:700; margin-top:.1em;
+  }
+  .opt.richtig{border-color:var(--accent); background:var(--accent-soft)}
+  .opt.richtig .key{background:var(--accent); color:#fff}
+  .opt.falsch{border-color:var(--wrong); background:var(--wrong-soft)}
+  .opt.falsch .key{background:var(--wrong); color:#fff}
+  .fb{margin-top:10px; padding:10px 12px; border-radius:var(--radius); background:var(--accent-soft); border-left:5px solid var(--accent)}
+  .fb.nein{background:var(--wrong-soft); border-left-color:var(--wrong)}
+  .fb b{display:block; margin-bottom:2px; font-size:.95em}
+  .fb p{margin:0; font-size:.86em; line-height:1.4}
+  /* Feste Leiste am unteren Bildschirmrand – der Rest scrollt darunter durch */
+  .leiste{
+    position:fixed; left:0; right:0; bottom:0; z-index:20;
+    background:var(--bg); border-top:1px solid var(--line);
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));
+    box-shadow:0 -4px 18px rgba(0,0,0,.10);
+  }
+  .weiter{
+    display:block; max-width:760px; margin:0 auto; width:100%;
+    background:var(--accent); color:#fff; border:none;
+    border-radius:var(--radius); padding:14px; font-size:1em; font-weight:600;
+  }
+  .weiter:hover{filter:brightness(1.08)}
+  .score{font-size:2.2em; font-weight:700; color:var(--accent); margin:4px 0}
+  .zentriert{text-align:center}
+  .row{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:14px}
+  .row button{border-radius:var(--radius); padding:10px 16px; font-size:.85em; border:2px solid var(--line); background:transparent; color:var(--ink)}
+  .row button.prim{background:var(--accent); color:#fff; border-color:var(--accent)}
+  #feuerwerk{position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:50}
+  .jubel{display:block; font-size:1.6em; margin-bottom:2px}
+  footer{text-align:center; color:var(--muted); font-size:.75em; margin-top:16px}
+  .hinweis{color:var(--muted); font-size:.8em; margin-top:8px}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Digital-Quiz</h1><span class="sub">KI verstehen – ChatGPT &amp; Co.</span>
+  </header>
+
+  <!-- Startbildschirm -->
+  <section id="start">
+    <div class="card">
+      <p style="margin:0 0 6px">Testen Sie in Ruhe, was hängengeblieben ist. Nach jeder Antwort kommt sofort die Erklärung – falsch antworten ist hier ausdrücklich erlaubt.</p>
+      <p class="hinweis">Am Beamer: mit den Tasten 1 bis 4 antworten, mit der Leertaste weiterblättern.</p>
+    </div>
+    <div class="blocks" id="blockListe"></div>
+  </section>
+
+  <!-- Quiz -->
+  <section id="quiz" hidden>
+    <div class="bar"><i id="fortschritt"></i></div>
+    <div class="meta"><span id="zaehler"></span><span id="punkte"></span></div>
+    <div class="card">
+      <p class="frage" id="frage"></p>
+      <div class="opts" id="opts"></div>
+      <div class="fb" id="fb" hidden><b id="fbTitel"></b><p id="fbText"></p></div>
+    </div>
+    <div class="zentriert"><button class="ghost" id="abbruch" type="button">Zurück zur Übersicht</button></div>
+  </section>
+
+  <!-- Ergebnis -->
+  <section id="ende" hidden>
+    <div class="card zentriert">
+      <span class="jubel" id="jubel" hidden>🎉</span>
+    <div id="ergebnisTitel" style="font-weight:600"></div>
+      <div class="score" id="ergebnisPunkte"></div>
+      <p id="ergebnisText" style="color:var(--muted); font-size:.86em; margin:0"></p>
+      <div class="row">
+        <button class="prim" id="nochmal" type="button">Nochmal üben</button>
+        <button id="zurueck" type="button">Anderes Thema</button>
+      </div>
+    </div>
+  </section>
+
+  <footer><a href="/#quizze" style="color:var(--accent)">← Zurück zu Media Mibaso</a></footer>
+</div>
+
+<div class="leiste" id="leiste" hidden>
+  <button class="weiter" id="weiter" type="button">Weiter</button>
+</div>
+
+<canvas id="feuerwerk" hidden></canvas>
+
+<script>
+const BLOECKE = [
+  {
+    id: "grundidee",
+    titel: "Was ein Sprachmodell ist",
+    unter: "Von Mustern zur Antwort – 10 Fragen",
+    fragen: [
+      {
+        f: "Die Abkürzung LLM steht für …",
+        a: ["Large Language Model – ein großes Sprachmodell",
+            "Lokales Lern-Modul",
+            "Letzte Logische Maschine",
+            "Langzeit-Lern-Methode"],
+        r: 0,
+        e: "Ein großes Sprachmodell ist, kurz gesagt, eine Maschine, die sehr gut darin ist, Sprache fortzusetzen."
+      },
+      {
+        f: "Wie entsteht die Antwort eines Sprachmodells?",
+        a: ["Stück für Stück – jedes Mal wird das wahrscheinlichste nächste Textstück gewählt",
+            "Sie wird in einer Datenbank nachgeschlagen",
+            "Ein Mitarbeiter tippt sie in Sekunden",
+            "Die ganze Antwort entsteht auf einen Schlag"],
+        r: 0,
+        e: "„Heute scheint die …“ – und das Modell rechnet aus, dass „Sonne“ sehr wahrscheinlich ist und „Katze“ nicht. Dann wiederholt sich das, sehr schnell und sehr oft."
+      },
+      {
+        f: "Was ist ein Token?",
+        a: ["Ein kleines Textstück, in das Sprache zerlegt wird",
+            "Ein Passwort für den Zugang zur KI",
+            "Eine Münze, mit der man Antworten bezahlt",
+            "Der Name des Modells"],
+        r: 0,
+        e: "Ihre Frage wird in Tokens zerlegt, und die Antwort wird Token für Token wieder zusammengesetzt."
+      },
+      {
+        f: "Was hat ein Modell beim Training eigentlich gespeichert?",
+        a: ["Muster und Zusammenhänge in Form von Wahrscheinlichkeiten",
+            "Alle gelesenen Texte wortwörtlich",
+            "Eine Liste mit geprüften Fakten",
+            "Die Fragen früherer Nutzer"],
+        r: 0,
+        e: "Es hat riesige Mengen Text gelesen und daraus Sprachgefühl, Grammatik und typische Erklärmuster abgeleitet – ein Nachschlagewerk ist es dadurch nicht geworden."
+      },
+      {
+        f: "Was bedeutet „Halluzination“ bei einer KI?",
+        a: ["Eine erfundene Aussage, die überzeugend klingt",
+            "Ein Programmfehler, der den Chat abstürzen lässt",
+            "Ein Bild, das die KI selbst erzeugt hat",
+            "Eine Antwort in einer fremden Sprache"],
+        r: 0,
+        e: "„Der Bus fährt um 14:17 Uhr von Steig 3“ klingt sehr sicher – und kann trotzdem frei erfunden sein. Deshalb: bei allem, was zählt, die Originalquelle öffnen."
+      },
+      {
+        f: "Warum kann eine Antwort überzeugend klingen und trotzdem falsch sein?",
+        a: ["Weil sie neu erzeugt und nicht nachgeschlagen wird",
+            "Weil die KI absichtlich schwindelt",
+            "Weil das Internet zu langsam war",
+            "Weil die Frage zu kurz gestellt wurde"],
+        r: 0,
+        e: "Das Modell erzeugt eine sprachlich passende Antwort. Passend heißt nicht geprüft – der flüssige Ton ist kein Qualitätsnachweis."
+      },
+      {
+        f: "Modell und App – wie hängt das zusammen?",
+        a: ["Das Modell ist der Motor, die App wie ChatGPT oder Claude das Fahrzeug drumherum",
+            "Beides sind zwei Wörter für dasselbe",
+            "Die App ist der Motor, das Modell die Bedienoberfläche",
+            "Jede App hat ihr eigenes, nur ihr gehörendes Modell"],
+        r: 0,
+        e: "Modellnamen ändern sich ständig. Für den Alltag ist die App mit ihrer Oberfläche, ihren Funktionen und ihrem Tarif meist wichtiger als der genaue Modellname."
+      },
+      {
+        f: "Wofür eignen sich Sprachmodelle besonders gut?",
+        a: ["Erklären, zusammenfassen, Entwürfe schreiben, übersetzen",
+            "Verbindlich sagen, ob eine Aussage stimmt",
+            "Verlässliche Quellen garantieren",
+            "Entscheiden, was für Sie persönlich richtig ist"],
+        r: 0,
+        e: "Als Assistent stark, als Autorität ungeeignet. Es kann nicht garantieren, dass etwas stimmt oder dass ein Rat zu Ihnen passt."
+      },
+      {
+        f: "Warum weiß ein Sprachmodell oft nichts über die letzten Tage?",
+        a: ["Sein Wissen stammt aus dem Training – Aktuelles fehlt, wenn es nicht extra nachschlägt",
+            "Weil Nachrichten urheberrechtlich geschützt sind",
+            "Weil es nur einmal pro Jahr eingeschaltet wird",
+            "Weil es Datum und Uhrzeit nicht kennt"],
+        r: 0,
+        e: "Manche Dienste können zusätzlich im Netz suchen. Tun sie das nicht, bleibt der Wissensstand beim Training stehen."
+      },
+      {
+        f: "Versteht ein Sprachmodell, worüber es schreibt?",
+        a: ["Nein – es rechnet mit Wahrscheinlichkeiten, ohne Bewusstsein und Lebenserfahrung",
+            "Ja, genau wie ein Mensch",
+            "Ja, aber nur bei einfachen Themen",
+            "Nur wenn man ihm den Zusammenhang erklärt"],
+        r: 0,
+        e: "Es erkennt Muster in sehr vielen Texten. Dass die Antworten so menschlich wirken, ist eine Leistung der Sprache – nicht des Verstehens."
+      }
+    ]
+  },
+  {
+    id: "praxis",
+    titel: "Gut fragen, sicher nutzen",
+    unter: "Aufträge, Dienste, Datenschutz – 10 Fragen",
+    fragen: [
+      {
+        f: "Was ist ein „Prompt“?",
+        a: ["Ein Arbeitsauftrag an die KI",
+            "Eine Zauberformel, die man auswendig lernen muss",
+            "Der Name des Antwortfensters",
+            "Ein kostenpflichtiger Zusatzdienst"],
+        r: 0,
+        e: "Sagen Sie der KI, was sie tun soll – und woran Sie ein gutes Ergebnis erkennen. Mehr Geheimnis steckt nicht dahinter."
+      },
+      {
+        f: "Welche vier Bausteine machen einen Auftrag gut?",
+        a: ["Aufgabe, Hintergrund, Form und Grenze",
+            "Anrede, Gruß, Datum und Unterschrift",
+            "Name, Adresse, Telefon und E-Mail",
+            "Frage, Antwort, Nachfrage und Dank"],
+        r: 0,
+        e: "Was soll entstehen? Für wen und wofür? Wie lang und in welchem Ton? Was soll die KI beachten? Damit muss sie nicht mehr raten."
+      },
+      {
+        f: "Welcher Zusatz zu einem Auftrag bringt erfahrungsgemäß am meisten?",
+        a: ["„Stelle mir zuerst zwei Rückfragen.“",
+            "„Antworte in genau 500 Wörtern.“",
+            "„Sei besonders kreativ.“",
+            "„Antworte so schnell wie möglich.“"],
+        r: 0,
+        e: "So merkt die KI selbst, was ihr fehlt – und Sie bekommen im zweiten Anlauf ein deutlich besseres Ergebnis. Nachfragen ist kein Fehler, sondern die Methode."
+      },
+      {
+        f: "Welche Aufgaben gehören in die rote Ampelstufe, bei der ein Mensch entscheidet?",
+        a: ["Diagnosen, Rechtsfristen, Geldüberweisungen und Notfälle",
+            "Einkaufslisten und Rezepte",
+            "Ideen für ein Geburtstagsgedicht",
+            "Formulierungsvorschläge für eine Einladung"],
+        r: 0,
+        e: "Je größer die Folgen eines Fehlers, desto weniger darf die KI allein entscheiden. Gelb – also nachprüfen – gilt für Preise, Fahrpläne, Verträge und Gesundheitsinformationen."
+      },
+      {
+        f: "Was gehört niemals in einen KI-Chat?",
+        a: ["Passwörter, Ausweis- und Kontodaten",
+            "Eine Frage, die Sie peinlich finden",
+            "Ein Text, den Sie kürzen lassen wollen",
+            "Eine Bitte um Übersetzung"],
+        r: 0,
+        e: "Auch nicht „zur Prüfung“. Ebenso heikel: Gesundheitsakten und Daten anderer Menschen – die höchstens anonymisiert und sparsam."
+      },
+      {
+        f: "Sie möchten einen schwierigen Behördenbrief erklären lassen. Was tun Sie vorher?",
+        a: ["Name, Adresse, Aktenzeichen und Unterschrift entfernen oder schwärzen",
+            "Den Brief in Großbuchstaben abtippen",
+            "Den Brief zuerst an die Behörde weiterleiten",
+            "Nichts – die KI löscht persönliche Daten von selbst"],
+        r: 0,
+        e: "Dann fragen: „Erkläre diesen Brief in einfacher Sprache. Welche Fristen werden genannt? Erfinde nichts.“ Über rechtliche Folgen entscheidet aber der Originalbrief und die zuständige Stelle."
+      },
+      {
+        f: "Welcher Dienst ist gedacht für aktuelle Recherche mit sichtbaren Quellenlinks?",
+        a: ["Perplexity", "Copilot", "Claude", "Gemini"],
+        r: 0,
+        e: "Perplexity ist eine Suchmaschine mit KI-Antwort. Aber auch dort gilt: Die Originalseite öffnen, denn auch Quellenlinks können unpassend sein."
+      },
+      {
+        f: "Welcher Assistent ist besonders eng mit Gmail, Docs und Drive verzahnt?",
+        a: ["Gemini", "ChatGPT", "Perplexity", "Claude"],
+        r: 0,
+        e: "Gemini kommt von Google. Copilot sitzt entsprechend in Word, Excel und PowerPoint. Es gibt keine Rangliste – die passende Umgebung zählt mehr als der Name."
+      },
+      {
+        f: "Wie steigt man als Privatperson am vernünftigsten ein?",
+        a: ["Kostenlos beginnen und höchstens einen Dienst bezahlen, am besten monatlich kündbar",
+            "Gleich den teuersten Tarif nehmen, dann stimmen die Antworten",
+            "Alle fünf Dienste gleichzeitig abonnieren",
+            "Ein Jahresabo abschließen, das ist immer günstiger"],
+        r: 0,
+        e: "Erst Erfahrung sammeln, dann entscheiden. Preise, Grenzen und Modellnamen ändern sich schnell – und hohe Limits sind kein Garant für richtige Antworten."
+      },
+      {
+        f: "Wo wird verarbeitet, was Sie in einen KI-Chat eingeben?",
+        a: ["In der Cloud des Anbieters, oft in mehreren Ländern",
+            "Nur auf Ihrem eigenen Gerät",
+            "Garantiert auf Servern in der EU",
+            "Auf dem Rechner der Volkshochschule"],
+        r: 0,
+        e: "Bei Privatkonten lässt sich der Serverstandort meist nicht auswählen. Eine EU-Speicherung sollte man nur annehmen, wenn sie ausdrücklich zugesagt ist."
+      }
+    ]
+  }
+];
+
+const LOB = [
+  { ab: 10, t: "Ganz ausgezeichnet!", s: "Das sitzt. Sie könnten den Kurs fast selbst geben." },
+  { ab: 8,  t: "Sehr gut gemacht!",   s: "Der Stoff ist angekommen – nur ein paar Kleinigkeiten zum Nachlesen." },
+  { ab: 6,  t: "Gut dabei!",          s: "Die Hälfte und mehr sitzt schon. Ein zweiter Durchgang lohnt sich." },
+  { ab: 0,  t: "Ein guter Anfang.",   s: "Kein Grund zur Sorge – gehen Sie es in Ruhe noch einmal durch." }
+];
+
+const $ = id => document.getElementById(id);
+let block = null, i = 0, richtig = 0, beantwortet = false, reihenfolge = [];
+
+// Antwortreihenfolge mischen, damit die richtige Lösung nicht immer oben steht
+function mische(n){
+  const a = [...Array(n).keys()];
+  for (let k = a.length - 1; k > 0; k--){
+    const j = Math.floor(Math.random() * (k + 1));
+    [a[k], a[j]] = [a[j], a[k]];
+  }
+  return a;
+}
+
+// Startbildschirm aufbauen
+BLOECKE.forEach((b, n) => {
+  const btn = document.createElement("button");
+  btn.className = "block";
+  btn.type = "button";
+  btn.innerHTML = "<b>" + b.titel + "</b><span>" + b.unter + "</span>";
+  btn.addEventListener("click", () => starte(n));
+  $("blockListe").appendChild(btn);
+});
+
+function leisteZeigen(an){
+  $("leiste").hidden = !an;
+  document.body.classList.toggle("mit-leiste", an);
+}
+
+function zeige(welche){
+  ["start","quiz","ende"].forEach(s => $(s).hidden = (s !== welche));
+  if (welche !== "quiz") leisteZeigen(false);
+  window.scrollTo(0, 0);
+}
+
+function starte(n){
+  block = BLOECKE[n];
+  i = 0; richtig = 0;
+  zeige("quiz");
+  frage();
+}
+
+function frage(){
+  beantwortet = false;
+  const q = block.fragen[i];
+  $("frage").textContent = q.f;
+  $("zaehler").textContent = "Frage " + (i + 1) + " von " + block.fragen.length;
+  $("punkte").textContent = richtig + " richtig";
+  $("fortschritt").style.width = (i / block.fragen.length * 100) + "%";
+  $("fb").hidden = true;
+  leisteZeigen(false);
+
+  const opts = $("opts");
+  opts.textContent = "";
+  reihenfolge = mische(q.a.length);
+  reihenfolge.forEach((orig, k) => {
+    const b = document.createElement("button");
+    b.className = "opt";
+    b.type = "button";
+    b.dataset.orig = orig;
+    const key = document.createElement("span");
+    key.className = "key";
+    key.textContent = k + 1;
+    const txt = document.createElement("span");
+    txt.textContent = q.a[orig];
+    b.append(key, txt);
+    b.addEventListener("click", () => antworte(orig));
+    opts.appendChild(b);
+  });
+}
+
+function antworte(orig){
+  if (beantwortet) return;
+  beantwortet = true;
+  const q = block.fragen[i];
+  const istRichtig = (orig === q.r);
+  if (istRichtig) richtig++;
+
+  [...$("opts").children].forEach(b => {
+    b.disabled = true;
+    const nr = Number(b.dataset.orig);
+    if (nr === q.r) b.classList.add("richtig");
+    else if (nr === orig) b.classList.add("falsch");
+  });
+
+  $("fb").hidden = false;
+  $("fb").classList.toggle("nein", !istRichtig);
+  $("fbTitel").textContent = istRichtig ? "Richtig." : "Nicht ganz.";
+  $("fbText").textContent = q.e;
+  $("punkte").textContent = richtig + " richtig";
+  $("weiter").textContent = (i + 1 < block.fragen.length) ? "Weiter" : "Ergebnis anzeigen";
+  leisteZeigen(true);
+  $("weiter").focus({ preventScroll: true });
+  // Erklärung sanft ins Bild holen, falls sie hinter der Leiste verschwindet
+  try {
+    const kasten = $("fb").getBoundingClientRect();
+    const frei = window.innerHeight - $("leiste").offsetHeight - 10;
+    const fehlt = kasten.bottom - frei;
+    if (fehlt > 0) window.scrollBy({ top: fehlt, behavior: "smooth" });
+  } catch(e){}
+}
+
+function weiter(){
+  if (!beantwortet) return;
+  i++;
+  if (i < block.fragen.length) frage();
+  else ergebnis();
+}
+
+function ergebnis(){
+  const n = block.fragen.length;
+  const lob = LOB.find(l => richtig >= l.ab);
+  const alles = (richtig === n);
+  $("ergebnisTitel").textContent = alles ? "Alles richtig!" : lob.t;
+  $("ergebnisPunkte").textContent = richtig + " von " + n;
+  $("ergebnisText").textContent = alles ? "Volle Punktzahl – Hut ab!" : lob.s;
+  $("jubel").hidden = !alles;
+  $("fortschritt").style.width = "100%";
+  zeige("ende");
+  if (alles) { fanfare(); feuerwerk(); }
+}
+
+/* ---------- Belohnung bei voller Punktzahl ---------- */
+
+// Fanfare, ganz ohne Tondatei: vier Töne und ein Schlussakkord
+function fanfare(){
+  try{
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    const ctx = new AC();
+    if (ctx.state === "suspended") ctx.resume();
+    const summe = ctx.createGain();
+    summe.gain.value = 0.9;
+    summe.connect(ctx.destination);
+
+    function ton(hz, start, dauer, laut){
+      const t = ctx.currentTime + start;
+      const filter = ctx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.value = 2600;
+      const huelle = ctx.createGain();
+      huelle.gain.setValueAtTime(0.0001, t);
+      huelle.gain.exponentialRampToValueAtTime(laut, t + 0.03);
+      huelle.gain.setValueAtTime(laut, t + dauer * 0.6);
+      huelle.gain.exponentialRampToValueAtTime(0.0001, t + dauer);
+      filter.connect(huelle); huelle.connect(summe);
+      [0, 6].forEach(verstimmung => {        // zwei Stimmen = voller Klang
+        const o = ctx.createOscillator();
+        o.type = "sawtooth";
+        o.frequency.value = hz;
+        o.detune.value = verstimmung;
+        o.connect(filter);
+        o.start(t); o.stop(t + dauer + 0.05);
+      });
+    }
+
+    const C5=523.25, E5=659.25, G5=783.99, C6=1046.50;
+    ton(C5, 0.00, 0.16, 0.22);
+    ton(E5, 0.16, 0.16, 0.22);
+    ton(G5, 0.32, 0.16, 0.22);
+    ton(C6, 0.50, 0.75, 0.26);
+    ton(G5, 0.50, 0.75, 0.13);
+    [C5, E5, G5, C6].forEach(h => ton(h, 1.35, 1.10, 0.15));
+
+    setTimeout(() => { try{ ctx.close(); }catch(e){} }, 3200);
+  }catch(e){}
+}
+
+// Feuerwerk: mehrere Raketen, die am Himmel zerplatzen
+function feuerwerk(){
+  const leinwand = $("feuerwerk");
+  if (!leinwand || !leinwand.getContext) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const stift = leinwand.getContext("2d");
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const breite = window.innerWidth, hoehe = window.innerHeight;
+  leinwand.width = breite * dpr; leinwand.height = hoehe * dpr;
+  stift.setTransform(dpr, 0, 0, dpr, 0, 0);
+  leinwand.hidden = false;
+
+  const FARBEN = ["#3E7CB1","#C28A3A","#B23B2E","#2C7A6A","#E8C15A","#7FB3D8"];
+  let funken = [];
+
+  function knall(x, y){
+    const farbe = FARBEN[Math.floor(Math.random() * FARBEN.length)];
+    const anzahl = 46;
+    for (let k = 0; k < anzahl; k++){
+      const winkel = (Math.PI * 2 * k) / anzahl + Math.random() * 0.2;
+      const tempo = 2.2 + Math.random() * 3.0;
+      funken.push({
+        x, y,
+        vx: Math.cos(winkel) * tempo,
+        vy: Math.sin(winkel) * tempo,
+        farbe, leben: 1, gross: 1.6 + Math.random() * 1.8
+      });
+    }
+  }
+
+  // Erste Salve sofort, dann noch ein paar verteilt
+  knall(breite * 0.5, hoehe * 0.32);
+  const zeitpunkte = [350, 700, 1050, 1450, 1800];
+  const uhren = zeitpunkte.map(ms => setTimeout(
+    () => knall(breite * (0.15 + Math.random() * 0.7), hoehe * (0.18 + Math.random() * 0.35)), ms));
+
+  const ende = performance.now() + 3400;
+  function bild(jetzt){
+    stift.clearRect(0, 0, breite, hoehe);
+    funken.forEach(f => {
+      f.x += f.vx; f.y += f.vy;
+      f.vy += 0.055;          // Schwerkraft
+      f.vx *= 0.985; f.vy *= 0.985;
+      f.leben -= 0.011;
+      if (f.leben > 0){
+        stift.globalAlpha = Math.max(f.leben, 0);
+        stift.fillStyle = f.farbe;
+        stift.beginPath();
+        stift.arc(f.x, f.y, f.gross, 0, Math.PI * 2);
+        stift.fill();
+      }
+    });
+    funken = funken.filter(f => f.leben > 0);
+    stift.globalAlpha = 1;
+    if (jetzt < ende || funken.length) requestAnimationFrame(bild);
+    else { stift.clearRect(0, 0, breite, hoehe); leinwand.hidden = true; }
+  }
+  requestAnimationFrame(bild);
+
+  // Beim Verlassen der Ergebnisseite aufräumen
+  ["nochmal","zurueck"].forEach(id => $(id).addEventListener("click", function aufraeumen(){
+    uhren.forEach(clearTimeout);
+    funken = [];
+    stift.clearRect(0, 0, breite, hoehe);
+    leinwand.hidden = true;
+    $(id).removeEventListener("click", aufraeumen);
+  }));
+}
+
+$("weiter").addEventListener("click", weiter);
+$("abbruch").addEventListener("click", () => zeige("start"));
+$("zurueck").addEventListener("click", () => zeige("start"));
+$("nochmal").addEventListener("click", () => starte(BLOECKE.indexOf(block)));
+
+// Tastatur: 1–4 antworten, Leertaste/Enter weiter
+document.addEventListener("keydown", e => {
+  if ($("quiz").hidden) return;
+  if (e.key >= "1" && e.key <= "4" && !beantwortet){
+    const b = $("opts").children[Number(e.key) - 1];
+    if (b) { e.preventDefault(); b.click(); }
+  } else if ((e.key === " " || e.key === "Enter") && beantwortet){
+    e.preventDefault(); weiter();
+  }
+});
+</script>
+</body>
+</html>

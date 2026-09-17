@@ -18,6 +18,7 @@ const CORE = [
   './index.html',
   './quizze/internet-grundlagen.html',
   './quizze/sicherheit.html',
+  './quizze/ki-und-sprachmodelle.html',
   './kurse/',
   './kurse/index.html',
   './impressum/',
