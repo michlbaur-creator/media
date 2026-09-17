@@ -98,7 +98,7 @@
   <!-- Startbildschirm -->
   <section id="start">
     <div class="card">
-      <p style="margin:0 0 6px">Testen Sie in Ruhe, was hängengeblieben ist. Nach jeder Antwort kommt sofort die Erklärung – falsch antworten ist hier ausdrücklich erlaubt.</p>
+      <p style="margin:0 0 6px">Teste in Ruhe, was hängengeblieben ist. Nach jeder Antwort kommt sofort die Erklärung – falsch antworten ist hier ausdrücklich erlaubt.</p>
       <p class="hinweis">Am Beamer: mit den Tasten 1 bis 4 antworten, mit der Leertaste weiterblättern.</p>
     </div>
     <div class="blocks" id="blockListe"></div>
@@ -147,31 +147,31 @@ const BLOECKE = [
     unter: "Phishing, Anhänge, Viren – 10 Fragen",
     fragen: [
       {
-        f: "Woran erkennen Sie, dass eine Internetseite verschlüsselt ist?",
+        f: "Woran erkennst du, dass eine Internetseite verschlüsselt ist?",
         a: ["Die Adresse beginnt mit https und der Browser zeigt ein Schloss",
             "Die Adresse beginnt mit www",
             "Die Seite lädt besonders schnell",
             "Am Ende der Adresse steht .de"],
         r: 0,
-        e: "Das „s“ in https steht für die Verschlüsselung zwischen Ihrem Gerät und dem Server. Ohne das Schloss sollten Sie dort keine persönlichen Daten eingeben."
+        e: "Das „s“ in https steht für die Verschlüsselung zwischen deinem Gerät und dem Server. Ohne das Schloss solltest du dort keine persönlichen Daten eingeben."
       },
       {
-        f: "Eine E-Mail droht mit einem Inkasso-Unternehmen wegen einer Bestellung, die Sie nie aufgegeben haben. Was steckt dahinter?",
-        a: ["Ein Betrugsversuch, der Sie unter Druck setzen soll",
+        f: "Eine E-Mail droht mit einem Inkasso-Unternehmen wegen einer Bestellung, die du nie aufgegeben hast. Was steckt dahinter?",
+        a: ["Ein Betrugsversuch, der dich unter Druck setzen soll",
             "Eine Verwechslung, die man telefonisch klären muss",
             "Eine gesetzlich vorgeschriebene Mahnung",
-            "Ein Hinweis, dass jemand in Ihrem Namen bestellt hat"],
+            "Ein Hinweis, dass jemand in deinem Namen bestellt hat"],
         r: 0,
         e: "Erfundene Bestellungen, Mahnungen und Inkasso-Drohungen sind der Klassiker unter den Phishing-Mails. Merksatz: Echte E-Mails drängen nicht – Betrüger schon."
       },
       {
-        f: "Eine Mail sieht aus wie von Ihrer Bank und bittet Sie, sich über den Link anzumelden. Was tun Sie?",
+        f: "Eine Mail sieht aus wie von deiner Bank und bittet dich, dich über den Link anzumelden. Was tust du?",
         a: ["Den Link ignorieren und die Seite der Bank selbst im Browser öffnen",
             "Auf den Link tippen und die Daten eingeben",
             "Auf die Mail antworten und nachfragen",
             "Die Mail an die Bank weiterleiten und auf Antwort warten"],
         r: 0,
-        e: "Die Adresse selbst eintippen oder das Lesezeichen nehmen – dann landen Sie garantiert bei der echten Bank. Dort sehen Sie sofort, ob wirklich etwas offen ist."
+        e: "Die Adresse selbst eintippen oder das Lesezeichen nehmen – dann landest du garantiert bei der echten Bank. Dort siehst du sofort, ob wirklich etwas offen ist."
       },
       {
         f: "Welche drei Fragen gehören zum 10-Sekunden-Check bei einer Mail?",
@@ -183,7 +183,7 @@ const BLOECKE = [
         e: "Schon ein einziger Zweifel reicht, um vorsichtig zu sein. Druck und Angst sind das deutlichste Warnsignal."
       },
       {
-        f: "Welche Dateianhänge sollten Sie auf keinen Fall öffnen?",
+        f: "Welche Dateianhänge solltest du auf keinen Fall öffnen?",
         a: ["Dateien, die auf .exe, .zip oder .docm enden",
             "Alle Anhänge, die größer als ein Megabyte sind",
             "PDF-Dateien von Behörden",
@@ -207,7 +207,7 @@ const BLOECKE = [
             "Weil das gesetzlich zur Kundenwerbung vorgeschrieben ist",
             "Um ihre Internetseite bekannter zu machen"],
         r: 0,
-        e: "Für den versprochenen Gewinn sollen Sie Name, Anschrift und E-Mail angeben. Genau darum geht es – der Gewinn kommt nie."
+        e: "Für den versprochenen Gewinn sollst du Name, Anschrift und E-Mail angeben. Genau darum geht es – der Gewinn kommt nie."
       },
       {
         f: "Was ist der Unterschied zwischen einem Virus und einem Trojaner?",
@@ -219,22 +219,22 @@ const BLOECKE = [
         e: "Viren schleusen sich in Programme ein und vermehren sich. Trojaner geben sich als nützliches Programm aus und holen im Hintergrund weitere Schadsoftware nach."
       },
       {
-        f: "Was machen Sie mit einer offensichtlichen Betrugs- oder Werbemail?",
+        f: "Was machst du mit einer offensichtlichen Betrugs- oder Werbemail?",
         a: ["Als Spam melden und löschen – nicht antworten",
             "Kurz antworten, dass man kein Interesse hat",
             "Den Abmelde-Link am Ende anklicken",
-            "Sie in einen eigenen Ordner verschieben und aufheben"],
+            "In einen eigenen Ordner verschieben und aufheben"],
         r: 0,
-        e: "Jede Reaktion – auch das Abmelden – zeigt den Absendern, dass Ihre Adresse benutzt wird. Niemals Links anklicken, Anhänge öffnen, antworten oder Daten eingeben."
+        e: "Jede Reaktion – auch das Abmelden – zeigt den Absendern, dass deine Adresse benutzt wird. Niemals Links anklicken, Anhänge öffnen, antworten oder Daten eingeben."
       },
       {
-        f: "Warum bekommen Sie im Internet ausgerechnet Werbung für Dinge, über die Sie kurz vorher gesprochen oder gelesen haben?",
-        a: ["Weil Ihr Verhalten über Cookies und Programme aufgezeichnet und ausgewertet wird",
+        f: "Warum bekommst du im Internet ausgerechnet Werbung für Dinge, über die du kurz vorher gesprochen oder gelesen hast?",
+        a: ["Weil dein Verhalten über Cookies und Programme aufgezeichnet und ausgewertet wird",
             "Weil das reiner Zufall ist",
-            "Weil Ihr Internetanbieter die Werbung auswählt",
+            "Weil dein Internetanbieter die Werbung auswählt",
             "Weil jeder in Deutschland dieselbe Werbung sieht"],
         r: 0,
-        e: "Das Geschäft mit Informationen ist der eigentliche Motor des Netzes: Ihre Daten machen Werbung zielgenau – und damit teuer verkäuflich."
+        e: "Das Geschäft mit Informationen ist der eigentliche Motor des Netzes: Deine Daten machen Werbung zielgenau – und damit teuer verkäuflich."
       }
     ]
   },
@@ -263,12 +263,12 @@ const BLOECKE = [
       },
       {
         f: "Wie funktioniert ein Passkey im Kern?",
-        a: ["Mit einem Schlüsselpaar: ein privater Teil bleibt bei Ihnen, ein öffentlicher liegt beim Anbieter",
-            "Ihr Passwort wird verschlüsselt beim Anbieter gespeichert",
-            "Ihr Fingerabdruck wird an den Anbieter übertragen",
+        a: ["Mit einem Schlüsselpaar: ein privater Teil bleibt bei dir, ein öffentlicher liegt beim Anbieter",
+            "Dein Passwort wird verschlüsselt beim Anbieter gespeichert",
+            "Dein Fingerabdruck wird an den Anbieter übertragen",
             "Ein Zufallswort wird jedes Mal per SMS geschickt"],
         r: 0,
-        e: "Mit dem öffentlichen Teil kann der Anbieter rechnerisch prüfen, ob Sie den privaten Teil besitzen – ohne ihn je zu sehen. Ihr Fingerabdruck verlässt das Gerät nicht."
+        e: "Mit dem öffentlichen Teil kann der Anbieter rechnerisch prüfen, ob du den privaten Teil besitzt – ohne ihn je zu sehen. Dein Fingerabdruck verlässt das Gerät nicht."
       },
       {
         f: "Warum sind Passkeys sicherer als Passwörter?",
@@ -277,7 +277,7 @@ const BLOECKE = [
             "Weil sie aus mindestens 20 Zeichen bestehen",
             "Weil man sie nirgends aufschreiben darf"],
         r: 0,
-        e: "Der entscheidende Punkt: Der private Schlüssel liegt nur auf Ihrem Gerät. Wird der Server des Anbieters gehackt, ist für die Kriminellen nichts zu holen."
+        e: "Der entscheidende Punkt: Der private Schlüssel liegt nur auf deinem Gerät. Wird der Server des Anbieters gehackt, ist für die Kriminellen nichts zu holen."
       },
       {
         f: "Wofür steht die Abkürzung Fido, die hinter den Passkeys steckt?",
@@ -301,41 +301,50 @@ const BLOECKE = [
         e: "Essenzielle Cookies halten zum Beispiel den Warenkorb oder die Anmeldung fest. Funktionale merken sich Sprache und Layout, Analyse und Werbung dienen dem Anbieter."
       },
       {
-        f: "Was passiert, wenn Sie im Cookie-Fenster auf „Alle akzeptieren“ tippen?",
-        a: ["Sie erlauben auch das Verfolgen Ihres Verhaltens für personalisierte Werbung",
-            "Sie schalten nur die technisch nötigen Cookies frei",
-            "Sie stimmen dem Newsletter zu",
-            "Sie machen die Seite werbefrei"],
+        f: "Was passiert, wenn du im Cookie-Fenster auf „Alle akzeptieren“ tippst?",
+        a: ["Du erlaubst auch das Verfolgen deines Verhaltens für personalisierte Werbung",
+            "Du schaltest nur die technisch nötigen Cookies frei",
+            "Du stimmst dem Newsletter zu",
+            "Du machst die Seite werbefrei"],
         r: 0,
         e: "Bequem ist es schon – der Preis ist weniger Datenschutz. Besser: die Auswahl kurz prüfen und nur zulassen, was nötig ist."
       },
       {
-        f: "Was sollten Sie einem KI-Programm wie ChatGPT niemals anvertrauen?",
+        f: "Was solltest du einem KI-Programm wie ChatGPT niemals anvertrauen?",
         a: ["Passwörter, PINs, TANs und vollständige Bankdaten",
-            "Fragen zu einem Thema, das Sie nicht verstehen",
-            "Texte, die Sie zusammenfassen lassen wollen",
-            "Ideen für den Geburtstag Ihrer Enkelin"],
+            "Fragen zu einem Thema, das du nicht verstehst",
+            "Texte, die du zusammenfassen lassen willst",
+            "Ideen für den Geburtstag deiner Enkelin"],
         r: 0,
         e: "Zugangsdaten und fremde vertrauliche Unterlagen gehören nicht hinein. Fragen, Zusammenfassungen, Kursmaterial und Kreatives sind dagegen unkritisch."
       },
       {
-        f: "Welche drei Gewohnheiten schützen Ihr Gerät am wirksamsten?",
+        f: "Welche drei Gewohnheiten schützen dein Gerät am wirksamsten?",
         a: ["Bildschirmsperre, regelmäßige Updates und Datensicherung",
             "Gerät nachts ausschalten, Hülle benutzen, Display putzen",
             "Apps oft neu installieren, Fotos löschen, Akku schonen",
             "Flugzeugmodus, Hintergrundbild wechseln, Ton ausschalten"],
         r: 0,
-        e: "Die Sperre schützt bei Verlust, Updates schließen bekannte Lücken, und die Sicherung rettet Ihre Fotos und Dokumente – am besten in der Cloud und zusätzlich auf einem USB-Stick."
+        e: "Die Sperre schützt bei Verlust, Updates schließen bekannte Lücken, und die Sicherung rettet deine Fotos und Dokumente – am besten in der Cloud und zusätzlich auf einem USB-Stick."
       }
     ]
   }
 ];
 
 const LOB = [
-  { ab: 10, t: "Ganz ausgezeichnet!", s: "Das sitzt. Sie könnten den Kurs fast selbst geben." },
-  { ab: 8,  t: "Sehr gut gemacht!",   s: "Der Stoff ist angekommen – nur ein paar Kleinigkeiten zum Nachlesen." },
-  { ab: 6,  t: "Gut dabei!",          s: "Die Hälfte und mehr sitzt schon. Ein zweiter Durchgang lohnt sich." },
-  { ab: 0,  t: "Ein guter Anfang.",   s: "Kein Grund zur Sorge – gehen Sie es in Ruhe noch einmal durch." }
+  { ab: 8, t: "Fast alles!",            s: "Da fehlt nur ein Krümel. Noch eine Runde, dann sitzt auch der Rest." },
+  { ab: 6, t: "Sauber!",                s: "Mehr als die Hälfte im Kasten – der Rest kommt beim zweiten Durchgang fast von allein." },
+  { ab: 4, t: "Geht doch!",             s: "Die halbe Miete ist drin. Wiederholen ist hier keine Schande, sondern die Methode." },
+  { ab: 0, t: "Ein Anfang ist gemacht.", s: "Kein Grund zur Sorge – auch das Internet wurde nicht an einem Tag verstanden." }
+];
+
+// Sprüche für die volle Punktzahl – einer wird ausgelost
+const JUBEL = [
+  "Zehn von zehn. Die Urkunde kommt per Rauchzeichen.",
+  "Alles richtig! Nächste Woche stellst du dich vorne hin und ich setze mich.",
+  "Fehlerfrei durch – das Internet verneigt sich.",
+  "Volle Punktzahl. Das riecht ganz nach einem Stück Kuchen zur Feier.",
+  "Keine einzige daneben. Wer hat dir das denn alles beigebracht?"
 ];
 
 const $ = id => document.getElementById(id);
@@ -450,9 +459,9 @@ function ergebnis(){
   const n = block.fragen.length;
   const lob = LOB.find(l => richtig >= l.ab);
   const alles = (richtig === n);
-  $("ergebnisTitel").textContent = alles ? "Alles richtig!" : lob.t;
+  $("ergebnisTitel").textContent = alles ? "Volltreffer!" : lob.t;
   $("ergebnisPunkte").textContent = richtig + " von " + n;
-  $("ergebnisText").textContent = alles ? "Volle Punktzahl – Hut ab!" : lob.s;
+  $("ergebnisText").textContent = alles ? JUBEL[Math.floor(Math.random() * JUBEL.length)] : lob.s;
   $("jubel").hidden = !alles;
   $("fortschritt").style.width = "100%";
   zeige("ende");

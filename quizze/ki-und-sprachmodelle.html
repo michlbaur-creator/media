@@ -98,7 +98,7 @@
   <!-- Startbildschirm -->
   <section id="start">
     <div class="card">
-      <p style="margin:0 0 6px">Testen Sie in Ruhe, was hängengeblieben ist. Nach jeder Antwort kommt sofort die Erklärung – falsch antworten ist hier ausdrücklich erlaubt.</p>
+      <p style="margin:0 0 6px">Teste in Ruhe, was hängengeblieben ist. Nach jeder Antwort kommt sofort die Erklärung – falsch antworten ist hier ausdrücklich erlaubt.</p>
       <p class="hinweis">Am Beamer: mit den Tasten 1 bis 4 antworten, mit der Leertaste weiterblättern.</p>
     </div>
     <div class="blocks" id="blockListe"></div>
@@ -171,7 +171,7 @@ const BLOECKE = [
             "Eine Münze, mit der man Antworten bezahlt",
             "Der Name des Modells"],
         r: 0,
-        e: "Ihre Frage wird in Tokens zerlegt, und die Antwort wird Token für Token wieder zusammengesetzt."
+        e: "Deine Frage wird in Tokens zerlegt, und die Antwort wird Token für Token wieder zusammengesetzt."
       },
       {
         f: "Was hat ein Modell beim Training eigentlich gespeichert?",
@@ -214,9 +214,9 @@ const BLOECKE = [
         a: ["Erklären, zusammenfassen, Entwürfe schreiben, übersetzen",
             "Verbindlich sagen, ob eine Aussage stimmt",
             "Verlässliche Quellen garantieren",
-            "Entscheiden, was für Sie persönlich richtig ist"],
+            "Entscheiden, was für dich persönlich richtig ist"],
         r: 0,
-        e: "Als Assistent stark, als Autorität ungeeignet. Es kann nicht garantieren, dass etwas stimmt oder dass ein Rat zu Ihnen passt."
+        e: "Als Assistent stark, als Autorität ungeeignet. Es kann nicht garantieren, dass etwas stimmt oder dass ein Rat zu dir passt."
       },
       {
         f: "Warum weiß ein Sprachmodell oft nichts über die letzten Tage?",
@@ -250,7 +250,7 @@ const BLOECKE = [
             "Der Name des Antwortfensters",
             "Ein kostenpflichtiger Zusatzdienst"],
         r: 0,
-        e: "Sagen Sie der KI, was sie tun soll – und woran Sie ein gutes Ergebnis erkennen. Mehr Geheimnis steckt nicht dahinter."
+        e: "Sag der KI, was sie tun soll – und woran du ein gutes Ergebnis erkennst. Mehr Geheimnis steckt nicht dahinter."
       },
       {
         f: "Welche vier Bausteine machen einen Auftrag gut?",
@@ -268,7 +268,7 @@ const BLOECKE = [
             "„Sei besonders kreativ.“",
             "„Antworte so schnell wie möglich.“"],
         r: 0,
-        e: "So merkt die KI selbst, was ihr fehlt – und Sie bekommen im zweiten Anlauf ein deutlich besseres Ergebnis. Nachfragen ist kein Fehler, sondern die Methode."
+        e: "So merkt die KI selbst, was ihr fehlt – und du bekommst im zweiten Anlauf ein deutlich besseres Ergebnis. Nachfragen ist kein Fehler, sondern die Methode."
       },
       {
         f: "Welche Aufgaben gehören in die rote Ampelstufe, bei der ein Mensch entscheidet?",
@@ -282,14 +282,14 @@ const BLOECKE = [
       {
         f: "Was gehört niemals in einen KI-Chat?",
         a: ["Passwörter, Ausweis- und Kontodaten",
-            "Eine Frage, die Sie peinlich finden",
-            "Ein Text, den Sie kürzen lassen wollen",
+            "Eine Frage, die du peinlich findest",
+            "Ein Text, den du kürzen lassen willst",
             "Eine Bitte um Übersetzung"],
         r: 0,
         e: "Auch nicht „zur Prüfung“. Ebenso heikel: Gesundheitsakten und Daten anderer Menschen – die höchstens anonymisiert und sparsam."
       },
       {
-        f: "Sie möchten einen schwierigen Behördenbrief erklären lassen. Was tun Sie vorher?",
+        f: "Du möchtest einen schwierigen Behördenbrief erklären lassen. Was tust du vorher?",
         a: ["Name, Adresse, Aktenzeichen und Unterschrift entfernen oder schwärzen",
             "Den Brief in Großbuchstaben abtippen",
             "Den Brief zuerst an die Behörde weiterleiten",
@@ -319,9 +319,9 @@ const BLOECKE = [
         e: "Erst Erfahrung sammeln, dann entscheiden. Preise, Grenzen und Modellnamen ändern sich schnell – und hohe Limits sind kein Garant für richtige Antworten."
       },
       {
-        f: "Wo wird verarbeitet, was Sie in einen KI-Chat eingeben?",
+        f: "Wo wird verarbeitet, was du in einen KI-Chat eingibst?",
         a: ["In der Cloud des Anbieters, oft in mehreren Ländern",
-            "Nur auf Ihrem eigenen Gerät",
+            "Nur auf deinem eigenen Gerät",
             "Garantiert auf Servern in der EU",
             "Auf dem Rechner der Volkshochschule"],
         r: 0,
@@ -332,10 +332,19 @@ const BLOECKE = [
 ];
 
 const LOB = [
-  { ab: 10, t: "Ganz ausgezeichnet!", s: "Das sitzt. Sie könnten den Kurs fast selbst geben." },
-  { ab: 8,  t: "Sehr gut gemacht!",   s: "Der Stoff ist angekommen – nur ein paar Kleinigkeiten zum Nachlesen." },
-  { ab: 6,  t: "Gut dabei!",          s: "Die Hälfte und mehr sitzt schon. Ein zweiter Durchgang lohnt sich." },
-  { ab: 0,  t: "Ein guter Anfang.",   s: "Kein Grund zur Sorge – gehen Sie es in Ruhe noch einmal durch." }
+  { ab: 8, t: "Fast alles!",            s: "Da fehlt nur ein Krümel. Noch eine Runde, dann sitzt auch der Rest." },
+  { ab: 6, t: "Sauber!",                s: "Mehr als die Hälfte im Kasten – der Rest kommt beim zweiten Durchgang fast von allein." },
+  { ab: 4, t: "Geht doch!",             s: "Die halbe Miete ist drin. Wiederholen ist hier keine Schande, sondern die Methode." },
+  { ab: 0, t: "Ein Anfang ist gemacht.", s: "Kein Grund zur Sorge – auch das Internet wurde nicht an einem Tag verstanden." }
+];
+
+// Sprüche für die volle Punktzahl – einer wird ausgelost
+const JUBEL = [
+  "Zehn von zehn. Die Urkunde kommt per Rauchzeichen.",
+  "Alles richtig! Nächste Woche stellst du dich vorne hin und ich setze mich.",
+  "Fehlerfrei durch – das Internet verneigt sich.",
+  "Volle Punktzahl. Das riecht ganz nach einem Stück Kuchen zur Feier.",
+  "Keine einzige daneben. Wer hat dir das denn alles beigebracht?"
 ];
 
 const $ = id => document.getElementById(id);
@@ -450,9 +459,9 @@ function ergebnis(){
   const n = block.fragen.length;
   const lob = LOB.find(l => richtig >= l.ab);
   const alles = (richtig === n);
-  $("ergebnisTitel").textContent = alles ? "Alles richtig!" : lob.t;
+  $("ergebnisTitel").textContent = alles ? "Volltreffer!" : lob.t;
   $("ergebnisPunkte").textContent = richtig + " von " + n;
-  $("ergebnisText").textContent = alles ? "Volle Punktzahl – Hut ab!" : lob.s;
+  $("ergebnisText").textContent = alles ? JUBEL[Math.floor(Math.random() * JUBEL.length)] : lob.s;
   $("jubel").hidden = !alles;
   $("fortschritt").style.width = "100%";
   zeige("ende");
