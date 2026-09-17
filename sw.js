@@ -17,6 +17,7 @@ const CORE = [
   './',
   './index.html',
   './quizze/internet-grundlagen.html',
+  './quizze/sicherheit.html',
   './kurse/',
   './kurse/index.html',
   './impressum/',

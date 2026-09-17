@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Digital-Quiz – Sicherheit im Netz</title>
+<style>
+  /* Farben wie media.mibaso.de */
+  :root{
+    --bg:#F7F3E8; --card:#FFFFFF; --ink:#33302B; --muted:#6A645B;
+    --line:#E3D8C4; --accent:#3E7CB1; --accent-tief:#2A5C86; --accent-soft:#E8F0F7;
+    --wrong:#A8442F; --wrong-soft:#F7E9E4; --shadow:0 2px 10px rgba(0,0,0,.07);
+    --fs:1.14rem; --radius:12px;
+  }
+  @media (min-width:620px){ :root{ --fs:1.25rem; } }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size:var(--fs); line-height:1.5;
+    padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  .wrap{max-width:760px; margin:0 auto; padding:26px 14px 30px}
+  body.mit-leiste .wrap{padding-bottom:110px}
+  header{margin-bottom:20px}
+  h1{font-size:1.15em; margin:0; letter-spacing:-.01em; display:inline}
+  .sub{color:var(--muted); font-size:.78em; display:inline; margin-left:6px}
+  button{font:inherit; cursor:pointer}
+  .ghost{
+    background:transparent; color:var(--muted); border:2px solid var(--line);
+    border-radius:999px; padding:5px 12px; font-size:.75em;
+  }
+  .ghost:hover{border-color:var(--accent); color:var(--accent)}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px; margin-bottom:14px}
+  .blocks{display:grid; gap:10px}
+  .block{
+    display:block; width:100%; text-align:left; background:var(--card); color:var(--ink);
+    border:2px solid var(--line); border-radius:var(--radius); padding:14px 16px; box-shadow:var(--shadow);
+  }
+  .block:hover{border-color:var(--accent)}
+  .block b{display:block; font-size:1.02em}
+  .block span{display:block; color:var(--muted); font-size:.8em; margin-top:2px}
+  .bar{height:6px; background:var(--line); border-radius:999px; overflow:hidden; margin-bottom:7px}
+  .bar>i{display:block; height:100%; background:var(--accent); width:0%; transition:width .3s}
+  .meta{display:flex; justify-content:space-between; color:var(--muted); font-size:.75em; margin-bottom:14px}
+  .frage{font-size:1.02em; font-weight:600; margin:0 0 14px; line-height:1.4}
+  .opts{display:grid; gap:7px}
+  .opt{
+    display:flex; gap:10px; align-items:flex-start; width:100%; text-align:left;
+    background:var(--card); color:var(--ink); border:2px solid var(--line);
+    border-radius:var(--radius); padding:9px 12px; line-height:1.35;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent); background:var(--accent-soft)}
+  .opt:disabled{cursor:default}
+  .key{
+    flex:0 0 auto; width:1.6em; height:1.6em; border-radius:50%; background:var(--line); color:var(--ink);
+    display:grid; place-items:center; font-size:.78em; font-weight:700; margin-top:.1em;
+  }
+  .opt.richtig{border-color:var(--accent); background:var(--accent-soft)}
+  .opt.richtig .key{background:var(--accent); color:#fff}
+  .opt.falsch{border-color:var(--wrong); background:var(--wrong-soft)}
+  .opt.falsch .key{background:var(--wrong); color:#fff}
+  .fb{margin-top:10px; padding:10px 12px; border-radius:var(--radius); background:var(--accent-soft); border-left:5px solid var(--accent)}
+  .fb.nein{background:var(--wrong-soft); border-left-color:var(--wrong)}
+  .fb b{display:block; margin-bottom:2px; font-size:.95em}
+  .fb p{margin:0; font-size:.86em; line-height:1.4}
+  /* Feste Leiste am unteren Bildschirmrand – der Rest scrollt darunter durch */
+  .leiste{
+    position:fixed; left:0; right:0; bottom:0; z-index:20;
+    background:var(--bg); border-top:1px solid var(--line);
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));
+    box-shadow:0 -4px 18px rgba(0,0,0,.10);
+  }
+  .weiter{
+    display:block; max-width:760px; margin:0 auto; width:100%;
+    background:var(--accent); color:#fff; border:none;
+    border-radius:var(--radius); padding:14px; font-size:1em; font-weight:600;
+  }
+  .weiter:hover{filter:brightness(1.08)}
+  .score{font-size:2.2em; font-weight:700; color:var(--accent); margin:4px 0}
+  .zentriert{text-align:center}
+  .row{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:14px}
+  .row button{border-radius:var(--radius); padding:10px 16px; font-size:.85em; border:2px solid var(--line); background:transparent; color:var(--ink)}
+  .row button.prim{background:var(--accent); color:#fff; border-color:var(--accent)}
+  #feuerwerk{position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:50}
+  .jubel{display:block; font-size:1.6em; margin-bottom:2px}
+  footer{text-align:center; color:var(--muted); font-size:.75em; margin-top:16px}
+  .hinweis{color:var(--muted); font-size:.8em; margin-top:8px}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Digital-Quiz</h1><span class="sub">Einsteigerkurs – sicher im Netz</span>
+  </header>
+
+  <!-- Startbildschirm -->
+  <section id="start">
+    <div class="card">
+      <p style="margin:0 0 6px">Testen Sie in Ruhe, was hängengeblieben ist. Nach jeder Antwort kommt sofort die Erklärung – falsch antworten ist hier ausdrücklich erlaubt.</p>
+      <p class="hinweis">Am Beamer: mit den Tasten 1 bis 4 antworten, mit der Leertaste weiterblättern.</p>
+    </div>
+    <div class="blocks" id="blockListe"></div>
+  </section>
+
+  <!-- Quiz -->
+  <section id="quiz" hidden>
+    <div class="bar"><i id="fortschritt"></i></div>
+    <div class="meta"><span id="zaehler"></span><span id="punkte"></span></div>
+    <div class="card">
+      <p class="frage" id="frage"></p>
+      <div class="opts" id="opts"></div>
+      <div class="fb" id="fb" hidden><b id="fbTitel"></b><p id="fbText"></p></div>
+    </div>
+    <div class="zentriert"><button class="ghost" id="abbruch" type="button">Zurück zur Übersicht</button></div>
+  </section>
+
+  <!-- Ergebnis -->
+  <section id="ende" hidden>
+    <div class="card zentriert">
+      <span class="jubel" id="jubel" hidden>🎉</span>
+    <div id="ergebnisTitel" style="font-weight:600"></div>
+      <div class="score" id="ergebnisPunkte"></div>
+      <p id="ergebnisText" style="color:var(--muted); font-size:.86em; margin:0"></p>
+      <div class="row">
+        <button class="prim" id="nochmal" type="button">Nochmal üben</button>
+        <button id="zurueck" type="button">Anderes Thema</button>
+      </div>
+    </div>
+  </section>
+
+  <footer><a href="/#quizze" style="color:var(--accent)">← Zurück zu Media Mibaso</a></footer>
+</div>
+
+<div class="leiste" id="leiste" hidden>
+  <button class="weiter" id="weiter" type="button">Weiter</button>
+</div>
+
+<canvas id="feuerwerk" hidden></canvas>
+
+<script>
+const BLOECKE = [
+  {
+    id: "betrug",
+    titel: "Fiese Post erkennen",
+    unter: "Phishing, Anhänge, Viren – 10 Fragen",
+    fragen: [
+      {
+        f: "Woran erkennen Sie, dass eine Internetseite verschlüsselt ist?",
+        a: ["Die Adresse beginnt mit https und der Browser zeigt ein Schloss",
+            "Die Adresse beginnt mit www",
+            "Die Seite lädt besonders schnell",
+            "Am Ende der Adresse steht .de"],
+        r: 0,
+        e: "Das „s“ in https steht für die Verschlüsselung zwischen Ihrem Gerät und dem Server. Ohne das Schloss sollten Sie dort keine persönlichen Daten eingeben."
+      },
+      {
+        f: "Eine E-Mail droht mit einem Inkasso-Unternehmen wegen einer Bestellung, die Sie nie aufgegeben haben. Was steckt dahinter?",
+        a: ["Ein Betrugsversuch, der Sie unter Druck setzen soll",
+            "Eine Verwechslung, die man telefonisch klären muss",
+            "Eine gesetzlich vorgeschriebene Mahnung",
+            "Ein Hinweis, dass jemand in Ihrem Namen bestellt hat"],
+        r: 0,
+        e: "Erfundene Bestellungen, Mahnungen und Inkasso-Drohungen sind der Klassiker unter den Phishing-Mails. Merksatz: Echte E-Mails drängen nicht – Betrüger schon."
+      },
+      {
+        f: "Eine Mail sieht aus wie von Ihrer Bank und bittet Sie, sich über den Link anzumelden. Was tun Sie?",
+        a: ["Den Link ignorieren und die Seite der Bank selbst im Browser öffnen",
+            "Auf den Link tippen und die Daten eingeben",
+            "Auf die Mail antworten und nachfragen",
+            "Die Mail an die Bank weiterleiten und auf Antwort warten"],
+        r: 0,
+        e: "Die Adresse selbst eintippen oder das Lesezeichen nehmen – dann landen Sie garantiert bei der echten Bank. Dort sehen Sie sofort, ob wirklich etwas offen ist."
+      },
+      {
+        f: "Welche drei Fragen gehören zum 10-Sekunden-Check bei einer Mail?",
+        a: ["Kenne ich den Absender? Erwarte ich die Mail? Macht sie Druck?",
+            "Ist die Mail lang? Sind Bilder dabei? Ist sie auf Deutsch?",
+            "Wann kam sie? Wie groß ist sie? Wer steht im CC?",
+            "Ist die Schrift ordentlich? Gibt es Fehler? Steht ein Datum drin?"],
+        r: 0,
+        e: "Schon ein einziger Zweifel reicht, um vorsichtig zu sein. Druck und Angst sind das deutlichste Warnsignal."
+      },
+      {
+        f: "Welche Dateianhänge sollten Sie auf keinen Fall öffnen?",
+        a: ["Dateien, die auf .exe, .zip oder .docm enden",
+            "Alle Anhänge, die größer als ein Megabyte sind",
+            "PDF-Dateien von Behörden",
+            "Fotos im Format .jpg von Bekannten"],
+        r: 0,
+        e: "Hinter einer harmlosen Bezeichnung kann sich ein ausführbares Programm verstecken. Rechnungen, Mahnungen und Paketinfos als Anhang sind besonders verdächtig – im Zweifel löschen."
+      },
+      {
+        f: "Wie verschickt eine Bank sensible Daten wie PIN oder TAN?",
+        a: ["Gar nicht – solche Daten werden niemals per E-Mail verschickt",
+            "Verschlüsselt als PDF im Anhang",
+            "Über einen Link, der nur 24 Stunden gilt",
+            "Per E-Mail, wenn man vorher zugestimmt hat"],
+        r: 0,
+        e: "Keine seriöse Bank fragt per Mail nach Zugangsdaten oder verschickt sie. Wer das tut, ist ein Betrüger."
+      },
+      {
+        f: "Warum locken zweifelhafte Seiten mit Gewinnspielen?",
+        a: ["Um an echte persönliche Daten für Werbung und Weiterverkauf zu kommen",
+            "Weil sie die Gewinne von der Steuer absetzen können",
+            "Weil das gesetzlich zur Kundenwerbung vorgeschrieben ist",
+            "Um ihre Internetseite bekannter zu machen"],
+        r: 0,
+        e: "Für den versprochenen Gewinn sollen Sie Name, Anschrift und E-Mail angeben. Genau darum geht es – der Gewinn kommt nie."
+      },
+      {
+        f: "Was ist der Unterschied zwischen einem Virus und einem Trojaner?",
+        a: ["Der Virus vervielfältigt sich, der Trojaner tarnt sich als harmloses Programm",
+            "Der Virus befällt nur Handys, der Trojaner nur Computer",
+            "Der Trojaner ist harmlos, der Virus gefährlich",
+            "Es sind zwei Wörter für dieselbe Sache"],
+        r: 0,
+        e: "Viren schleusen sich in Programme ein und vermehren sich. Trojaner geben sich als nützliches Programm aus und holen im Hintergrund weitere Schadsoftware nach."
+      },
+      {
+        f: "Was machen Sie mit einer offensichtlichen Betrugs- oder Werbemail?",
+        a: ["Als Spam melden und löschen – nicht antworten",
+            "Kurz antworten, dass man kein Interesse hat",
+            "Den Abmelde-Link am Ende anklicken",
+            "Sie in einen eigenen Ordner verschieben und aufheben"],
+        r: 0,
+        e: "Jede Reaktion – auch das Abmelden – zeigt den Absendern, dass Ihre Adresse benutzt wird. Niemals Links anklicken, Anhänge öffnen, antworten oder Daten eingeben."
+      },
+      {
+        f: "Warum bekommen Sie im Internet ausgerechnet Werbung für Dinge, über die Sie kurz vorher gesprochen oder gelesen haben?",
+        a: ["Weil Ihr Verhalten über Cookies und Programme aufgezeichnet und ausgewertet wird",
+            "Weil das reiner Zufall ist",
+            "Weil Ihr Internetanbieter die Werbung auswählt",
+            "Weil jeder in Deutschland dieselbe Werbung sieht"],
+        r: 0,
+        e: "Das Geschäft mit Informationen ist der eigentliche Motor des Netzes: Ihre Daten machen Werbung zielgenau – und damit teuer verkäuflich."
+      }
+    ]
+  },
+  {
+    id: "schluessel",
+    titel: "Passwörter, Passkeys und Cookies",
+    unter: "Sicher anmelden und bewusst zustimmen – 10 Fragen",
+    fragen: [
+      {
+        f: "Warum sollen Passwörter nach und nach abgelöst werden?",
+        a: ["Weil sie immer länger und komplizierter werden müssen, um noch sicher zu sein",
+            "Weil Computer sie nicht mehr lesen können",
+            "Weil sie zu viel Speicherplatz brauchen",
+            "Weil sie in Deutschland verboten werden sollen"],
+        r: 0,
+        e: "Die Sicherheitsansprüche wachsen ständig. Ein Passwort, das heute als sicher gilt, ist unbequem lang – und wird trotzdem immer wieder gestohlen."
+      },
+      {
+        f: "Wie meldet man sich mit einem Passkey an?",
+        a: ["Mit Fingerabdruck oder Gesichtserkennung auf dem eigenen Gerät",
+            "Mit einem besonders langen Passwort",
+            "Mit einer Nummer, die per Post kommt",
+            "Mit dem Personalausweis am Kartenleser"],
+        r: 0,
+        e: "Benutzername und Passwort entfallen ganz. Das ist nicht nur bequemer, sondern auch deutlich sicherer."
+      },
+      {
+        f: "Wie funktioniert ein Passkey im Kern?",
+        a: ["Mit einem Schlüsselpaar: ein privater Teil bleibt bei Ihnen, ein öffentlicher liegt beim Anbieter",
+            "Ihr Passwort wird verschlüsselt beim Anbieter gespeichert",
+            "Ihr Fingerabdruck wird an den Anbieter übertragen",
+            "Ein Zufallswort wird jedes Mal per SMS geschickt"],
+        r: 0,
+        e: "Mit dem öffentlichen Teil kann der Anbieter rechnerisch prüfen, ob Sie den privaten Teil besitzen – ohne ihn je zu sehen. Ihr Fingerabdruck verlässt das Gerät nicht."
+      },
+      {
+        f: "Warum sind Passkeys sicherer als Passwörter?",
+        a: ["Sie lassen sich nicht erraten, nicht wiederverwenden und nicht beim Anbieter stehlen",
+            "Weil sie alle drei Monate automatisch gewechselt werden",
+            "Weil sie aus mindestens 20 Zeichen bestehen",
+            "Weil man sie nirgends aufschreiben darf"],
+        r: 0,
+        e: "Der entscheidende Punkt: Der private Schlüssel liegt nur auf Ihrem Gerät. Wird der Server des Anbieters gehackt, ist für die Kriminellen nichts zu holen."
+      },
+      {
+        f: "Wofür steht die Abkürzung Fido, die hinter den Passkeys steckt?",
+        a: ["Fast Identity Online", "Federal Internet Data Organisation", "Filesystem Identity Option", "Firewall Identification Online"],
+        r: 0,
+        e: "Hinter Fido steht ein Bündnis großer Technik-Konzerne, das seit über zehn Jahren am Ende des Passworts arbeitet."
+      },
+      {
+        f: "Machen Passkeys einen Passwort-Manager überflüssig?",
+        a: ["Nein – wer verschiedene Systeme oder fremde Geräte nutzt, braucht weiter Passwörter",
+            "Ja, sofort und für alle Dienste",
+            "Ja, sobald man ein neues Handy kauft",
+            "Nein, weil Passkeys nur für Online-Banking gelten"],
+        r: 0,
+        e: "Apple, Google und Microsoft gleichen die Schlüssel jeweils nur innerhalb der eigenen Welt ab. Auf einem fremden Gerät hilft der Passkey nicht weiter."
+      },
+      {
+        f: "Welche Art von Cookies ist für den Betrieb einer Seite wirklich nötig?",
+        a: ["Die essenziellen", "Die Analyse-Cookies", "Die Werbe-Cookies", "Alle vier Arten gleichermaßen"],
+        r: 0,
+        e: "Essenzielle Cookies halten zum Beispiel den Warenkorb oder die Anmeldung fest. Funktionale merken sich Sprache und Layout, Analyse und Werbung dienen dem Anbieter."
+      },
+      {
+        f: "Was passiert, wenn Sie im Cookie-Fenster auf „Alle akzeptieren“ tippen?",
+        a: ["Sie erlauben auch das Verfolgen Ihres Verhaltens für personalisierte Werbung",
+            "Sie schalten nur die technisch nötigen Cookies frei",
+            "Sie stimmen dem Newsletter zu",
+            "Sie machen die Seite werbefrei"],
+        r: 0,
+        e: "Bequem ist es schon – der Preis ist weniger Datenschutz. Besser: die Auswahl kurz prüfen und nur zulassen, was nötig ist."
+      },
+      {
+        f: "Was sollten Sie einem KI-Programm wie ChatGPT niemals anvertrauen?",
+        a: ["Passwörter, PINs, TANs und vollständige Bankdaten",
+            "Fragen zu einem Thema, das Sie nicht verstehen",
+            "Texte, die Sie zusammenfassen lassen wollen",
+            "Ideen für den Geburtstag Ihrer Enkelin"],
+        r: 0,
+        e: "Zugangsdaten und fremde vertrauliche Unterlagen gehören nicht hinein. Fragen, Zusammenfassungen, Kursmaterial und Kreatives sind dagegen unkritisch."
+      },
+      {
+        f: "Welche drei Gewohnheiten schützen Ihr Gerät am wirksamsten?",
+        a: ["Bildschirmsperre, regelmäßige Updates und Datensicherung",
+            "Gerät nachts ausschalten, Hülle benutzen, Display putzen",
+            "Apps oft neu installieren, Fotos löschen, Akku schonen",
+            "Flugzeugmodus, Hintergrundbild wechseln, Ton ausschalten"],
+        r: 0,
+        e: "Die Sperre schützt bei Verlust, Updates schließen bekannte Lücken, und die Sicherung rettet Ihre Fotos und Dokumente – am besten in der Cloud und zusätzlich auf einem USB-Stick."
+      }
+    ]
+  }
+];
+
+const LOB = [
+  { ab: 10, t: "Ganz ausgezeichnet!", s: "Das sitzt. Sie könnten den Kurs fast selbst geben." },
+  { ab: 8,  t: "Sehr gut gemacht!",   s: "Der Stoff ist angekommen – nur ein paar Kleinigkeiten zum Nachlesen." },
+  { ab: 6,  t: "Gut dabei!",          s: "Die Hälfte und mehr sitzt schon. Ein zweiter Durchgang lohnt sich." },
+  { ab: 0,  t: "Ein guter Anfang.",   s: "Kein Grund zur Sorge – gehen Sie es in Ruhe noch einmal durch." }
+];
+
+const $ = id => document.getElementById(id);
+let block = null, i = 0, richtig = 0, beantwortet = false, reihenfolge = [];
+
+// Antwortreihenfolge mischen, damit die richtige Lösung nicht immer oben steht
+function mische(n){
+  const a = [...Array(n).keys()];
+  for (let k = a.length - 1; k > 0; k--){
+    const j = Math.floor(Math.random() * (k + 1));
+    [a[k], a[j]] = [a[j], a[k]];
+  }
+  return a;
+}
+
+// Startbildschirm aufbauen
+BLOECKE.forEach((b, n) => {
+  const btn = document.createElement("button");
+  btn.className = "block";
+  btn.type = "button";
+  btn.innerHTML = "<b>" + b.titel + "</b><span>" + b.unter + "</span>";
+  btn.addEventListener("click", () => starte(n));
+  $("blockListe").appendChild(btn);
+});
+
+function leisteZeigen(an){
+  $("leiste").hidden = !an;
+  document.body.classList.toggle("mit-leiste", an);
+}
+
+function zeige(welche){
+  ["start","quiz","ende"].forEach(s => $(s).hidden = (s !== welche));
+  if (welche !== "quiz") leisteZeigen(false);
+  window.scrollTo(0, 0);
+}
+
+function starte(n){
+  block = BLOECKE[n];
+  i = 0; richtig = 0;
+  zeige("quiz");
+  frage();
+}
+
+function frage(){
+  beantwortet = false;
+  const q = block.fragen[i];
+  $("frage").textContent = q.f;
+  $("zaehler").textContent = "Frage " + (i + 1) + " von " + block.fragen.length;
+  $("punkte").textContent = richtig + " richtig";
+  $("fortschritt").style.width = (i / block.fragen.length * 100) + "%";
+  $("fb").hidden = true;
+  leisteZeigen(false);
+
+  const opts = $("opts");
+  opts.textContent = "";
+  reihenfolge = mische(q.a.length);
+  reihenfolge.forEach((orig, k) => {
+    const b = document.createElement("button");
+    b.className = "opt";
+    b.type = "button";
+    b.dataset.orig = orig;
+    const key = document.createElement("span");
+    key.className = "key";
+    key.textContent = k + 1;
+    const txt = document.createElement("span");
+    txt.textContent = q.a[orig];
+    b.append(key, txt);
+    b.addEventListener("click", () => antworte(orig));
+    opts.appendChild(b);
+  });
+}
+
+function antworte(orig){
+  if (beantwortet) return;
+  beantwortet = true;
+  const q = block.fragen[i];
+  const istRichtig = (orig === q.r);
+  if (istRichtig) richtig++;
+
+  [...$("opts").children].forEach(b => {
+    b.disabled = true;
+    const nr = Number(b.dataset.orig);
+    if (nr === q.r) b.classList.add("richtig");
+    else if (nr === orig) b.classList.add("falsch");
+  });
+
+  $("fb").hidden = false;
+  $("fb").classList.toggle("nein", !istRichtig);
+  $("fbTitel").textContent = istRichtig ? "Richtig." : "Nicht ganz.";
+  $("fbText").textContent = q.e;
+  $("punkte").textContent = richtig + " richtig";
+  $("weiter").textContent = (i + 1 < block.fragen.length) ? "Weiter" : "Ergebnis anzeigen";
+  leisteZeigen(true);
+  $("weiter").focus({ preventScroll: true });
+  // Erklärung sanft ins Bild holen, falls sie hinter der Leiste verschwindet
+  try {
+    const kasten = $("fb").getBoundingClientRect();
+    const frei = window.innerHeight - $("leiste").offsetHeight - 10;
+    const fehlt = kasten.bottom - frei;
+    if (fehlt > 0) window.scrollBy({ top: fehlt, behavior: "smooth" });
+  } catch(e){}
+}
+
+function weiter(){
+  if (!beantwortet) return;
+  i++;
+  if (i < block.fragen.length) frage();
+  else ergebnis();
+}
+
+function ergebnis(){
+  const n = block.fragen.length;
+  const lob = LOB.find(l => richtig >= l.ab);
+  const alles = (richtig === n);
+  $("ergebnisTitel").textContent = alles ? "Alles richtig!" : lob.t;
+  $("ergebnisPunkte").textContent = richtig + " von " + n;
+  $("ergebnisText").textContent = alles ? "Volle Punktzahl – Hut ab!" : lob.s;
+  $("jubel").hidden = !alles;
+  $("fortschritt").style.width = "100%";
+  zeige("ende");
+  if (alles) { fanfare(); feuerwerk(); }
+}
+
+/* ---------- Belohnung bei voller Punktzahl ---------- */
+
+// Fanfare, ganz ohne Tondatei: vier Töne und ein Schlussakkord
+function fanfare(){
+  try{
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    const ctx = new AC();
+    if (ctx.state === "suspended") ctx.resume();
+    const summe = ctx.createGain();
+    summe.gain.value = 0.9;
+    summe.connect(ctx.destination);
+
+    function ton(hz, start, dauer, laut){
+      const t = ctx.currentTime + start;
+      const filter = ctx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.value = 2600;
+      const huelle = ctx.createGain();
+      huelle.gain.setValueAtTime(0.0001, t);
+      huelle.gain.exponentialRampToValueAtTime(laut, t + 0.03);
+      huelle.gain.setValueAtTime(laut, t + dauer * 0.6);
+      huelle.gain.exponentialRampToValueAtTime(0.0001, t + dauer);
+      filter.connect(huelle); huelle.connect(summe);
+      [0, 6].forEach(verstimmung => {        // zwei Stimmen = voller Klang
+        const o = ctx.createOscillator();
+        o.type = "sawtooth";
+        o.frequency.value = hz;
+        o.detune.value = verstimmung;
+        o.connect(filter);
+        o.start(t); o.stop(t + dauer + 0.05);
+      });
+    }
+
+    const C5=523.25, E5=659.25, G5=783.99, C6=1046.50;
+    ton(C5, 0.00, 0.16, 0.22);
+    ton(E5, 0.16, 0.16, 0.22);
+    ton(G5, 0.32, 0.16, 0.22);
+    ton(C6, 0.50, 0.75, 0.26);
+    ton(G5, 0.50, 0.75, 0.13);
+    [C5, E5, G5, C6].forEach(h => ton(h, 1.35, 1.10, 0.15));
+
+    setTimeout(() => { try{ ctx.close(); }catch(e){} }, 3200);
+  }catch(e){}
+}
+
+// Feuerwerk: mehrere Raketen, die am Himmel zerplatzen
+function feuerwerk(){
+  const leinwand = $("feuerwerk");
+  if (!leinwand || !leinwand.getContext) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const stift = leinwand.getContext("2d");
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const breite = window.innerWidth, hoehe = window.innerHeight;
+  leinwand.width = breite * dpr; leinwand.height = hoehe * dpr;
+  stift.setTransform(dpr, 0, 0, dpr, 0, 0);
+  leinwand.hidden = false;
+
+  const FARBEN = ["#3E7CB1","#C28A3A","#B23B2E","#2C7A6A","#E8C15A","#7FB3D8"];
+  let funken = [];
+
+  function knall(x, y){
+    const farbe = FARBEN[Math.floor(Math.random() * FARBEN.length)];
+    const anzahl = 46;
+    for (let k = 0; k < anzahl; k++){
+      const winkel = (Math.PI * 2 * k) / anzahl + Math.random() * 0.2;
+      const tempo = 2.2 + Math.random() * 3.0;
+      funken.push({
+        x, y,
+        vx: Math.cos(winkel) * tempo,
+        vy: Math.sin(winkel) * tempo,
+        farbe, leben: 1, gross: 1.6 + Math.random() * 1.8
+      });
+    }
+  }
+
+  // Erste Salve sofort, dann noch ein paar verteilt
+  knall(breite * 0.5, hoehe * 0.32);
+  const zeitpunkte = [350, 700, 1050, 1450, 1800];
+  const uhren = zeitpunkte.map(ms => setTimeout(
+    () => knall(breite * (0.15 + Math.random() * 0.7), hoehe * (0.18 + Math.random() * 0.35)), ms));
+
+  const ende = performance.now() + 3400;
+  function bild(jetzt){
+    stift.clearRect(0, 0, breite, hoehe);
+    funken.forEach(f => {
+      f.x += f.vx; f.y += f.vy;
+      f.vy += 0.055;          // Schwerkraft
+      f.vx *= 0.985; f.vy *= 0.985;
+      f.leben -= 0.011;
+      if (f.leben > 0){
+        stift.globalAlpha = Math.max(f.leben, 0);
+        stift.fillStyle = f.farbe;
+        stift.beginPath();
+        stift.arc(f.x, f.y, f.gross, 0, Math.PI * 2);
+        stift.fill();
+      }
+    });
+    funken = funken.filter(f => f.leben > 0);
+    stift.globalAlpha = 1;
+    if (jetzt < ende || funken.length) requestAnimationFrame(bild);
+    else { stift.clearRect(0, 0, breite, hoehe); leinwand.hidden = true; }
+  }
+  requestAnimationFrame(bild);
+
+  // Beim Verlassen der Ergebnisseite aufräumen
+  ["nochmal","zurueck"].forEach(id => $(id).addEventListener("click", function aufraeumen(){
+    uhren.forEach(clearTimeout);
+    funken = [];
+    stift.clearRect(0, 0, breite, hoehe);
+    leinwand.hidden = true;
+    $(id).removeEventListener("click", aufraeumen);
+  }));
+}
+
+$("weiter").addEventListener("click", weiter);
+$("abbruch").addEventListener("click", () => zeige("start"));
+$("zurueck").addEventListener("click", () => zeige("start"));
+$("nochmal").addEventListener("click", () => starte(BLOECKE.indexOf(block)));
+
+// Tastatur: 1–4 antworten, Leertaste/Enter weiter
+document.addEventListener("keydown", e => {
+  if ($("quiz").hidden) return;
+  if (e.key >= "1" && e.key <= "4" && !beantwortet){
+    const b = $("opts").children[Number(e.key) - 1];
+    if (b) { e.preventDefault(); b.click(); }
+  } else if ((e.key === " " || e.key === "Enter") && beantwortet){
+    e.preventDefault(); weiter();
+  }
+});
+</script>
+</body>
+</html>
