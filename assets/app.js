@@ -22,7 +22,7 @@
   }
 
   window.addEventListener('load', function () {
-    navigator.serviceWorker.register('/sw.js').then(function (reg) {
+    navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' }).then(function (reg) {
       uebernehmen(reg);
       reg.addEventListener('updatefound', function () {
         var neu = reg.installing; if (!neu) return;
@@ -35,6 +35,10 @@
       document.addEventListener('visibilitychange', function () {
         if (document.visibilityState === 'visible') reg.update();
       });
+      // iPhone/iPad: beim Zurückkehren zur App feuert visibilitychange nicht
+      // immer – deshalb zusätzlich bei pageshow und focus nachsehen.
+      window.addEventListener('pageshow', function () { reg.update(); });
+      window.addEventListener('focus', function () { reg.update(); });
       setInterval(function () { reg.update(); }, 3 * 60 * 1000);
     }).catch(function () {});
   });
