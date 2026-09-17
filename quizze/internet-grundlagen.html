@@ -82,6 +82,8 @@
   .row{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:14px}
   .row button{border-radius:var(--radius); padding:10px 16px; font-size:.85em; border:2px solid var(--line); background:transparent; color:var(--ink)}
   .row button.prim{background:var(--accent); color:#fff; border-color:var(--accent)}
+  #feuerwerk{position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:50}
+  .jubel{display:block; font-size:1.6em; margin-bottom:2px}
   footer{text-align:center; color:var(--muted); font-size:.75em; margin-top:16px}
   .hinweis{color:var(--muted); font-size:.8em; margin-top:8px}
   [hidden]{display:none!important}
@@ -117,7 +119,8 @@
   <!-- Ergebnis -->
   <section id="ende" hidden>
     <div class="card zentriert">
-      <div id="ergebnisTitel" style="font-weight:600"></div>
+      <span class="jubel" id="jubel" hidden>🎉</span>
+    <div id="ergebnisTitel" style="font-weight:600"></div>
       <div class="score" id="ergebnisPunkte"></div>
       <p id="ergebnisText" style="color:var(--muted); font-size:.86em; margin:0"></p>
       <div class="row">
@@ -133,6 +136,8 @@
 <div class="leiste" id="leiste" hidden>
   <button class="weiter" id="weiter" type="button">Weiter</button>
 </div>
+
+<canvas id="feuerwerk" hidden></canvas>
 
 <script>
 const BLOECKE = [
@@ -444,11 +449,130 @@ function weiter(){
 function ergebnis(){
   const n = block.fragen.length;
   const lob = LOB.find(l => richtig >= l.ab);
-  $("ergebnisTitel").textContent = lob.t;
+  const alles = (richtig === n);
+  $("ergebnisTitel").textContent = alles ? "Alles richtig!" : lob.t;
   $("ergebnisPunkte").textContent = richtig + " von " + n;
-  $("ergebnisText").textContent = lob.s;
+  $("ergebnisText").textContent = alles ? "Volle Punktzahl – Hut ab!" : lob.s;
+  $("jubel").hidden = !alles;
   $("fortschritt").style.width = "100%";
   zeige("ende");
+  if (alles) { fanfare(); feuerwerk(); }
+}
+
+/* ---------- Belohnung bei voller Punktzahl ---------- */
+
+// Fanfare, ganz ohne Tondatei: vier Töne und ein Schlussakkord
+function fanfare(){
+  try{
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    const ctx = new AC();
+    if (ctx.state === "suspended") ctx.resume();
+    const summe = ctx.createGain();
+    summe.gain.value = 0.9;
+    summe.connect(ctx.destination);
+
+    function ton(hz, start, dauer, laut){
+      const t = ctx.currentTime + start;
+      const filter = ctx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.value = 2600;
+      const huelle = ctx.createGain();
+      huelle.gain.setValueAtTime(0.0001, t);
+      huelle.gain.exponentialRampToValueAtTime(laut, t + 0.03);
+      huelle.gain.setValueAtTime(laut, t + dauer * 0.6);
+      huelle.gain.exponentialRampToValueAtTime(0.0001, t + dauer);
+      filter.connect(huelle); huelle.connect(summe);
+      [0, 6].forEach(verstimmung => {        // zwei Stimmen = voller Klang
+        const o = ctx.createOscillator();
+        o.type = "sawtooth";
+        o.frequency.value = hz;
+        o.detune.value = verstimmung;
+        o.connect(filter);
+        o.start(t); o.stop(t + dauer + 0.05);
+      });
+    }
+
+    const C5=523.25, E5=659.25, G5=783.99, C6=1046.50;
+    ton(C5, 0.00, 0.16, 0.22);
+    ton(E5, 0.16, 0.16, 0.22);
+    ton(G5, 0.32, 0.16, 0.22);
+    ton(C6, 0.50, 0.75, 0.26);
+    ton(G5, 0.50, 0.75, 0.13);
+    [C5, E5, G5, C6].forEach(h => ton(h, 1.35, 1.10, 0.15));
+
+    setTimeout(() => { try{ ctx.close(); }catch(e){} }, 3200);
+  }catch(e){}
+}
+
+// Feuerwerk: mehrere Raketen, die am Himmel zerplatzen
+function feuerwerk(){
+  const leinwand = $("feuerwerk");
+  if (!leinwand || !leinwand.getContext) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const stift = leinwand.getContext("2d");
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const breite = window.innerWidth, hoehe = window.innerHeight;
+  leinwand.width = breite * dpr; leinwand.height = hoehe * dpr;
+  stift.setTransform(dpr, 0, 0, dpr, 0, 0);
+  leinwand.hidden = false;
+
+  const FARBEN = ["#3E7CB1","#C28A3A","#B23B2E","#2C7A6A","#E8C15A","#7FB3D8"];
+  let funken = [];
+
+  function knall(x, y){
+    const farbe = FARBEN[Math.floor(Math.random() * FARBEN.length)];
+    const anzahl = 46;
+    for (let k = 0; k < anzahl; k++){
+      const winkel = (Math.PI * 2 * k) / anzahl + Math.random() * 0.2;
+      const tempo = 2.2 + Math.random() * 3.0;
+      funken.push({
+        x, y,
+        vx: Math.cos(winkel) * tempo,
+        vy: Math.sin(winkel) * tempo,
+        farbe, leben: 1, gross: 1.6 + Math.random() * 1.8
+      });
+    }
+  }
+
+  // Erste Salve sofort, dann noch ein paar verteilt
+  knall(breite * 0.5, hoehe * 0.32);
+  const zeitpunkte = [350, 700, 1050, 1450, 1800];
+  const uhren = zeitpunkte.map(ms => setTimeout(
+    () => knall(breite * (0.15 + Math.random() * 0.7), hoehe * (0.18 + Math.random() * 0.35)), ms));
+
+  const ende = performance.now() + 3400;
+  function bild(jetzt){
+    stift.clearRect(0, 0, breite, hoehe);
+    funken.forEach(f => {
+      f.x += f.vx; f.y += f.vy;
+      f.vy += 0.055;          // Schwerkraft
+      f.vx *= 0.985; f.vy *= 0.985;
+      f.leben -= 0.011;
+      if (f.leben > 0){
+        stift.globalAlpha = Math.max(f.leben, 0);
+        stift.fillStyle = f.farbe;
+        stift.beginPath();
+        stift.arc(f.x, f.y, f.gross, 0, Math.PI * 2);
+        stift.fill();
+      }
+    });
+    funken = funken.filter(f => f.leben > 0);
+    stift.globalAlpha = 1;
+    if (jetzt < ende || funken.length) requestAnimationFrame(bild);
+    else { stift.clearRect(0, 0, breite, hoehe); leinwand.hidden = true; }
+  }
+  requestAnimationFrame(bild);
+
+  // Beim Verlassen der Ergebnisseite aufräumen
+  ["nochmal","zurueck"].forEach(id => $(id).addEventListener("click", function aufraeumen(){
+    uhren.forEach(clearTimeout);
+    funken = [];
+    stift.clearRect(0, 0, breite, hoehe);
+    leinwand.hidden = true;
+    $(id).removeEventListener("click", aufraeumen);
+  }));
 }
 
 $("weiter").addEventListener("click", weiter);
