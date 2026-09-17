@@ -10,9 +10,9 @@
     --bg:#F7F3E8; --card:#FFFFFF; --ink:#33302B; --muted:#6A645B;
     --line:#E3D8C4; --accent:#3E7CB1; --accent-tief:#2A5C86; --accent-soft:#E8F0F7;
     --wrong:#A8442F; --wrong-soft:#F7E9E4; --shadow:0 2px 10px rgba(0,0,0,.07);
-    --fs:1.02rem; --radius:12px;
+    --fs:1.14rem; --radius:12px;
   }
-  @media (min-width:620px){ :root{ --fs:1.15rem; } }
+  @media (min-width:620px){ :root{ --fs:1.25rem; } }
   *{box-sizing:border-box}
   body{
     margin:0; padding:0; background:var(--bg); color:var(--ink);
@@ -20,8 +20,9 @@
     font-size:var(--fs); line-height:1.5;
     padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
   }
-  .wrap{max-width:760px; margin:0 auto; padding:22px 14px 28px}
-  header{margin-bottom:18px}
+  .wrap{max-width:760px; margin:0 auto; padding:26px 14px 30px}
+  body.mit-leiste .wrap{padding-bottom:110px}
+  header{margin-bottom:20px}
   h1{font-size:1.15em; margin:0; letter-spacing:-.01em; display:inline}
   .sub{color:var(--muted); font-size:.78em; display:inline; margin-left:6px}
   button{font:inherit; cursor:pointer}
@@ -63,11 +64,17 @@
   .fb.nein{background:var(--wrong-soft); border-left-color:var(--wrong)}
   .fb b{display:block; margin-bottom:2px; font-size:.95em}
   .fb p{margin:0; font-size:.86em; line-height:1.4}
+  /* Feste Leiste am unteren Bildschirmrand – der Rest scrollt darunter durch */
+  .leiste{
+    position:fixed; left:0; right:0; bottom:0; z-index:20;
+    background:var(--bg); border-top:1px solid var(--line);
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));
+    box-shadow:0 -4px 18px rgba(0,0,0,.10);
+  }
   .weiter{
-    position:sticky; bottom:calc(8px + env(safe-area-inset-bottom,0px)); z-index:5;
-    margin-top:10px; width:100%; background:var(--accent); color:#fff; border:none;
-    border-radius:var(--radius); padding:13px; font-size:.98em; font-weight:600;
-    box-shadow:0 3px 14px rgba(0,0,0,.18);
+    display:block; max-width:760px; margin:0 auto; width:100%;
+    background:var(--accent); color:#fff; border:none;
+    border-radius:var(--radius); padding:14px; font-size:1em; font-weight:600;
   }
   .weiter:hover{filter:brightness(1.08)}
   .score{font-size:2.2em; font-weight:700; color:var(--accent); margin:4px 0}
@@ -103,7 +110,6 @@
       <p class="frage" id="frage"></p>
       <div class="opts" id="opts"></div>
       <div class="fb" id="fb" hidden><b id="fbTitel"></b><p id="fbText"></p></div>
-      <button class="weiter" id="weiter" type="button" hidden>Weiter</button>
     </div>
     <div class="zentriert"><button class="ghost" id="abbruch" type="button">Zurück zur Übersicht</button></div>
   </section>
@@ -122,6 +128,10 @@
   </section>
 
   <footer><a href="/#quizze" style="color:var(--accent)">← Zurück zu Media Mibaso</a></footer>
+</div>
+
+<div class="leiste" id="leiste" hidden>
+  <button class="weiter" id="weiter" type="button">Weiter</button>
 </div>
 
 <script>
@@ -346,8 +356,14 @@ BLOECKE.forEach((b, n) => {
   $("blockListe").appendChild(btn);
 });
 
+function leisteZeigen(an){
+  $("leiste").hidden = !an;
+  document.body.classList.toggle("mit-leiste", an);
+}
+
 function zeige(welche){
   ["start","quiz","ende"].forEach(s => $(s).hidden = (s !== welche));
+  if (welche !== "quiz") leisteZeigen(false);
   window.scrollTo(0, 0);
 }
 
@@ -366,7 +382,7 @@ function frage(){
   $("punkte").textContent = richtig + " richtig";
   $("fortschritt").style.width = (i / block.fragen.length * 100) + "%";
   $("fb").hidden = true;
-  $("weiter").hidden = true;
+  leisteZeigen(false);
 
   const opts = $("opts");
   opts.textContent = "";
@@ -406,9 +422,16 @@ function antworte(orig){
   $("fbTitel").textContent = istRichtig ? "Richtig." : "Nicht ganz.";
   $("fbText").textContent = q.e;
   $("punkte").textContent = richtig + " richtig";
-  $("weiter").hidden = false;
   $("weiter").textContent = (i + 1 < block.fragen.length) ? "Weiter" : "Ergebnis anzeigen";
+  leisteZeigen(true);
   $("weiter").focus({ preventScroll: true });
+  // Erklärung sanft ins Bild holen, falls sie hinter der Leiste verschwindet
+  try {
+    const kasten = $("fb").getBoundingClientRect();
+    const frei = window.innerHeight - $("leiste").offsetHeight - 10;
+    const fehlt = kasten.bottom - frei;
+    if (fehlt > 0) window.scrollBy({ top: fehlt, behavior: "smooth" });
+  } catch(e){}
 }
 
 function weiter(){
