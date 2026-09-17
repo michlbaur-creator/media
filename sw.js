@@ -16,6 +16,7 @@ const MEDIA_CACHE = 'media-media-v1';
 const CORE = [
   './',
   './index.html',
+  './quizze/internet-grundlagen.html',
   './kurse/',
   './kurse/index.html',
   './impressum/',

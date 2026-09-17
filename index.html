@@ -57,6 +57,7 @@
   .h-blau{color:#3E7CB1}
   .h-gold{color:#C28A3A}
   .h-teal{color:#2C7A6A}
+  .h-rot{color:#B23B2E}
   .h-coral{color:#C4603A}
   .h-slate{color:#5A6B7A}
   .lead{font-size:19px}
@@ -197,6 +198,7 @@
 <nav class="menu"><div class="row">
   <a href="#start" onclick="showHome()">Start</a>
   <a href="#vortraege" onclick="showHome()">Vorträge</a>
+  <a href="#quizze" onclick="showHome()">Quizze</a>
   <a href="#termine" onclick="showHome()">Termine</a>
   <a href="#tipps" onclick="showHome()">Tipps</a>
 </div></nav>
@@ -256,6 +258,16 @@
     <h2 class="h-blau">Meine Vorträge</h2>
     <p>Sechs Themen – tippe auf eine Kachel für die Kurzbeschreibung.</p>
     <div class="tiles" id="vortragsTiles"></div>
+  </section>
+
+  <section id="quizze">
+    <h2 class="h-rot">Quizze zum Üben</h2>
+    <p>Kleine Wissensproben zu den Kursthemen – jede Antwort wird sofort erklärt.
+    Für zu Hause auf dem Handy, im Kurs auch am Beamer:</p>
+    <!-- QUIZZE:START -->
+    <a class="dl" href="quizze/internet-grundlagen.html">
+      <span class="ico" style="background:#3E7CB1">?</span><span class="titel">Einsteigerkurs: Internet verstehen<small>2 Runden &middot; je 10 Fragen</small></span><span class="pfeil">starten &rarr;</span></a>
+    <!-- QUIZZE:ENDE -->
   </section>
 
   <section id="termine">
