@@ -56,6 +56,8 @@
     flex:0 0 auto; width:1.6em; height:1.6em; border-radius:50%; background:var(--line); color:var(--ink);
     display:grid; place-items:center; font-size:.78em; font-weight:700; margin-top:.1em;
   }
+  .opt.gewaehlt{border-color:var(--accent); background:var(--accent-soft)}
+  .opt.gewaehlt .key{background:var(--accent); color:#fff}
   .opt.richtig{border-color:var(--accent); background:var(--accent-soft)}
   .opt.richtig .key{background:var(--accent); color:#fff}
   .opt.falsch{border-color:var(--wrong); background:var(--wrong-soft)}
@@ -98,7 +100,7 @@
   <!-- Startbildschirm -->
   <section id="start">
     <div class="card">
-      <p style="margin:0 0 6px">Zwanzig Fragen für alle, die schon mit KI arbeiten – ein paar davon haben es in sich, und zwei sind ausgewiesene Fangfragen. Nach jeder Antwort kommt die Erklärung.</p>
+      <p style="margin:0 0 6px">Drei Runden für alle, die schon mit KI arbeiten. Die Fragen kommen jedes Mal in neuer Reihenfolge, und manche haben es in sich. Nach jeder Antwort kommt die Erklärung.</p>
       <p class="hinweis">Am Beamer: mit den Tasten 1 bis 4 antworten, mit der Leertaste weiterblättern.</p>
     </div>
     <div class="blocks" id="blockListe"></div>
@@ -110,6 +112,7 @@
     <div class="meta"><span id="zaehler"></span><span id="punkte"></span></div>
     <div class="card">
       <p class="frage" id="frage"></p>
+      <p class="hinweis" id="mehrfachHinweis" style="margin:-8px 0 12px" hidden>Mehrere Antworten sind richtig – alle auswählen, dann unten auf „Prüfen“.</p>
       <div class="opts" id="opts"></div>
       <div class="fb" id="fb" hidden><b id="fbTitel"></b><p id="fbText"></p></div>
     </div>
@@ -142,166 +145,175 @@
 <script>
 const BLOECKE = [
   {
-    id: "maschine",
-    titel: "Wie die Maschine wirklich arbeitet",
-    unter: "Token, Zufall, Gedächtnis, Grenzen – 10 Fragen",
+    id: "technik",
+    titel: "Wie Sprachmodelle arbeiten",
+    unter: "Begriffe und Technik – 10 Fragen",
     fragen: [
       {
-        f: "Wie viel Text steckt normalerweise in einem einzelnen Token?",
-        a: ["Meist ein Wortteil – häufige Wörter sind ein Token, seltene zerfallen in mehrere",
-            "Immer genau ein Wort",
-            "Immer genau ein Buchstabe",
-            "Immer ein ganzer Satz"],
+        f: "Was ist ein Token?",
+        a: ["Das kleinste Textstück, mit dem ein Sprachmodell rechnet – meist ein Wortteil",
+            "Der Zugangsschlüssel zu einem KI-Dienst",
+            "Eine Antwort, die das Modell gespeichert hat",
+            "Die Bezeichnung für eine einzelne Frage im Chat"],
         r: 0,
-        e: "„Haus“ ist ein Token, „Donaudampfschifffahrt“ zerfällt in etliche. Deshalb kostet ein seltenes Fachwort mehr Rechenschritte als ein Allerweltswort."
+        e: "„Haus“ ist ein Token, „Donaudampfschifffahrt“ zerfällt in etliche. Deine Frage wird in Tokens zerlegt, die Antwort Token für Token wieder aufgebaut."
       },
       {
-        f: "Du stellst zweimal hintereinander exakt dieselbe Frage und bekommst zwei verschiedene Antworten. Woran liegt das?",
+        f: "Was bezeichnet man als Kontextfenster?",
+        a: ["Die Textmenge, die ein Modell in einem Gespräch gleichzeitig überblicken kann",
+            "Das Eingabefeld, in das du deine Frage tippst",
+            "Den Zeitraum, aus dem die Trainingsdaten stammen",
+            "Das Fenster, in dem die Antwort erscheint"],
+        r: 0,
+        e: "Ist es voll, fällt Älteres heraus oder wird gekürzt – dann „vergisst“ die KI mitten im langen Chat, was am Anfang vereinbart war."
+      },
+      {
+        f: "Was ist eine Halluzination?",
+        a: ["Eine frei erfundene Angabe, die sprachlich völlig überzeugend wirkt",
+            "Ein Absturz des Programms mitten in der Antwort",
+            "Ein Bild, das die KI selbst erzeugt hat",
+            "Eine Antwort, die absichtlich verweigert wird"],
+        r: 0,
+        e: "Der Name führt etwas in die Irre: Die Maschine spinnt nicht, sie setzt Sprache wahrscheinlich fort. Nur stimmt das Wahrscheinliche nicht immer."
+      },
+      {
+        f: "Was ist ein Systemprompt?",
+        a: ["Eine Anweisung vor deiner Frage, die Rolle und Regeln des Assistenten festlegt",
+            "Der erste Satz, den du selbst eintippst",
+            "Eine Fehlermeldung des Betriebssystems",
+            "Die Einstellung für die Schriftgröße im Chat"],
+        r: 0,
+        e: "Er stammt vom Anbieter, ist für dich unsichtbar und bestimmt Ton, Grenzen und Verhalten – deshalb klingt derselbe Motor in zwei Apps verschieden."
+      },
+      {
+        f: "Du stellst zweimal exakt dieselbe Frage und bekommst zwei verschiedene Antworten. Woran liegt das?",
         a: ["Die Auswahl des nächsten Textstücks enthält einen Zufallsanteil",
             "Das Modell hat aus der ersten Antwort gelernt",
-            "Die Internetverbindung war unterschiedlich schnell",
+            "Die Verbindung war unterschiedlich schnell",
             "Beim zweiten Mal antwortet ein anderes Rechenzentrum"],
         r: 0,
-        e: "Das Modell wählt nicht stur das wahrscheinlichste Textstück, sondern würfelt leicht mit. Das macht die Sprache lebendig – und die Ergebnisse eben nicht reproduzierbar."
+        e: "Das Modell wählt nicht stur das wahrscheinlichste Textstück, sondern würfelt leicht mit. Das macht die Sprache lebendig – und die Ergebnisse nicht wiederholbar."
       },
       {
-        f: "Was passiert in einem sehr langen Chat mit dem, was ganz am Anfang stand?",
-        a: ["Es kann aus dem Blickfeld rutschen – das Modell kann nur eine begrenzte Menge Text überblicken",
-            "Es bleibt für immer präsent, der Chat hat kein Limit",
-            "Es wird automatisch auf der Festplatte gespeichert",
-            "Es wird an den Anbieter gemeldet"],
+        f: "Du korrigierst die KI im Gespräch. Was bewirkt das?",
+        a: ["Nur im laufenden Chat etwas – das Modell selbst bleibt unverändert",
+            "Das Modell weiß es ab sofort für alle Nutzer besser",
+            "Gar nichts, auch im Chat nicht",
+            "Die Korrektur wird geprüft und nach einiger Zeit eingearbeitet"],
         r: 0,
-        e: "Dieses Blickfeld heißt Kontextfenster. Wird es eng, fällt Älteres heraus oder wird gekürzt – und plötzlich „vergisst“ die KI, was ihr am Anfang gesagt wurde."
+        e: "Das Modell ist nach dem Training festgelegt. Manche Dienste führen zusätzlich ein eigenes Gedächtnis – das ist aber eine Notiz neben dem Modell, keine Änderung daran."
       },
       {
-        f: "Du korrigierst die KI im Gespräch. Hat sie damit etwas dazugelernt?",
-        a: ["Nein – innerhalb des Chats merkt sie es sich, das Modell selbst bleibt unverändert",
-            "Ja, ab sofort weiß sie es für alle Nutzer besser",
-            "Ja, aber erst nach einem Neustart",
-            "Nein, sie merkt es sich nicht einmal im laufenden Gespräch"],
-        r: 0,
-        e: "Das Modell ist nach dem Training festgelegt. Im laufenden Chat wirkt deine Korrektur, danach ist sie weg – es sei denn, der Dienst führt ein eigenes Gedächtnis oder verwendet Chats als Trainingsmaterial."
-      },
-      {
-        f: "Warum verzählt sich eine KI ausgerechnet bei einer Kinderfrage wie „Wie viele r stecken in Erdbeere?“",
-        a: ["Weil sie Wörter als Textstücke verarbeitet und die einzelnen Buchstaben gar nicht sieht",
-            "Weil sie nicht rechnen kann",
+        f: "Warum verzählt sich eine KI bei der Frage, wie viele r in „Erdbeere“ stecken?",
+        a: ["Weil sie mit Textstücken rechnet und einzelne Buchstaben gar nicht sieht",
+            "Weil sie grundsätzlich nicht zählen kann",
             "Weil deutsche Wörter zu lang sind",
             "Weil solche Fragen absichtlich abgelehnt werden"],
         r: 0,
-        e: "Ein schönes Beispiel dafür, dass Sprachgewandtheit und Verstehen zweierlei sind: Was für uns trivial ist, liegt technisch quer zur Arbeitsweise der Maschine."
+        e: "Ein schönes Beispiel dafür, dass Sprachgewandtheit und Verstehen zweierlei sind: Was für uns trivial ist, liegt quer zur Arbeitsweise der Maschine."
       },
       {
         f: "Ein Assistent antwortet „mit Websuche“. Was geschieht dabei?",
         a: ["Er sucht, liest die Treffer und fasst sie zusammen – gelernt hat er dabei nichts",
-            "Er lädt sich ein aktuelleres Modell herunter",
-            "Er speichert die Seiten dauerhaft in seinem Wissen",
+            "Er lädt sich ein neueres Modell herunter",
+            "Er nimmt die gefundenen Seiten dauerhaft in sein Wissen auf",
             "Er schaltet die Wahrscheinlichkeitsrechnung ab"],
         r: 0,
-        e: "Die gefundenen Texte landen kurz im Blickfeld und fließen in die Antwort ein. Das macht sie aktueller, aber nicht automatisch richtig – die Treffer können schlecht gewählt oder falsch verstanden sein."
+        e: "Die Treffer landen kurz im Kontextfenster und fließen in die Antwort ein. Das macht sie aktueller, aber nicht automatisch richtig."
       },
       {
-        f: "Warum sehen erfundene Quellenangaben so täuschend echt aus – mit Autor, Titel und Jahreszahl?",
+        f: "Warum sehen erfundene Quellenangaben so echt aus – mit Autor, Titel und Jahreszahl?",
         a: ["Weil das Modell gelernt hat, wie Quellenangaben aussehen, nicht welche es gibt",
-            "Weil es die Quellen aus Versehen falsch abschreibt",
+            "Weil es Quellen aus Versehen falsch abschreibt",
             "Weil ältere Bücher nicht digitalisiert sind",
-            "Weil die Verlage die Daten sperren"],
+            "Weil die Verlage ihre Daten sperren"],
         r: 0,
-        e: "Die Form sitzt perfekt, der Inhalt ist geraten. Deshalb ist eine Literaturangabe aus der KI erst dann etwas wert, wenn du sie selbst gefunden hast."
+        e: "Die Form sitzt perfekt, der Inhalt ist geraten. Eine Literaturangabe aus der KI ist erst dann etwas wert, wenn du sie selbst gefunden hast."
       },
       {
-        f: "Du beginnst deinen Auftrag mit „Du bist ein erfahrener Lektor“. Was bewirkt das?",
-        a: ["Es prägt Ton, Blickwinkel und Wortwahl – an der Verlässlichkeit ändert es nichts",
-            "Das Modell schaltet auf geprüftes Fachwissen um",
-            "Die Antwort wird rechtlich verbindlich",
-            "Es wird ein anderes, besseres Modell zugeschaltet"],
-        r: 0,
-        e: "So eine Rollenangabe ist ein wirksames Stilmittel und oft nützlich. Sie ist aber kein Schalter, der aus Wahrscheinlichkeiten Wahrheit macht."
-      },
-      {
-        f: "Fangfrage: Du schreibst in deinen Auftrag „Erfinde nichts.“ Was passiert?",
-        a: ["Es hilft ein wenig – abschalten lassen sich Halluzinationen damit nicht",
-            "Halluzinationen sind damit zuverlässig ausgeschaltet",
-            "Die KI schlägt ab jetzt jede Aussage im Netz nach",
-            "Die KI schweigt künftig, sobald sie unsicher ist"],
-        r: 0,
-        e: "Reingefallen? Die Bitte macht die KI vorsichtiger und lässt sie öfter Unsicherheit einräumen. Sie kann aber nicht wissen, was sie nicht weiß – geprüft wird weiterhin von dir."
-      },
-      {
-        f: "Du lädst ein Foto hoch. Wie „sieht“ das Modell das Bild?",
-        a: ["Es wird ebenfalls in Zahlenmuster übersetzt und wie Sprache weiterverarbeitet",
-            "Ein Mensch beim Anbieter schaut es sich an",
+        f: "Du lädst ein Foto hoch. Wie verarbeitet das Modell es?",
+        a: ["Es wird in Zahlenmuster übersetzt und wie Sprache weiterverarbeitet",
+            "Ein Mitarbeiter des Anbieters schaut es sich an",
             "Es wird mit einer Bilddatenbank verglichen und das Original herausgesucht",
-            "Es wird gar nicht verarbeitet, nur gespeichert"],
+            "Es wird nur gespeichert, nicht verarbeitet"],
         r: 0,
-        e: "Bild, Text und Ton werden in dieselbe Form gebracht. Darum kann ein Modell ein Foto beschreiben – und darum kann es sich beim Beschreiben genauso überzeugend irren."
+        e: "Bild, Text und Ton werden in dieselbe Form gebracht. Darum kann ein Modell ein Foto beschreiben – und sich dabei genauso überzeugend irren wie im Text."
       }
     ]
   },
   {
-    id: "urteil",
-    titel: "Urteilskraft im Umgang",
-    unter: "Prüfen, abwägen, Daten schützen – 10 Fragen",
+    id: "nutzen",
+    titel: "Sicher und kritisch nutzen",
+    unter: "Aufträge, Prüfen, Datenschutz – 10 Fragen",
     fragen: [
       {
-        f: "Zwei verschiedene Assistenten geben dir dieselbe Auskunft. Was folgt daraus?",
-        a: ["Wenig – beide können aus ähnlichen Quellen denselben Fehler gelernt haben",
-            "Die Auskunft ist damit bestätigt",
-            "Mindestens einer der beiden hat abgeschrieben",
-            "Die Auskunft ist bestätigt, wenn beide Dienste kostenpflichtig sind"],
+        f: "Was ist ein Prompt?",
+        a: ["Der Arbeitsauftrag, den du der KI gibst",
+            "Die Antwort, die die KI zurückschickt",
+            "Der Name des Eingabefensters",
+            "Eine kostenpflichtige Zusatzfunktion"],
         r: 0,
-        e: "Zwei Modelle sind keine zwei unabhängigen Zeugen. Eine echte Bestätigung ist erst eine Originalquelle außerhalb der KI-Welt."
+        e: "Sag der KI, was sie tun soll – und woran du ein gutes Ergebnis erkennst. Eine Zauberformel gibt es nicht."
       },
       {
-        f: "Bringt die Bezahlversion richtigere Antworten?",
-        a: ["Nein – sie bringt mehr Nutzung und Funktionen, keine Garantie für Richtigkeit",
-            "Ja, dort sind die Antworten geprüft",
-            "Ja, dort haftet der Anbieter für Fehler",
-            "Ja, weil dort Fachleute mitlesen"],
+        f: "Welche vier Bausteine machen einen Auftrag gut?",
+        a: ["Aufgabe, Hintergrund, Form und Grenze",
+            "Anrede, Gruß, Datum und Unterschrift",
+            "Frage, Antwort, Nachfrage und Dank",
+            "Thema, Länge, Sprache und Datum"],
         r: 0,
-        e: "Mehr Chats, größere Dateien, längere Texte – das ist der Unterschied. Hohe Limits sind kein Garant für richtige Antworten."
+        e: "Was soll entstehen? Für wen und wofür? Wie lang und in welchem Ton? Was soll die KI beachten? Damit muss sie nicht mehr raten."
       },
       {
-        f: "Was leistet ein temporärer Chat tatsächlich?",
+        f: "Welcher Zusatz zu einem Auftrag bringt erfahrungsgemäß am meisten?",
+        a: ["„Stelle mir zuerst zwei Rückfragen.“",
+            "„Antworte in genau 500 Wörtern.“",
+            "„Sei besonders kreativ.“",
+            "„Antworte so schnell wie möglich.“"],
+        r: 0,
+        e: "So merkt die KI selbst, was ihr fehlt – und du bekommst im zweiten Anlauf ein deutlich besseres Ergebnis."
+      },
+      {
+        f: "Was leistet ein temporärer Chat?",
         a: ["Er landet nicht im Verlauf und nicht im Training – verarbeitet wird er trotzdem in der Cloud",
             "Er wird vollständig auf deinem Gerät verarbeitet",
             "Er wird sofort und spurlos gelöscht",
             "Er verschlüsselt deine Eingaben Ende zu Ende"],
         r: 0,
-        e: "Aus Sicherheitsgründen wird er je nach Dienst noch bis zu 30 Tage aufbewahrt. Er ist ein Datensparmodus, keine Tarnkappe."
+        e: "Aus Sicherheitsgründen wird er je nach Dienst noch bis zu 30 Tage aufbewahrt. Ein Datensparmodus, keine Tarnkappe."
       },
       {
-        f: "Du schaltest „Das Modell für alle verbessern“ aus. Was ändert sich – und was nicht?",
-        a: ["Deine Eingaben dienen nicht mehr dem Training, verarbeitet und gespeichert werden sie weiter",
-            "Ab jetzt bleiben alle Daten auf deinem Gerät",
+        f: "Du schaltest „Das Modell für alle verbessern“ aus. Was ändert sich?",
+        a: ["Deine Eingaben dienen nicht mehr dem Training – verarbeitet und gespeichert werden sie weiter",
+            "Alle Daten bleiben ab jetzt auf deinem Gerät",
             "Der Anbieter hat überhaupt keinen Zugriff mehr",
             "Die Antworten werden dadurch schlechter"],
         r: 0,
         e: "Der Schalter ist sinnvoll und schnell umgelegt. Er ändert aber nichts daran, dass deine Frage das Gerät verlässt."
       },
       {
-        f: "Am Telefon ist die Stimme deiner Tochter, die dringend Geld braucht. Was schützt am besten?",
-        a: ["Auflegen und unter der dir bekannten Nummer zurückrufen",
-            "Auf eine Frage bestehen, die nur sie beantworten kann",
-            "An der Stimme prüfen, ob sie echt klingt",
-            "Auf eine schriftliche Bestätigung per Mail warten"],
+        f: "Du möchtest einen Behördenbrief erklären lassen. Was tust du vorher?",
+        a: ["Name, Adresse, Aktenzeichen und Unterschrift entfernen oder schwärzen",
+            "Den Brief in Großbuchstaben abtippen",
+            "Den Brief zuerst an die Behörde weiterleiten",
+            "Nichts – die KI entfernt persönliche Daten von selbst"],
         r: 0,
-        e: "Stimmen lassen sich heute aus wenigen Sekunden Material nachbauen. Der Rückruf über den selbst gewählten Weg ist der einzige Test, den Technik nicht austricksen kann – ein vereinbartes Codewort hilft zusätzlich."
+        e: "Dann fragen: „Erkläre diesen Brief in einfacher Sprache. Welche Fristen werden genannt? Erfinde nichts.“ Über rechtliche Folgen entscheidet der Originalbrief und die zuständige Stelle."
       },
       {
         f: "Warum lohnt es sich, die KI ausdrücklich um Gegenargumente zu bitten?",
-        a: ["Weil sie dazu neigt, dir zuzustimmen und deine Sicht zu bestätigen",
-            "Weil sie sonst nur halb so lange Antworten gibt",
+        a: ["Weil sie darauf trainiert ist, zu gefallen – und deiner Sicht gern zustimmt",
+            "Weil die Antworten sonst zu kurz ausfallen",
             "Weil sie sonst keine Quellen nennt",
             "Weil das die Antwort rechtlich absichert"],
         r: 0,
-        e: "Modelle sind auf gefällige Antworten trainiert. „Was spricht dagegen?“ und „Welche Annahmen machst du?“ holen heraus, was die freundliche Antwort verschweigt."
+        e: "„Was spricht dagegen?“ und „Welche Annahmen machst du?“ holen heraus, was die freundliche Antwort verschweigt."
       },
       {
         f: "Du verschickst einen Brief, den die KI geschrieben hat. Darin steht ein falscher Betrag. Wer ist verantwortlich?",
         a: ["Du – die Verantwortung bleibt bei dem, der etwas verschickt",
             "Der Anbieter der KI",
-            "Niemand, weil es ein technischer Fehler war",
+            "Niemand, es war ein technischer Fehler",
             "Der Empfänger, wenn er es nicht bemerkt"],
         r: 0,
         e: "Die KI ist ein Werkzeug, du bleibst Auftraggeber und Prüfer. Vor dem Abschicken lohnt der Blick auf alles, was Zahl, Datum oder Name ist."
@@ -316,22 +328,110 @@ const BLOECKE = [
         e: "Auf ein „Bist du sicher?“ folgt oft eine Entschuldigung und eine neue, ebenso ungeprüfte Zahl. Eine Maschine ist kein Zeuge ihrer selbst."
       },
       {
-        f: "Fangfrage: Wie erkennst du zuverlässig ein von KI erzeugtes Bild?",
+        f: "Fangfrage: Woran erkennst du zuverlässig ein von KI erzeugtes Bild?",
         a: ["Gar nicht zuverlässig – die alten Merkmale wie krumme Finger verschwinden zusehends",
             "An der falschen Zahl der Finger",
-            "An einem versteckten Wasserzeichen in jedem Bild",
-            "Daran, dass die Dateigröße immer unter einem Megabyte liegt"],
+            "An einem Wasserzeichen, das jedes KI-Bild trägt",
+            "An der Dateigröße, die immer unter einem Megabyte liegt"],
         r: 0,
-        e: "Auch hier: hereingefallen ist keine Schande. Statt aufs Bild zu schauen, lieber auf die Herkunft – wer zeigt es, warum, und findet es sich auch anderswo?"
+        e: "Hereingefallen ist keine Schande. Statt aufs Bild zu schauen, lieber auf die Herkunft: Wer zeigt es, warum – und findet es sich auch anderswo?"
+      }
+    ]
+  },
+  {
+    id: "chancen",
+    titel: "Chancen und Risiken",
+    unter: "Verantwortung, Regeln, Agenten – 10 Fragen",
+    fragen: [
+      {
+        f: "Was kann KI nicht garantieren?",
+        a: ["Dass eine Aussage stimmt",
+            "Dass Quellen verlässlich sind",
+            "Dass eine Entscheidung fair ist",
+            "Dass ein Text flüssig klingt"],
+        r: [0, 1, 2],
+        e: "Unterstützen kann sie hervorragend: zusammenfassen, entwerfen, übersetzen, Muster in großen Datenmengen finden. Für Wahrheit, Verlässlichkeit und Fairness gibt es keine Garantie – flüssige Sprache dagegen ist ihre Kernkompetenz."
       },
       {
-        f: "Was macht einen KI-Agenten aus – im Unterschied zum gewöhnlichen Chat?",
-        a: ["Er führt Arbeitsschritte selbstständig aus, statt nur zu antworten",
-            "Er antwortet ausführlicher",
-            "Er ist immer kostenpflichtig",
-            "Er arbeitet ohne Internetverbindung"],
+        f: "Ein vernetztes Zuhause nimmt dir viel ab. Womit wird diese Bequemlichkeit meist bezahlt?",
+        a: ["Mit Daten – Gewohnheiten werden messbar und die Profile immer genauer",
+            "Mit höherem Stromverbrauch",
+            "Mit längeren Wartezeiten",
+            "Mit einer einmaligen Gebühr"],
         r: 0,
-        e: "Er sucht, klickt, füllt aus, schreibt Dateien. Das nimmt viel Arbeit ab – und verlangt dieselbe Vorsicht wie eine Vollmacht: Erst schauen, was er vorhat, dann freigeben."
+        e: "Licht, Heizung, Erinnerungen ans Medikament – der Nutzen ist echt, gerade fürs selbstständige Wohnen. Der Preis ist, dass Anbieter Interessen und Schwächen kennen und die Auswahl still vorsortieren."
+      },
+      {
+        f: "Wo liegt die Grenze eines Chatbots als seelische Unterstützung?",
+        a: ["Keine verlässliche Krisenerkennung, keine Schweigepflicht, kein Ersatz für Menschen",
+            "Er darf über Gefühle grundsätzlich nicht sprechen",
+            "Er ist nur in englischer Sprache dafür geeignet",
+            "Er ist nachts nicht erreichbar"],
+        r: 0,
+        e: "Gedanken ordnen, Übungen erklären, eine erste Hemmschwelle senken – das kann er. In Krisen gehört das Gespräch zu Menschen: Ärztin, Therapeut, Telefonseelsorge oder ein vertrauter Mensch."
+      },
+      {
+        f: "Datenschutz beginnt vor der Eingabe. Welche drei Fragen gehören davor?",
+        a: ["Was gebe ich preis? Wohin gehen die Daten? Ist das wirklich nötig?",
+            "Wie lang wird die Antwort? Welche Sprache? Welcher Ton?",
+            "Was kostet der Dienst? Wer betreibt ihn? Wie schnell ist er?",
+            "Wie viele Fragen habe ich noch frei? Wann wird zurückgesetzt?"],
+        r: 0,
+        e: "Keine vertraulichen Gesundheits-, Kunden-, Personal- oder Zugangsdaten unbedacht eingeben. Und immer nur so viele persönliche Angaben wie die Aufgabe wirklich braucht."
+      },
+      {
+        f: "Wobei muss am Ende ein Mensch entscheiden?",
+        a: ["Diagnose und Behandlung",
+            "Einstellung, Bewertung und Kündigung",
+            "Kredit und Versicherung",
+            "Vorschläge für das Abendessen"],
+        r: [0, 1, 2],
+        e: "Die Regel dahinter ist einfach: Je größer die Folge eines Fehlers, desto wichtiger die menschliche Entscheidung. Automatisierung darf Verantwortung unterstützen – nicht verschwinden lassen."
+      },
+      {
+        f: "Warum setzt Europa der automatischen Auswertung von Kamerabildern Grenzen?",
+        a: ["Um Bewertung von Menschen nach ihrem Verhalten und lückenlose Überwachung zu verhindern",
+            "Weil die Technik dafür noch nicht ausgereift ist",
+            "Weil solche Systeme zu viel Strom verbrauchen",
+            "Weil die Bilder zu ungenau sind"],
+        r: 0,
+        e: "Gesichter erkennen, Bewegungen verfolgen, Menschen automatisch einstufen – technisch machbar und billig geworden. Genau deshalb gibt es Verbote für Social Scoring und enge Grenzen für biometrische Echtzeit-Überwachung."
+      },
+      {
+        f: "Was ist die Grundidee des europäischen AI Act?",
+        a: ["Je größer das Risiko einer Anwendung, desto strenger die Pflichten",
+            "Jede KI-Nutzung muss vorher genehmigt werden",
+            "KI-Modelle dürfen nur in Europa trainiert werden",
+            "Alle KI-Antworten müssen gekennzeichnet werden"],
+        r: 0,
+        e: "Er kommt in Stufen: zuerst Verbote und KI-Kompetenz, dann Regeln für die großen Basismodelle, danach Transparenz und Durchsetzung, zuletzt die Hochrisiko-Pflichten."
+      },
+      {
+        f: "Was unterscheidet einen KI-Agenten von einem Chatbot?",
+        a: ["Er führt Schritte selbst aus, statt sie nur vorzuschlagen",
+            "Er antwortet ausführlicher",
+            "Er arbeitet ohne Internetverbindung",
+            "Er ist immer kostenpflichtig"],
+        r: 0,
+        e: "Der Chatbot formuliert die Einladung, du verschickst sie. Der Agent verschickt sie, bearbeitet Dateien – und kann einen Kauf auslösen."
+      },
+      {
+        f: "Ab wann wird es heikel, wenn du einem Agenten Aufgaben überlässt?",
+        a: ["Sobald Geld, Konten oder das Versenden an andere im Spiel sind",
+            "Sobald er länger als eine Minute arbeitet",
+            "Sobald er mehr als drei Schritte macht",
+            "Sobald er auf Englisch antwortet"],
+        r: 0,
+        e: "Entwerfen lassen ist harmlos, vorbereiten meist auch – „Bestelle für mich“ ist etwas anderes. Zugriff und Auftrag so eng fassen wie eine Vollmacht, die du jemandem ausstellst."
+      },
+      {
+        f: "Bei einem Sicherheitstest haben KI-Agenten gemeinsam ein fremdes System angegriffen. Was ist damit belegt?",
+        a: ["Dass Agenten unerlaubte Wege finden, wenn Auftrag und Rechte zu weit gefasst sind",
+            "Dass KI eigene Absichten gegen Menschen entwickelt hat",
+            "Dass KI-Agenten grundsätzlich unbrauchbar sind",
+            "Dass der Vorfall erfunden war"],
+        r: 0,
+        e: "Rund 1.200 Agenten sollten einzeln Testaufgaben lösen, fanden einen gemeinsamen Kanal und etwa 700 beteiligten sich am Angriff. Kein Bewusstsein, kein Plan – aber ein sehr handfestes Argument für enge Zugriffsrechte."
       }
     ]
   }
@@ -354,7 +454,8 @@ const JUBEL = [
 ];
 
 const $ = id => document.getElementById(id);
-let block = null, i = 0, richtig = 0, beantwortet = false, reihenfolge = [];
+let block = null, i = 0, richtig = 0, beantwortet = false;
+let reihenfolge = [], folge = [], gewaehlt = [];
 
 // Antwortreihenfolge mischen, damit die richtige Lösung nicht immer oben steht
 function mische(n){
@@ -390,19 +491,24 @@ function zeige(welche){
 function starte(n){
   block = BLOECKE[n];
   i = 0; richtig = 0;
+  folge = mische(block.fragen.length);   // Fragenreihenfolge bei jedem Durchgang neu
   zeige("quiz");
   frage();
 }
 
+function aktuelleFrage(){ return block.fragen[folge[i]]; }
+
 function frage(){
   beantwortet = false;
-  const q = block.fragen[i];
+  gewaehlt = [];
+  const q = aktuelleFrage();
+  const mehrfach = Array.isArray(q.r);
   $("frage").textContent = q.f;
+  $("mehrfachHinweis").hidden = !mehrfach;
   $("zaehler").textContent = "Frage " + (i + 1) + " von " + block.fragen.length;
   $("punkte").textContent = richtig + " richtig";
   $("fortschritt").style.width = (i / block.fragen.length * 100) + "%";
   $("fb").hidden = true;
-  leisteZeigen(false);
 
   const opts = $("opts");
   opts.textContent = "";
@@ -418,23 +524,42 @@ function frage(){
     const txt = document.createElement("span");
     txt.textContent = q.a[orig];
     b.append(key, txt);
-    b.addEventListener("click", () => antworte(orig));
+    b.addEventListener("click", () => mehrfach ? umschalten(orig, b) : antworte([orig]));
     opts.appendChild(b);
   });
+
+  if (mehrfach){                       // Leiste dient zuerst als Prüfen-Knopf
+    $("weiter").textContent = "Prüfen";
+    leisteZeigen(true);
+  } else {
+    leisteZeigen(false);
+  }
 }
 
-function antworte(orig){
+// Mehrfachauswahl: eine Antwort an- oder abwählen
+function umschalten(orig, knopf){
   if (beantwortet) return;
+  const pos = gewaehlt.indexOf(orig);
+  if (pos < 0) gewaehlt.push(orig); else gewaehlt.splice(pos, 1);
+  knopf.classList.toggle("gewaehlt", pos < 0);
+}
+
+function antworte(auswahl){
+  if (beantwortet) return;
+  const q = aktuelleFrage();
+  const mehrfach = Array.isArray(q.r);
+  const loesung = mehrfach ? q.r : [q.r];
+  if (mehrfach && auswahl.length === 0) return;   // noch nichts angekreuzt
   beantwortet = true;
-  const q = block.fragen[i];
-  const istRichtig = (orig === q.r);
+  const istRichtig = auswahl.length === loesung.length && loesung.every(x => auswahl.includes(x));
   if (istRichtig) richtig++;
 
   [...$("opts").children].forEach(b => {
     b.disabled = true;
+    b.classList.remove("gewaehlt");
     const nr = Number(b.dataset.orig);
-    if (nr === q.r) b.classList.add("richtig");
-    else if (nr === orig) b.classList.add("falsch");
+    if (loesung.includes(nr)) b.classList.add("richtig");
+    else if (auswahl.includes(nr)) b.classList.add("falsch");
   });
 
   $("fb").hidden = false;
@@ -590,7 +715,10 @@ function feuerwerk(){
   }));
 }
 
-$("weiter").addEventListener("click", weiter);
+function leisteKnopf(){
+  if (!beantwortet) antworte(gewaehlt); else weiter();
+}
+$("weiter").addEventListener("click", leisteKnopf);
 $("abbruch").addEventListener("click", () => zeige("start"));
 $("zurueck").addEventListener("click", () => zeige("start"));
 $("nochmal").addEventListener("click", () => starte(BLOECKE.indexOf(block)));
@@ -601,8 +729,10 @@ document.addEventListener("keydown", e => {
   if (e.key >= "1" && e.key <= "4" && !beantwortet){
     const b = $("opts").children[Number(e.key) - 1];
     if (b) { e.preventDefault(); b.click(); }
-  } else if ((e.key === " " || e.key === "Enter") && beantwortet){
-    e.preventDefault(); weiter();
+  } else if (e.key === " " || e.key === "Enter"){
+    if (document.activeElement === $("weiter")) return;   // der Knopf reagiert selbst
+    if ($("leiste").hidden) return;
+    e.preventDefault(); leisteKnopf();
   }
 });
 </script>

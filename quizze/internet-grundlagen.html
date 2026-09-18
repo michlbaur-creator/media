@@ -56,6 +56,8 @@
     flex:0 0 auto; width:1.6em; height:1.6em; border-radius:50%; background:var(--line); color:var(--ink);
     display:grid; place-items:center; font-size:.78em; font-weight:700; margin-top:.1em;
   }
+  .opt.gewaehlt{border-color:var(--accent); background:var(--accent-soft)}
+  .opt.gewaehlt .key{background:var(--accent); color:#fff}
   .opt.richtig{border-color:var(--accent); background:var(--accent-soft)}
   .opt.richtig .key{background:var(--accent); color:#fff}
   .opt.falsch{border-color:var(--wrong); background:var(--wrong-soft)}
@@ -110,6 +112,7 @@
     <div class="meta"><span id="zaehler"></span><span id="punkte"></span></div>
     <div class="card">
       <p class="frage" id="frage"></p>
+      <p class="hinweis" id="mehrfachHinweis" style="margin:-8px 0 12px" hidden>Mehrere Antworten sind richtig – alle auswählen, dann unten auf „Prüfen“.</p>
       <div class="opts" id="opts"></div>
       <div class="fb" id="fb" hidden><b id="fbTitel"></b><p id="fbText"></p></div>
     </div>
@@ -348,7 +351,8 @@ const JUBEL = [
 ];
 
 const $ = id => document.getElementById(id);
-let block = null, i = 0, richtig = 0, beantwortet = false, reihenfolge = [];
+let block = null, i = 0, richtig = 0, beantwortet = false;
+let reihenfolge = [], folge = [], gewaehlt = [];
 
 // Antwortreihenfolge mischen, damit die richtige Lösung nicht immer oben steht
 function mische(n){
@@ -384,19 +388,24 @@ function zeige(welche){
 function starte(n){
   block = BLOECKE[n];
   i = 0; richtig = 0;
+  folge = mische(block.fragen.length);   // Fragenreihenfolge bei jedem Durchgang neu
   zeige("quiz");
   frage();
 }
 
+function aktuelleFrage(){ return block.fragen[folge[i]]; }
+
 function frage(){
   beantwortet = false;
-  const q = block.fragen[i];
+  gewaehlt = [];
+  const q = aktuelleFrage();
+  const mehrfach = Array.isArray(q.r);
   $("frage").textContent = q.f;
+  $("mehrfachHinweis").hidden = !mehrfach;
   $("zaehler").textContent = "Frage " + (i + 1) + " von " + block.fragen.length;
   $("punkte").textContent = richtig + " richtig";
   $("fortschritt").style.width = (i / block.fragen.length * 100) + "%";
   $("fb").hidden = true;
-  leisteZeigen(false);
 
   const opts = $("opts");
   opts.textContent = "";
@@ -412,23 +421,42 @@ function frage(){
     const txt = document.createElement("span");
     txt.textContent = q.a[orig];
     b.append(key, txt);
-    b.addEventListener("click", () => antworte(orig));
+    b.addEventListener("click", () => mehrfach ? umschalten(orig, b) : antworte([orig]));
     opts.appendChild(b);
   });
+
+  if (mehrfach){                       // Leiste dient zuerst als Prüfen-Knopf
+    $("weiter").textContent = "Prüfen";
+    leisteZeigen(true);
+  } else {
+    leisteZeigen(false);
+  }
 }
 
-function antworte(orig){
+// Mehrfachauswahl: eine Antwort an- oder abwählen
+function umschalten(orig, knopf){
   if (beantwortet) return;
+  const pos = gewaehlt.indexOf(orig);
+  if (pos < 0) gewaehlt.push(orig); else gewaehlt.splice(pos, 1);
+  knopf.classList.toggle("gewaehlt", pos < 0);
+}
+
+function antworte(auswahl){
+  if (beantwortet) return;
+  const q = aktuelleFrage();
+  const mehrfach = Array.isArray(q.r);
+  const loesung = mehrfach ? q.r : [q.r];
+  if (mehrfach && auswahl.length === 0) return;   // noch nichts angekreuzt
   beantwortet = true;
-  const q = block.fragen[i];
-  const istRichtig = (orig === q.r);
+  const istRichtig = auswahl.length === loesung.length && loesung.every(x => auswahl.includes(x));
   if (istRichtig) richtig++;
 
   [...$("opts").children].forEach(b => {
     b.disabled = true;
+    b.classList.remove("gewaehlt");
     const nr = Number(b.dataset.orig);
-    if (nr === q.r) b.classList.add("richtig");
-    else if (nr === orig) b.classList.add("falsch");
+    if (loesung.includes(nr)) b.classList.add("richtig");
+    else if (auswahl.includes(nr)) b.classList.add("falsch");
   });
 
   $("fb").hidden = false;
@@ -584,7 +612,10 @@ function feuerwerk(){
   }));
 }
 
-$("weiter").addEventListener("click", weiter);
+function leisteKnopf(){
+  if (!beantwortet) antworte(gewaehlt); else weiter();
+}
+$("weiter").addEventListener("click", leisteKnopf);
 $("abbruch").addEventListener("click", () => zeige("start"));
 $("zurueck").addEventListener("click", () => zeige("start"));
 $("nochmal").addEventListener("click", () => starte(BLOECKE.indexOf(block)));
@@ -595,8 +626,10 @@ document.addEventListener("keydown", e => {
   if (e.key >= "1" && e.key <= "4" && !beantwortet){
     const b = $("opts").children[Number(e.key) - 1];
     if (b) { e.preventDefault(); b.click(); }
-  } else if ((e.key === " " || e.key === "Enter") && beantwortet){
-    e.preventDefault(); weiter();
+  } else if (e.key === " " || e.key === "Enter"){
+    if (document.activeElement === $("weiter")) return;   // der Knopf reagiert selbst
+    if ($("leiste").hidden) return;
+    e.preventDefault(); leisteKnopf();
   }
 });
 </script>
