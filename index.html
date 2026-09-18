@@ -80,6 +80,12 @@
     padding:14px 26px;border-radius:12px;font-size:19px;box-shadow:0 2px 0 var(--terra-tief)}
   .cta:hover{background:var(--terra-tief)}
   .cta small{display:block;font-size:14px;opacity:.85;font-weight:normal}
+  .geschuetzt{border:1px solid var(--linie);border-radius:14px;padding:14px 16px;
+    margin:16px 0 4px;background:var(--creme-tile)}
+  .geschuetzt h3{margin:0 0 2px;font-size:17px;color:var(--terra-tief)}
+  .geschuetzt p{margin:0 0 10px;font-size:14px;color:var(--ink-soft)}
+  .geschuetzt-knoepfe{display:flex;gap:8px;flex-wrap:wrap}
+  .cta.klein{margin:0;padding:11px 18px;font-size:17px;flex:1 1 40%;text-align:center}
 
   /* Installations-Sprechblasen */
   .install-bubble{display:none;text-align:center;margin:18px 0 2px}
@@ -210,15 +216,16 @@
       <a class="start-chip" href="https://mibaso.de">⌂ Alle Mibaso-Apps</a>
     </div>
 
-    <p class="lead">Hier gibt's jede Menge Infos zu meinen Vorträgen und
-    VHS-Kursen. Die <strong>kursbegleitenden Materialien</strong> (Folien,
-    Handouts, Übungen) liegen im geschützten Bereich – das Passwort bekommst
-    du von mir.</p>
-    <a class="cta" href="/kurse/">Zu den Kursmaterialien
-      <small>geschützter Bereich · Passwort erforderlich</small></a>
+    <p class="lead">Hier gibt's jede Menge Infos zu meinen Vorträgen und VHS-Kursen.</p>
 
-    <a class="cta" href="/umfrage/">Themenfindung: Wünsch dir was!
-      <small>für Kursteilnehmer · Passwort erforderlich</small></a>
+    <div class="geschuetzt">
+      <h3>Geschützter Bereich</h3>
+      <p>Für Kursteilnehmer – die Passwörter bekommst du von mir.</p>
+      <div class="geschuetzt-knoepfe">
+        <a class="cta klein" href="/kurse/">Kursmaterialien</a>
+        <a class="cta klein" href="/umfrage/">Kursthemen</a>
+      </div>
+    </div>
 
     <!-- Installations-Sprechblase iPhone -->
     <div id="install-bubble-ios" class="install-bubble">

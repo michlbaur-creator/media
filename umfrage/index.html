@@ -64,7 +64,7 @@
 <div id="vorhang">
   <div class="box">
     <h2>Themenfindung</h2>
-    <p>Diese Umfrage ist den Kursteilnehmern vorbehalten. Bitte das im Kurs genannte Passwort eingeben – dasselbe wie für die Kursmaterialien.</p>
+    <p>Diese Umfrage ist den Kursteilnehmern vorbehalten. Bitte das im Kurs genannte Passwort eingeben.</p>
     <input id="pw" type="password" placeholder="Passwort" autocomplete="off"
            autocapitalize="none" autocorrect="off" spellcheck="false"
            onkeydown="if(event.key==='Enter')pruefe()">
@@ -101,7 +101,7 @@
 
 <script>
 /* ====== Passwort – gleiches Verfahren und gleiches Passwort wie im Kursbereich ====== */
-const PW_HASH = "da5360a60fe7d345efa6b8d46f5e2fee4efb3550652e4e007c742836366ff77d";
+const PW_HASH = "ee5d96b3cb87ce86948a05970237ee035291399bb61910e01a5c64ee34c76e30"; // Umfrage
 async function hashe(text){
   try{
     if(window.crypto && crypto.subtle && crypto.subtle.digest){
