@@ -19,6 +19,7 @@ const CORE = [
   './quizze/internet-grundlagen.html',
   './quizze/sicherheit.html',
   './quizze/ki-und-sprachmodelle.html',
+  './quizze/whatsapp.html',
   './kurse/',
   './kurse/index.html',
   './impressum/',
