@@ -10,7 +10,7 @@
    „Neue Version verfügbar"-Banner aus.
 */
 
-const SHELL_CACHE = 'media-shell-v5';
+const SHELL_CACHE = 'media-shell-v6';
 const MEDIA_CACHE = 'media-media-v1';
 
 const CORE = [
@@ -20,6 +20,7 @@ const CORE = [
   './quizze/sicherheit.html',
   './quizze/ki-und-sprachmodelle.html',
   './quizze/whatsapp.html',
+  './quizze/android.html',
   './umfrage/',
   './umfrage/index.html',
   './einstieg-handy/',
