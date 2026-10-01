@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Digital-Quiz – Internet für Einsteiger</title>
+<title>Digital-Quiz – Smartphone und Internet</title>
 <style>
   /* Farben wie media.mibaso.de */
   :root{
@@ -94,13 +94,13 @@
 <body>
 <div class="wrap">
   <header>
-    <h1>Digital-Quiz</h1><span class="sub">Internet für Einsteiger</span>
+    <h1>Digital-Quiz</h1><span class="sub">Smartphone und Internet für Einsteiger</span>
   </header>
 
   <!-- Startbildschirm -->
   <section id="start">
     <div class="card">
-      <p style="margin:0 0 6px">Teste in Ruhe, was hängengeblieben ist. Nach jeder Antwort kommt sofort die Erklärung – falsch antworten ist hier ausdrücklich erlaubt.</p>
+      <p style="margin:0 0 6px">Drei Runden: wie das Internet funktioniert, die wichtigsten Begriffe und die Handgriffe am Android-Handy. Die Fragen kommen jedes Mal in neuer Reihenfolge, und nach jeder Antwort steht die Erklärung darunter.</p>
       <p class="hinweis">Am Beamer: mit den Tasten 1 bis 4 antworten, mit der Leertaste weiterblättern.</p>
     </div>
     <div class="blocks" id="blockListe"></div>
@@ -145,190 +145,359 @@
 <script>
 const BLOECKE = [
   {
-    id: "grundlagen",
-    titel: "Wie das Internet funktioniert",
-    unter: "Netz, Router, Provider, Cloud – 10 Fragen",
-    fragen: [
+    "id": "grundlagen",
+    "titel": "Wie das Internet funktioniert",
+    "unter": "Netz, Router, Provider, Cloud – 10 Fragen",
+    "fragen": [
       {
-        f: "Das Wort „Internet“ ist eine Abkürzung. Wofür steht es?",
-        a: ["Interconnected Network – ein weltweit ineinandergreifendes Netzwerk",
-            "International Netbook – die erste Generation tragbarer Computer",
-            "Interner Nachrichtendienst der Universitäten",
-            "Intelligentes Netz, das sich selbst verwaltet"],
-        r: 0,
-        e: "Inter + connected + Network. Im Deutschen sagen wir meist einfach „Netz“ oder „Web“."
+        "f": "Das Wort „Internet“ ist eine Abkürzung. Wofür steht es?",
+        "a": [
+          "Interconnected Network – ein weltweit ineinandergreifendes Netzwerk",
+          "International Netbook – die erste Generation tragbarer Computer",
+          "Interner Nachrichtendienst der Universitäten",
+          "Intelligentes Netz, das sich selbst verwaltet"
+        ],
+        "r": 0,
+        "e": "Inter + connected + Network. Im Deutschen sagen wir meist einfach „Netz“ oder „Web“."
       },
       {
-        f: "Wer stellte 1989 das World Wide Web vor?",
-        a: ["Tim Berners-Lee", "Bill Gates", "Steve Jobs", "Mark Zuckerberg"],
-        r: 0,
-        e: "Tim Berners-Lee entwickelte die Bausteine HTML, HTTP, die Internetadressen (URL) sowie den ersten Browser und Webserver."
+        "f": "Wer stellte 1989 das World Wide Web vor?",
+        "a": [
+          "Tim Berners-Lee",
+          "Bill Gates",
+          "Steve Jobs",
+          "Mark Zuckerberg"
+        ],
+        "r": 0,
+        "e": "Tim Berners-Lee entwickelte die Bausteine HTML, HTTP, die Internetadressen (URL) sowie den ersten Browser und Webserver."
       },
       {
-        f: "Wie reisen deine Daten durchs Internet?",
-        a: ["In vielen kleinen Paketen, die sich unterschiedliche Wege suchen",
-            "Als ein einziger großer Block auf einer festen Leitung",
-            "Über Funkwellen direkt vom Absender zum Empfänger",
-            "Sie werden auf Servern zwischengelagert und nachts verschickt"],
-        r: 0,
-        e: "Die Daten werden zerlegt wie ein Puzzle. Jedes Paket nimmt seinen eigenen Weg – so gibt es keine Staus. Am Ziel werden sie wieder korrekt zusammengesetzt."
+        "f": "Wie reisen deine Daten durchs Internet?",
+        "a": [
+          "In vielen kleinen Paketen, die sich unterschiedliche Wege suchen",
+          "Als ein einziger großer Block auf einer festen Leitung",
+          "Über Funkwellen direkt vom Absender zum Empfänger",
+          "Sie werden auf Servern zwischengelagert und nachts verschickt"
+        ],
+        "r": 0,
+        "e": "Die Daten werden zerlegt wie ein Puzzle. Jedes Paket nimmt seinen eigenen Weg – so gibt es keine Staus. Am Ziel werden sie wieder korrekt zusammengesetzt."
       },
       {
-        f: "Was macht der Router, der bei dir zu Hause steht – zum Beispiel eine Fritzbox?",
-        a: ["Er verteilt die ankommenden Daten auf deine Geräte",
-            "Er speichert alle deine Fotos und E-Mails",
-            "Er verschlüsselt automatisch jede Nachricht",
-            "Er ersetzt den Vertrag mit dem Telefonanbieter"],
-        r: 0,
-        e: "Der Router ist der Verkehrsmanager: Er verbindet Netzwerke und schickt jedes Datenpaket an das richtige Gerät – Laptop, Smartphone, Drucker, Smart-TV."
+        "f": "Was macht der Router, der bei dir zu Hause steht – zum Beispiel eine Fritzbox?",
+        "a": [
+          "Er verteilt die ankommenden Daten auf deine Geräte",
+          "Er speichert alle deine Fotos und E-Mails",
+          "Er verschlüsselt automatisch jede Nachricht",
+          "Er ersetzt den Vertrag mit dem Telefonanbieter"
+        ],
+        "r": 0,
+        "e": "Der Router ist der Verkehrsmanager: Er verbindet Netzwerke und schickt jedes Datenpaket an das richtige Gerät – Laptop, Smartphone, Drucker, Smart-TV."
       },
       {
-        f: "Welche Rolle hat ein Provider wie Telekom, Vodafone oder 1&1?",
-        a: ["Er stellt überhaupt erst die Verbindung ins Internet bereit",
-            "Er baut die Router und Smartphones",
-            "Er prüft die Internetseiten auf ihren Wahrheitsgehalt",
-            "Er verwaltet die Passwörter seiner Kunden"],
-        r: 0,
-        e: "Der Provider (Dienstanbieter) ist die Brücke zum Internet – meistens ist er zugleich der Telefonanbieter."
+        "f": "Welche Rolle hat ein Provider wie Telekom, Vodafone oder 1&1?",
+        "a": [
+          "Er stellt überhaupt erst die Verbindung ins Internet bereit",
+          "Er baut die Router und Smartphones",
+          "Er prüft die Internetseiten auf ihren Wahrheitsgehalt",
+          "Er verwaltet die Passwörter seiner Kunden"
+        ],
+        "r": 0,
+        "e": "Der Provider (Dienstanbieter) ist die Brücke zum Internet – meistens ist er zugleich der Telefonanbieter."
       },
       {
-        f: "Was ist der Unterschied zwischen LAN und WLAN?",
-        a: ["LAN läuft über Kabel, WLAN drahtlos per Funk",
-            "LAN ist für Firmen, WLAN nur für Privathaushalte",
-            "WLAN ist immer schneller als LAN",
-            "LAN ist das weltweite Netz, WLAN das deutsche"],
-        r: 0,
-        e: "Beides ist ein örtliches Netzwerk. Kabel bedeutet stabil und schnell, Funk bedeutet Bewegungsfreiheit – praktisch für Smartphone und Tablet."
+        "f": "Was ist der Unterschied zwischen LAN und WLAN?",
+        "a": [
+          "LAN läuft über Kabel, WLAN drahtlos per Funk",
+          "LAN ist für Firmen, WLAN nur für Privathaushalte",
+          "WLAN ist immer schneller als LAN",
+          "LAN ist das weltweite Netz, WLAN das deutsche"
+        ],
+        "r": 0,
+        "e": "Beides ist ein örtliches Netzwerk. Kabel bedeutet stabil und schnell, Funk bedeutet Bewegungsfreiheit – praktisch für Smartphone und Tablet."
       },
       {
-        f: "Wofür ist ein Mesh-WLAN gedacht?",
-        a: ["Mehrere Geräte spannen gemeinsam ein Netz ohne Funklöcher auf",
-            "Es verschlüsselt das WLAN besonders stark",
-            "Es begrenzt den Datenverbrauch der Kinder",
-            "Es ersetzt den Internetanschluss durch Satellit"],
-        r: 0,
-        e: "Mehrere Router arbeiten zusammen und melden jedes Gerät automatisch beim besten Knotenpunkt an. Ideal für große Wohnungen und Häuser mit dicken Wänden."
+        "f": "Wofür ist ein Mesh-WLAN gedacht?",
+        "a": [
+          "Mehrere Geräte spannen gemeinsam ein Netz ohne Funklöcher auf",
+          "Es verschlüsselt das WLAN besonders stark",
+          "Es begrenzt den Datenverbrauch der Kinder",
+          "Es ersetzt den Internetanschluss durch Satellit"
+        ],
+        "r": 0,
+        "e": "Mehrere Router arbeiten zusammen und melden jedes Gerät automatisch beim besten Knotenpunkt an. Ideal für große Wohnungen und Häuser mit dicken Wänden."
       },
       {
-        f: "Was steckt hinter dem Begriff „Cloud“?",
-        a: ["Deine Dateien liegen auf fremden Servern und sind auf allen Geräten aktuell",
-            "Ein besonders großer Speicher im eigenen Computer",
-            "Ein Programm, das das Internet schneller macht",
-            "Die drahtlose Verbindung zwischen Handy und Router"],
-        r: 0,
-        e: "Bekannte Anbieter sind Google Drive, iCloud, Dropbox und OneDrive. Vorteil: Zugriff von überall und automatische Sicherung. Kehrseite: Die Daten liegen bei einer fremden Firma."
+        "f": "Was steckt hinter dem Begriff „Cloud“?",
+        "a": [
+          "Deine Dateien liegen auf fremden Servern und sind auf allen Geräten aktuell",
+          "Ein besonders großer Speicher im eigenen Computer",
+          "Ein Programm, das das Internet schneller macht",
+          "Die drahtlose Verbindung zwischen Handy und Router"
+        ],
+        "r": 0,
+        "e": "Bekannte Anbieter sind Google Drive, iCloud, Dropbox und OneDrive. Vorteil: Zugriff von überall und automatische Sicherung. Kehrseite: Die Daten liegen bei einer fremden Firma."
       },
       {
-        f: "Was kann ein Smartphone, was ein einfaches Handy nicht kann?",
-        a: ["Ins Internet gehen, Apps nutzen, fotografieren und navigieren",
-            "Telefonieren und SMS schreiben",
-            "Einen Akku aufladen",
-            "Eine SIM-Karte aufnehmen"],
-        r: 0,
-        e: "Telefonieren und SMS können beide. Das Smartphone ist darüber hinaus ein kleiner Computer mit Internet, Apps, Kamera und Navigation."
+        "f": "Was kann ein Smartphone, was ein einfaches Handy nicht kann?",
+        "a": [
+          "Ins Internet gehen, Apps nutzen, fotografieren und navigieren",
+          "Telefonieren und SMS schreiben",
+          "Einen Akku aufladen",
+          "Eine SIM-Karte aufnehmen"
+        ],
+        "r": 0,
+        "e": "Telefonieren und SMS können beide. Das Smartphone ist darüber hinaus ein kleiner Computer mit Internet, Apps, Kamera und Navigation."
       },
       {
-        f: "Wie viel des weltweiten Stromverbrauchs geht ungefähr auf das Konto des Internets?",
-        a: ["Etwa 8 bis 10 Prozent", "Weniger als 1 Prozent", "Etwa 30 Prozent", "Rund die Hälfte"],
-        r: 0,
-        e: "Rund 2000 bis 3000 Terawattstunden im Jahr. Die IT-Branche verursacht über 3 Prozent der Treibhausgase – mehr als der gesamte Flugverkehr mit etwa 2 Prozent."
+        "f": "Wie viel des weltweiten Stromverbrauchs geht ungefähr auf das Konto des Internets?",
+        "a": [
+          "Etwa 8 bis 10 Prozent",
+          "Weniger als 1 Prozent",
+          "Etwa 30 Prozent",
+          "Rund die Hälfte"
+        ],
+        "r": 0,
+        "e": "Rund 2000 bis 3000 Terawattstunden im Jahr. Die IT-Branche verursacht über 3 Prozent der Treibhausgase – mehr als der gesamte Flugverkehr mit etwa 2 Prozent."
       }
     ]
   },
   {
-    id: "begriffe",
-    titel: "Begriffe, die ständig auftauchen",
-    unter: "App, Account, Bluetooth, Hotspot & Co. – 10 Fragen",
-    fragen: [
+    "id": "begriffe",
+    "titel": "Begriffe, die ständig auftauchen",
+    "unter": "App, Account, Bluetooth, Hotspot & Co. – 10 Fragen",
+    "fragen": [
       {
-        f: "Das Wort „App“ ist die Kurzform von …",
-        a: ["Application, also Anwendung oder Programm",
-            "Apparat, also das Gerät selbst",
-            "Approved Program, also geprüftes Programm",
-            "Apple Programm"],
-        r: 0,
-        e: "Apps holst du dir im Google Play Store (Android) oder im App Store (Apple). Viele sind kostenlos – bezahlt wird dann oft mit Werbung oder mit deinen Daten."
+        "f": "Das Wort „App“ ist die Kurzform von …",
+        "a": [
+          "Application, also Anwendung oder Programm",
+          "Apparat, also das Gerät selbst",
+          "Approved Program, also geprüftes Programm",
+          "Apple Programm"
+        ],
+        "r": 0,
+        "e": "Apps holst du dir im Google Play Store (Android) oder im App Store (Apple). Viele sind kostenlos – bezahlt wird dann oft mit Werbung oder mit deinen Daten."
       },
       {
-        f: "Was ist ein Account?",
-        a: ["Dein persönliches Benutzerkonto bei einem Dienst",
-            "Die Rechnung, die am Monatsende kommt",
-            "Ein besonders sicheres Passwort",
-            "Der Speicherplatz auf deinem Handy"],
-        r: 0,
-        e: "Zugang nur mit Benutzername und Passwort. Der Benutzername ist meistens deine E-Mail-Adresse."
+        "f": "Was ist ein Account?",
+        "a": [
+          "Dein persönliches Benutzerkonto bei einem Dienst",
+          "Die Rechnung, die am Monatsende kommt",
+          "Ein besonders sicheres Passwort",
+          "Der Speicherplatz auf deinem Handy"
+        ],
+        "r": 0,
+        "e": "Zugang nur mit Benutzername und Passwort. Der Benutzername ist meistens deine E-Mail-Adresse."
       },
       {
-        f: "Wofür wird Bluetooth verwendet?",
-        a: ["Zum Verbinden zweier Geräte über kurze Entfernung, etwa mit der Freisprechanlage im Auto",
-            "Für den Internetzugang unterwegs",
-            "Zum Aufladen des Handys ohne Kabel",
-            "Zum Sichern der Fotos in der Cloud"],
-        r: 0,
-        e: "Bluetooth ist Funk auf kurze Distanz – für Kopfhörer, Lautsprecher, Autoradio oder die Smartwatch. Einschalten lässt es sich in den Einstellungen."
+        "f": "Wofür wird Bluetooth verwendet?",
+        "a": [
+          "Zum Verbinden zweier Geräte über kurze Entfernung, etwa mit der Freisprechanlage im Auto",
+          "Für den Internetzugang unterwegs",
+          "Zum Aufladen des Handys ohne Kabel",
+          "Zum Sichern der Fotos in der Cloud"
+        ],
+        "r": 0,
+        "e": "Bluetooth ist Funk auf kurze Distanz – für Kopfhörer, Lautsprecher, Autoradio oder die Smartwatch. Einschalten lässt es sich in den Einstellungen."
       },
       {
-        f: "Was ist der Homescreen?",
-        a: ["Der Startbildschirm, der nach dem Einschalten erscheint",
-            "Das Display eines Fernsehers",
-            "Die Startseite des Browsers",
-            "Der Sperrbildschirm mit der Uhrzeit"],
-        r: 0,
-        e: "Den Startbildschirm kannst du ganz nach deinem Geschmack einrichten – und sich sogar mehrere davon anlegen."
+        "f": "Was ist der Homescreen?",
+        "a": [
+          "Der Startbildschirm, der nach dem Einschalten erscheint",
+          "Das Display eines Fernsehers",
+          "Die Startseite des Browsers",
+          "Der Sperrbildschirm mit der Uhrzeit"
+        ],
+        "r": 0,
+        "e": "Den Startbildschirm kannst du ganz nach deinem Geschmack einrichten – und sich sogar mehrere davon anlegen."
       },
       {
-        f: "Was ist ein Hotspot?",
-        a: ["Ein WLAN-Zugangspunkt, über den Geräte ins Internet kommen",
-            "Eine besonders warme Stelle am Akku",
-            "Ein Werbefenster in einer App",
-            "Der Ort mit dem besten Handyempfang im Haus"],
-        r: 0,
-        e: "Es gibt öffentliche Hotspots, etwa im Café, und private. Auch dein Smartphone kann selbst zum Hotspot werden und zum Beispiel den Laptop mit ins Netz nehmen."
+        "f": "Was ist ein Hotspot?",
+        "a": [
+          "Ein WLAN-Zugangspunkt, über den Geräte ins Internet kommen",
+          "Eine besonders warme Stelle am Akku",
+          "Ein Werbefenster in einer App",
+          "Der Ort mit dem besten Handyempfang im Haus"
+        ],
+        "r": 0,
+        "e": "Es gibt öffentliche Hotspots, etwa im Café, und private. Auch dein Smartphone kann selbst zum Hotspot werden und zum Beispiel den Laptop mit ins Netz nehmen."
       },
       {
-        f: "Was zeichnet eine PDF-Datei aus?",
-        a: ["Sie zeigt den Inhalt originalgetreu, so wie er gedacht war",
-            "Sie lässt sich in jedem Programm beliebig umschreiben",
-            "Sie enthält immer nur Bilder",
-            "Sie kann nur am Computer geöffnet werden, nicht am Handy"],
-        r: 0,
-        e: "PDF steht für Portable Document Format. Layout und Schrift bleiben auf jedem Gerät gleich. Zum Lesen genügt ein PDF-Reader, den jedes Smartphone mitbringt."
+        "f": "Was zeichnet eine PDF-Datei aus?",
+        "a": [
+          "Sie zeigt den Inhalt originalgetreu, so wie er gedacht war",
+          "Sie lässt sich in jedem Programm beliebig umschreiben",
+          "Sie enthält immer nur Bilder",
+          "Sie kann nur am Computer geöffnet werden, nicht am Handy"
+        ],
+        "r": 0,
+        "e": "PDF steht für Portable Document Format. Layout und Schrift bleiben auf jedem Gerät gleich. Zum Lesen genügt ein PDF-Reader, den jedes Smartphone mitbringt."
       },
       {
-        f: "Was passiert im Flugzeugmodus?",
-        a: ["Alle Funkverbindungen werden abgeschaltet, das Gerät bleibt aber an",
-            "Das Handy schaltet sich vollständig aus",
-            "Nur das WLAN wird abgeschaltet",
-            "Alle Apps werden beendet und gelöscht"],
-        r: 0,
-        e: "Praktisch auch nachts: Telefon und Internet sind still, der Wecker klingelt trotzdem."
+        "f": "Was passiert im Flugzeugmodus?",
+        "a": [
+          "Alle Funkverbindungen werden abgeschaltet, das Gerät bleibt aber an",
+          "Das Handy schaltet sich vollständig aus",
+          "Nur das WLAN wird abgeschaltet",
+          "Alle Apps werden beendet und gelöscht"
+        ],
+        "r": 0,
+        "e": "Praktisch auch nachts: Telefon und Internet sind still, der Wecker klingelt trotzdem."
       },
       {
-        f: "Welche Aufgabe hat die SIM-Karte?",
-        a: ["Sie weist dein Gerät im Mobilfunknetz aus",
-            "Sie speichert deine Fotos und Videos",
-            "Sie sorgt für den WLAN-Empfang zu Hause",
-            "Sie lädt den Akku schneller"],
-        r: 0,
-        e: "SIM heißt Subscriber Identification Module – Teilnehmer-Erkennung. Geschützt ist sie durch die PIN, die du jederzeit ändern kannst."
+        "f": "Welche Aufgabe hat die SIM-Karte?",
+        "a": [
+          "Sie weist dein Gerät im Mobilfunknetz aus",
+          "Sie speichert deine Fotos und Videos",
+          "Sie sorgt für den WLAN-Empfang zu Hause",
+          "Sie lädt den Akku schneller"
+        ],
+        "r": 0,
+        "e": "SIM heißt Subscriber Identification Module – Teilnehmer-Erkennung. Geschützt ist sie durch die PIN, die du jederzeit ändern kannst."
       },
       {
-        f: "Was ist ein Widget?",
-        a: ["Ein kleines Fenster auf dem Startbildschirm, etwa Wetter oder Uhr",
-            "Ein besonders kleines Smartphone",
-            "Ein Schutzprogramm gegen Viren",
-            "Ein Stecker für den Kopfhörer"],
-        r: 0,
-        e: "Widgets zeigen eine Funktion einer App direkt auf dem Startbildschirm – Wetter, Uhr, Taschenlampe, Taschenrechner oder die Nachrichten."
+        "f": "Was ist ein Widget?",
+        "a": [
+          "Ein kleines Fenster auf dem Startbildschirm, etwa Wetter oder Uhr",
+          "Ein besonders kleines Smartphone",
+          "Ein Schutzprogramm gegen Viren",
+          "Ein Stecker für den Kopfhörer"
+        ],
+        "r": 0,
+        "e": "Widgets zeigen eine Funktion einer App direkt auf dem Startbildschirm – Wetter, Uhr, Taschenlampe, Taschenrechner oder die Nachrichten."
       },
       {
-        f: "Was bedeutet Display-Timeout?",
-        a: ["Der Bildschirm wird nach einer eingestellten Zeit von allein dunkel",
-            "Das Gerät ist defekt und muss neu gestartet werden",
-            "Der Akku ist leer",
-            "Die Internetverbindung ist abgelaufen"],
-        r: 0,
-        e: "Das spart Strom und schützt vor versehentlichen Berührungen. Wie lange es dauert, stellst du in den Einstellungen selbst ein."
+        "f": "Was bedeutet Display-Timeout?",
+        "a": [
+          "Der Bildschirm wird nach einer eingestellten Zeit von allein dunkel",
+          "Das Gerät ist defekt und muss neu gestartet werden",
+          "Der Akku ist leer",
+          "Die Internetverbindung ist abgelaufen"
+        ],
+        "r": 0,
+        "e": "Das spart Strom und schützt vor versehentlichen Berührungen. Wie lange es dauert, stellst du in den Einstellungen selbst ein."
+      }
+    ]
+  },
+  {
+    "id": "handgriffe",
+    "titel": "Handgriffe am Android-Handy",
+    "unter": "Suchfeld, QR-Code, Kopieren, Schrift – 10 Fragen",
+    "fragen": [
+      {
+        "f": "Ein Menüpunkt heißt auf deinem Handy anders als in der Anleitung. Was hilft am schnellsten?",
+        "a": [
+          "In den Einstellungen oben auf die Lupe tippen und das Stichwort eingeben",
+          "Das Handy neu starten",
+          "Beim Hersteller anrufen",
+          "Alle Menüs der Reihe nach durchblättern"
+        ],
+        "r": 0,
+        "e": "Samsung, Xiaomi, Google und Motorola nennen dieselben Dinge oft ein bisschen anders. Das Suchfeld findet den Eintrag trotzdem – egal, wie tief er vergraben ist."
+      },
+      {
+        "f": "Wie findest du den Google Passwortmanager am einfachsten?",
+        "a": [
+          "In der Google-Suche „Google Passwortmanager“ eingeben und den Treffer antippen",
+          "Im Play Store herunterladen",
+          "In WhatsApp unter Einstellungen",
+          "In der Kamera-App"
+        ],
+        "r": 0,
+        "e": "Der Treffer heißt Google Passwortmanager (passwords.google.com). Danach erscheint die Liste deiner gespeicherten Zugänge."
+      },
+      {
+        "f": "Auf einem Plakat ist ein QR-Code. Wie öffnest du ihn?",
+        "a": [
+          "Kamera-App öffnen, den Code anvisieren, nicht auslösen – dann den Hinweisbalken antippen",
+          "Ein Foto machen und es an dich selbst schicken",
+          "Eine spezielle QR-App kaufen",
+          "Den Code in die Google-Suche abtippen"
+        ],
+        "r": 0,
+        "e": "Nach einem Moment erscheint ein Balken mit der Zieladresse. Lies sie kurz, bevor du tippst."
+      },
+      {
+        "f": "Der QR-Code steckt in einer E-Mail auf deinem eigenen Handy. Was tust du?",
+        "a": [
+          "Einen Screenshot machen, ihn in Google Fotos öffnen und unten auf Lens tippen",
+          "Das Handy vor einen Spiegel halten",
+          "Die E-Mail ausdrucken – anders geht es nicht",
+          "Den Code mit dem Finger antippen und halten"
+        ],
+        "r": 0,
+        "e": "Das Handy kann sich nicht selbst fotografieren. Der Screenshot ist der Umweg – danach erscheint der hinterlegte Link und lässt sich antippen."
+      },
+      {
+        "f": "Wie machst du auf den meisten Android-Handys einen Screenshot?",
+        "a": [
+          "Ein/Aus-Taste und Leiser-Taste gleichzeitig kurz drücken",
+          "Dreimal auf den Bildschirm tippen",
+          "Das Handy schütteln",
+          "Ein/Aus-Taste lange gedrückt halten"
+        ],
+        "r": 0,
+        "e": "Kurz und gleichzeitig – dann blitzt der Bildschirm auf, und das Bild liegt in Google Fotos."
+      },
+      {
+        "f": "Was kann Google Lens mit einem Foto von einem gedruckten Text?",
+        "a": [
+          "Den Text erkennen, sodass du ihn markieren und kopieren kannst",
+          "Den Text gleich übersetzen",
+          "Den Text automatisch an alle Kontakte schicken",
+          "Den Drucker finden, der ihn gedruckt hat"
+        ],
+        "r": [
+          0,
+          1
+        ],
+        "e": "Foto in Google Fotos öffnen, Lens antippen, oben auf „Text“ wechseln. Mit den blauen Anfassern auswählen, dann Kopieren – oder gleich Übersetzen."
+      },
+      {
+        "f": "Du möchtest einen interessanten Zeitungsartikel aus dem Internet an deine Tochter schicken. Wie geht das am einfachsten?",
+        "a": [
+          "Über das Teilen-Symbol – es schickt den Link direkt in WhatsApp oder in eine E-Mail",
+          "Den ganzen Artikel markieren, kopieren und einfügen",
+          "Jede Seite einzeln abfotografieren",
+          "Die Adresse vom Bildschirm abschreiben"
+        ],
+        "r": 0,
+        "e": "Ganze Seiten musst du nicht kopieren. Das Teilen-Symbol sieht aus wie ein Kästchen mit Pfeil oder wie drei verbundene Punkte."
+      },
+      {
+        "f": "Wo landet eine Fahrkarte als PDF, die du aus dem Internet geladen hast?",
+        "a": [
+          "In der App Dateien (oder „Eigene Dateien“) unter Downloads",
+          "In Chrome über die drei Punkte oben rechts → Downloads",
+          "Im Papierkorb",
+          "In den Kontakten"
+        ],
+        "r": [
+          0,
+          1
+        ],
+        "e": "Die Liste ist nach Datum sortiert, das Neueste steht oben. Über die Lupe kannst du auch nach Teilen des Dateinamens suchen."
+      },
+      {
+        "f": "Was ist der Unterschied zwischen Schriftgröße und Anzeigegröße?",
+        "a": [
+          "Die Schriftgröße macht nur den Text größer, die Anzeigegröße auch Symbole und Schaltflächen",
+          "Es gibt keinen – beides macht dasselbe",
+          "Die Anzeigegröße ändert nur die Helligkeit",
+          "Die Schriftgröße gilt nur für WhatsApp"
+        ],
+        "r": 0,
+        "e": "Zu finden unter Einstellungen → Anzeige. Die Anzeigegröße hilft oft mehr. Weiter unten warten noch „Text mit hohem Kontrast“ und „Fetter Text“."
+      },
+      {
+        "f": "Eine App lässt sich nicht vergrößern. Was hilft trotzdem?",
+        "a": [
+          "In den Bedienungshilfen die Vergrößerung einschalten – dann dreimal auf den Bildschirm tippen",
+          "Das Handy näher an die Augen halten, eine andere Möglichkeit gibt es nicht",
+          "Die App löschen und neu installieren",
+          "Den Bildschirm heller stellen"
+        ],
+        "r": 0,
+        "e": "Mit dem dreifachen Antippen zoomst du in jede beliebige Stelle hinein – auch dort, wo die App selbst kein Zoomen anbietet."
       }
     ]
   }

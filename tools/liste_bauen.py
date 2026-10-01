@@ -15,6 +15,8 @@ Der Dateiname bestimmt, was auf der Seite steht:
 
     Unterstrich = Leerzeichen. Bindestriche bleiben stehen.
     Das Datum vorne darf 2026-09-16 oder 2026-09 heissen - oder ganz fehlen.
+    Ein Pluszeichen vorne (+2026-09-19_Tipps.pdf) holt einen Zettel in seinem
+    Abschnitt ganz nach oben; das Pluszeichen selbst erscheint nicht.
     Dateien, die mit einem Unterstrich beginnen (_entwurf.pdf), werden
     uebersprungen; so kann man etwas ablegen, ohne es zu veroeffentlichen.
 
@@ -24,10 +26,12 @@ Kategorien:
     Aufklappen (<details>/<summary>, ganz ohne Javascript). Der Ordnername
     bestimmt Reihenfolge und Ueberschrift:
 
-        broschueren/30_Internet-und-Sicherheit/   ->  "Internet und Sicherheit"
+        broschueren/30_Internet_und_Sicherheit/   ->  "Internet und Sicherheit"
+        broschueren/05_Smartphone-Tipps/          ->  "Smartphone-Tipps"
 
     Die Zahl vorne sortiert nur (kleine Zahl = weiter oben) und erscheint
-    nicht auf der Seite. Unterstriche und Bindestriche werden Leerzeichen.
+    nicht auf der Seite. Unterstriche werden Leerzeichen, Bindestriche bleiben
+    stehen (seit 01.10.2026, wie bei den Dateinamen).
     Hinten in der Ueberschrift steht, wie viele Zettel drin sind.
     Alle Abschnitte sind offen - ausser solchen, deren Name auf "Archiv"
     endet, die sind zugeklappt. Leere Ordner werden weggelassen.
@@ -65,6 +69,8 @@ def groesse(bytes_: int) -> str:
 def zerlegen(pfad: Path):
     """Dateiname -> (Sortierschluessel, Titel, Datumstext)."""
     stamm = pfad.stem
+    oben = stamm.startswith("+")          # "+" vorne = ganz nach oben
+    stamm = stamm.lstrip("+")
     treffer = DATUM.match(stamm)
     if treffer:
         jahr, monat, tag, rest = treffer.groups()
@@ -72,6 +78,8 @@ def zerlegen(pfad: Path):
         datumstext = f"{tag}.{monat}.{jahr}" if tag else f"{monat}/{jahr}"
     else:
         schluessel, datumstext, rest = "0000-00-00", "", stamm
+    if oben:
+        schluessel = "9999-" + schluessel
     titel = rest.replace("_", " ").strip()
     return schluessel, titel or stamm, datumstext
 
@@ -87,7 +95,7 @@ def ordnername(ordner: Path):
         zahl, rest = int(treffer.group(1)), treffer.group(2)
     else:
         zahl, rest = 10**6, ordner.name
-    titel = rest.replace("_", " ").replace("-", " ").strip()
+    titel = rest.replace("_", " ").strip()   # wie bei Dateinamen: Bindestrich bleibt
     return zahl, titel or ordner.name
 
 
