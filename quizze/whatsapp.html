@@ -153,196 +153,244 @@
 <script>
 const BLOECKE = [
   {
-    id: "alltag",
-    titel: "WhatsApp im Alltag",
-    unter: "Häkchen, Sprachnachrichten, Fotos – 10 Fragen",
-    fragen: [
+    "id": "alltag",
+    "titel": "WhatsApp im Alltag",
+    "unter": "Häkchen, Sprachnachrichten, Fotos – 10 Fragen",
+    "fragen": [
       {
-        f: "Zwei graue Häkchen stehen unter deiner Nachricht. Was heißt das?",
-        a: ["Angekommen – gelesen wurde sie noch nicht",
-            "Gelesen",
-            "Abgeschickt, aber noch nicht angekommen",
-            "Die Nachricht konnte nicht zugestellt werden"],
-        r: 0,
-        e: "Ein graues Häkchen: abgeschickt. Zwei graue: angekommen. Zwei blaue: gelesen. Gar keins: noch unterwegs. Blau heißt übrigens nur gelesen – nicht beantwortet."
+        "f": "Fangfrage: In der Familiengruppe stehen zwei blaue Häkchen unter deiner Nachricht. Was heißt das?",
+        "a": [
+          "Alle Mitglieder der Gruppe haben sie gelesen",
+          "Mindestens ein Mitglied hat sie gelesen",
+          "Die Nachricht ist bei allen angekommen, gelesen hat sie noch niemand",
+          "Der Gruppen-Admin hat sie gelesen"
+        ],
+        "r": 0,
+        "e": "In Gruppen werden die Häkchen erst blau, wenn wirklich alle gelesen haben – fehlt einer, bleiben sie grau. Zur Erinnerung: ein graues Häkchen heißt abgeschickt, zwei graue angekommen, zwei blaue gelesen. Wer genau gelesen hat, zeigt ein langer Druck auf die Nachricht und dann „Info“."
       },
       {
-        f: "Eine Sprachnachricht ist dir zu langsam gesprochen. Was hilft?",
-        a: ["Während des Abspielens auf das kleine Feld „1×“ tippen – es schaltet auf 1,5× und 2×",
-            "Die Lautstärke-Wippe nach oben drücken",
-            "Den Chat schließen und neu öffnen",
-            "Die Nachricht an dich selbst weiterleiten"],
-        r: 0,
-        e: "Eine Fünf-Minuten-Nachricht ist so in zweieinhalb Minuten gehört. Wischst du aus dem Chat heraus, läuft sie oben in einer kleinen Leiste einfach weiter."
+        "f": "Eine Sprachnachricht ist dir zu langsam gesprochen. Was hilft?",
+        "a": [
+          "Während des Abspielens auf das kleine Feld „1×“ tippen – es schaltet auf 1,5× und 2×",
+          "Die Lautstärke-Wippe nach oben drücken",
+          "Den Chat schließen und neu öffnen",
+          "Die Nachricht an dich selbst weiterleiten"
+        ],
+        "r": 0,
+        "e": "Eine Fünf-Minuten-Nachricht ist so in zweieinhalb Minuten gehört. Wischst du aus dem Chat heraus, läuft sie oben in einer kleinen Leiste einfach weiter."
       },
       {
-        f: "Du nimmst eine Sprachnachricht auf, aber das Halten des Mikrofons wird dir zu mühsam. Was tust du?",
-        a: ["Mit dem gedrückten Finger nach oben wischen – ein Schloss erscheint, die Aufnahme läuft weiter",
-            "Zweimal auf das Mikrofon tippen",
-            "Das Handy kurz schütteln",
-            "Auf den grünen Pfeil tippen und weitersprechen"],
-        r: 0,
-        e: "Nach dem Feststellen kannst du in Ruhe sprechen. Zum Beenden tippst du dann auf den grünen Senden-Pfeil."
+        "f": "Du nimmst eine Sprachnachricht auf, aber das Halten des Mikrofons wird dir zu mühsam. Was tust du?",
+        "a": [
+          "Mit dem gedrückten Finger nach oben wischen – ein Schloss erscheint, die Aufnahme läuft weiter",
+          "Zweimal auf das Mikrofon tippen",
+          "Das Handy kurz schütteln",
+          "Auf den grünen Pfeil tippen und weitersprechen"
+        ],
+        "r": 0,
+        "e": "Nach dem Feststellen kannst du in Ruhe sprechen. Zum Beenden tippst du dann auf den grünen Senden-Pfeil."
       },
       {
-        f: "Du sprichst gerade und möchtest die Aufnahme doch nicht abschicken. Was tust du?",
-        a: ["Mit dem gedrückten Finger nach links wischen",
-            "Das Handy ausschalten",
-            "Warten, bis die Aufnahme von selbst endet",
-            "Den Chat verlassen"],
-        r: 0,
-        e: "Ist die Aufnahme schon mit dem Schloss festgestellt, tippst du stattdessen links auf den Papierkorb. Und wer vorher noch einmal hören will: erst Pause, dann Abspielen – verschickt wird erst mit dem Pfeil."
+        "f": "Du sprichst gerade und möchtest die Aufnahme doch nicht abschicken. Was tust du?",
+        "a": [
+          "Mit dem gedrückten Finger nach links wischen",
+          "Das Handy ausschalten",
+          "Warten, bis die Aufnahme von selbst endet",
+          "Den Chat verlassen"
+        ],
+        "r": 0,
+        "e": "Ist die Aufnahme schon mit dem Schloss festgestellt, tippst du stattdessen links auf den Papierkorb. Und wer vorher noch einmal hören will: erst Pause, dann Abspielen – verschickt wird erst mit dem Pfeil."
       },
       {
-        f: "Du hast gesprochen, aber es wurde nichts verschickt. Woran liegt das meistens?",
-        a: ["Der Finger war zu früh vom Mikrofon – unter einer Sekunde verwirft WhatsApp die Aufnahme",
-            "Der Speicher des Handys war voll",
-            "Die Nachricht war zu lang",
-            "Der Empfänger hat dich blockiert"],
-        r: 0,
-        e: "Einfach noch einmal, diesmal einen Moment länger halten. Bei ganz kurzen Aufnahmen nimmt WhatsApp an, du hättest dich vertippt."
+        "f": "Du hast gesprochen, aber es wurde nichts verschickt. Woran liegt das meistens?",
+        "a": [
+          "Der Finger war zu früh vom Mikrofon – unter einer Sekunde verwirft WhatsApp die Aufnahme",
+          "Der Speicher des Handys war voll",
+          "Die Nachricht war zu lang",
+          "Der Empfänger hat dich blockiert"
+        ],
+        "r": 0,
+        "e": "Einfach noch einmal, diesmal einen Moment länger halten. Bei ganz kurzen Aufnahmen nimmt WhatsApp an, du hättest dich vertippt."
       },
       {
-        f: "Du möchtest Sprachnachrichten lieber lesen als anhören. Geht das?",
-        a: ["Ja – Transkripte einschalten, dann die Nachricht lange gedrückt halten und „Transkribieren“ wählen",
-            "Nein, das kann WhatsApp nicht",
-            "Ja, aber nur bei Nachrichten, die du selbst aufgenommen hast",
-            "Ja, das macht WhatsApp immer automatisch"],
-        r: 0,
-        e: "Einstellungen → Chats → „Transkripte für Sprachnachrichten“, Deutsch auswählen. Auf dem iPhone gibt es das schon länger, auf Android kommt Deutsch nach und nach."
+        "f": "Du möchtest Sprachnachrichten lieber lesen als anhören. Geht das?",
+        "a": [
+          "Ja – Transkripte einschalten, dann die Nachricht lange gedrückt halten und „Transkribieren“ wählen",
+          "Nein, das kann WhatsApp nicht",
+          "Ja, aber nur bei Nachrichten, die du selbst aufgenommen hast",
+          "Ja, das macht WhatsApp immer automatisch"
+        ],
+        "r": 0,
+        "e": "Einstellungen → Chats → „Transkripte für Sprachnachrichten“, Deutsch auswählen. Auf dem iPhone gibt es das schon länger, auf Android kommt Deutsch nach und nach."
       },
       {
-        f: "Ein Foto soll ausgedruckt werden und darf nicht grieselig ankommen. Was tust du?",
-        a: ["Vor dem Senden oben auf „HD“ tippen und „HD-Qualität“ wählen",
-            "Das Foto zweimal hintereinander schicken",
-            "Das Foto vorher am Computer vergrößern",
-            "Es als Bildunterschrift beschreiben"],
-        r: 0,
-        e: "WhatsApp verkleinert Fotos, damit sie schnell ankommen. Für den Fotokalender oder den Ausdruck reicht das nicht – dafür gibt es den HD-Schalter."
+        "f": "Ein Foto soll ausgedruckt werden und darf nicht grieselig ankommen. Was tust du?",
+        "a": [
+          "Vor dem Senden oben auf „HD“ tippen und „HD-Qualität“ wählen",
+          "Das Foto zweimal hintereinander schicken",
+          "Das Foto vorher am Computer vergrößern",
+          "Es als Bildunterschrift beschreiben"
+        ],
+        "r": 0,
+        "e": "WhatsApp verkleinert Fotos, damit sie schnell ankommen. Für den Fotokalender oder den Ausdruck reicht das nicht – dafür gibt es den HD-Schalter."
       },
       {
-        f: "Im Familienchat laufen mehrere Themen. Wie antwortest du auf eine bestimmte ältere Nachricht?",
-        a: ["Die Nachricht kurz nach rechts wischen – sie wird oben zitiert",
-            "Die Nachricht nach links wischen",
-            "Den Absender anrufen",
-            "Den Text der alten Nachricht noch einmal abtippen"],
-        r: 0,
-        e: "Dann wissen alle, worauf du dich beziehst. Wer nur kurz zustimmen will, hält die Nachricht gedrückt und tippt auf ein Smiley – das genügt als Antwort."
+        "f": "Im Familienchat laufen mehrere Themen. Wie antwortest du auf eine bestimmte ältere Nachricht?",
+        "a": [
+          "Die Nachricht kurz nach rechts wischen – sie wird oben zitiert",
+          "Die Nachricht nach links wischen",
+          "Den Absender anrufen",
+          "Den Text der alten Nachricht noch einmal abtippen"
+        ],
+        "r": 0,
+        "e": "Dann wissen alle, worauf du dich beziehst. Wer nur kurz zustimmen will, hält die Nachricht gedrückt und tippt auf ein Smiley – das genügt als Antwort."
       },
       {
-        f: "Die Vereinsgruppe meldet sich ständig. Was passiert, wenn du sie stummschaltest?",
-        a: ["Die Nachrichten kommen weiter an, nur leise – und niemand in der Gruppe erfährt davon",
-            "Du verlässt damit die Gruppe",
-            "Die Mitglieder sehen, dass du stummgeschaltet hast",
-            "Die Nachrichten werden gelöscht"],
-        r: 0,
-        e: "Gruppennamen antippen → „Stummschalten“, wahlweise für 8 Stunden, eine Woche oder für immer. Völlig unauffällig."
+        "f": "Die Vereinsgruppe meldet sich ständig. Was passiert, wenn du sie stummschaltest?",
+        "a": [
+          "Die Nachrichten kommen weiter an, nur leise – und niemand in der Gruppe erfährt davon",
+          "Du verlässt damit die Gruppe",
+          "Die Mitglieder sehen, dass du stummgeschaltet hast",
+          "Die Nachrichten werden gelöscht"
+        ],
+        "r": 0,
+        "e": "Gruppennamen antippen → „Stummschalten“, wahlweise für 8 Stunden, eine Woche oder für immer. Völlig unauffällig."
       },
       {
-        f: "Eine fremde Nummer schreibt dich freundlich und per Du an und bittet um einen Code. Was tust du?",
-        a: ["Nicht antworten und den Kontakt blockieren",
-            "Höflich absagen und erklären, dass du keine Codes weitergibst",
-            "Den Code schicken, wenn die Person deinen Namen kennt",
-            "Die Nachricht an zehn Leute weiterleiten, damit alle gewarnt sind"],
-        r: 0,
-        e: "Typische Muster: „Bitte an zehn Leute weiterleiten“, eine fremde Nummer, die dich duzt, und jemand, der Geld, Codes oder Passwörter will. Jede Antwort bestätigt nur, dass die Nummer echt ist."
+        "f": "Eine fremde Nummer schreibt dich freundlich und per Du an und bittet um einen Code. Was tust du?",
+        "a": [
+          "Nicht antworten und den Kontakt blockieren",
+          "Höflich absagen und erklären, dass du keine Codes weitergibst",
+          "Den Code schicken, wenn die Person deinen Namen kennt",
+          "Die Nachricht an zehn Leute weiterleiten, damit alle gewarnt sind"
+        ],
+        "r": 0,
+        "e": "Typische Muster: „Bitte an zehn Leute weiterleiten“, eine fremde Nummer, die dich duzt, und jemand, der Geld, Codes oder Passwörter will. Jede Antwort bestätigt nur, dass die Nummer echt ist."
       }
     ]
   },
   {
-    id: "neu2026",
-    titel: "Neu 2026 – für Fortgeschrittene",
-    unter: "Nutzername, Passkey, Meta AI, Gruppen – 10 Fragen",
-    fragen: [
+    "id": "neu2026",
+    "titel": "Neu 2026 – für Fortgeschrittene",
+    "unter": "Nutzername, Passkey, Meta AI, Gruppen – 10 Fragen",
+    "fragen": [
       {
-        f: "Wozu ist der neue Nutzername gut, etwa @michael.baur?",
-        a: ["Andere können dich anschreiben, ohne dass sie deine Telefonnummer brauchen oder sehen",
-            "Er ersetzt dein Profilbild",
-            "Er macht deine Nachrichten sicherer verschlüsselt",
-            "Er erlaubt dir mehrere Konten auf einem Handy"],
-        r: 0,
-        e: "Bisher war deine Nummer deine WhatsApp-Adresse. Reservieren kannst du einen Wunschnamen unter Einstellungen → Profil → Nutzername – jeden Namen gibt es nur einmal, wer früh dran ist, bekommt den passenden."
+        "f": "Wozu ist der neue Nutzername gut, etwa @michael.baur?",
+        "a": [
+          "Andere können dich anschreiben, ohne dass sie deine Telefonnummer brauchen oder sehen",
+          "Er ersetzt dein Profilbild",
+          "Er macht deine Nachrichten sicherer verschlüsselt",
+          "Er erlaubt dir mehrere Konten auf einem Handy"
+        ],
+        "r": 0,
+        "e": "Bisher war deine Nummer deine WhatsApp-Adresse. Reservieren kannst du einen Wunschnamen unter Einstellungen → Profil → Nutzername – jeden Namen gibt es nur einmal, wer früh dran ist, bekommt den passenden."
       },
       {
-        f: "Welche Regeln gelten für den Nutzernamen?",
-        a: ["3 bis 35 Zeichen, Kleinbuchstaben, Ziffern, Punkt und Unterstrich – beginnen muss er mit einem Buchstaben",
-            "Genau acht Zeichen, beliebig gemischt",
-            "Nur Großbuchstaben und Ziffern",
-            "Der volle Vor- und Nachname, wie im Ausweis"],
-        r: 0,
-        e: "Umlaute, Leerzeichen und Sonderzeichen gehen nicht. Und weil jeder Name nur einmal vergeben wird, lohnt sich das Reservieren jetzt und nicht erst beim Zwangswechsel."
+        "f": "Welche Regeln gelten für den Nutzernamen?",
+        "a": [
+          "3 bis 35 Zeichen, Kleinbuchstaben, Ziffern, Punkt und Unterstrich – beginnen muss er mit einem Buchstaben",
+          "Genau acht Zeichen, beliebig gemischt",
+          "Nur Großbuchstaben und Ziffern",
+          "Der volle Vor- und Nachname, wie im Ausweis"
+        ],
+        "r": 0,
+        "e": "Umlaute, Leerzeichen und Sonderzeichen gehen nicht. Und weil jeder Name nur einmal vergeben wird, lohnt sich das Reservieren jetzt und nicht erst beim Zwangswechsel."
       },
       {
-        f: "Zum Nutzernamen gehört eine vierstellige PIN. Wozu?",
-        a: ["Nur wer die PIN kennt, kann dich über den Nutzernamen anschreiben",
-            "Sie ersetzt die Bildschirmsperre deines Handys",
-            "Sie schützt deine alten Chats vor dem Löschen",
-            "Sie wird beim Bezahlen in WhatsApp gebraucht"],
-        r: 0,
-        e: "Das hält Werbe- und Betrugsnachrichten wirksam draußen. Gib sie nur weiter, wenn du von jemandem wirklich angeschrieben werden möchtest."
+        "f": "Zum Nutzernamen gehört eine vierstellige PIN. Wozu?",
+        "a": [
+          "Nur wer die PIN kennt, kann dich über den Nutzernamen anschreiben",
+          "Sie ersetzt die Bildschirmsperre deines Handys",
+          "Sie schützt deine alten Chats vor dem Löschen",
+          "Sie wird beim Bezahlen in WhatsApp gebraucht"
+        ],
+        "r": 0,
+        "e": "Das hält Werbe- und Betrugsnachrichten wirksam draußen. Gib sie nur weiter, wenn du von jemandem wirklich angeschrieben werden möchtest."
       },
       {
-        f: "Was ist ein Passkey bei WhatsApp?",
-        a: ["Die Anmeldung per Fingerabdruck oder Gesicht – statt der SMS mit sechs Ziffern",
-            "Ein Passwort, das du dir neu ausdenken musst",
-            "Ein Schlüssel, mit dem du einzelne Chats abschließt",
-            "Die Nummer, die WhatsApp beim ersten Start verschickt"],
-        r: 0,
-        e: "Einzurichten unter Einstellungen → Konto → Passkeys, seit 2026 auch mehrere gleichzeitig für Handy und Tablet. Nichts zu merken, nichts abzutippen – und eine SMS kann dir niemand abfangen."
+        "f": "Was ist ein Passkey bei WhatsApp?",
+        "a": [
+          "Die Anmeldung per Fingerabdruck oder Gesicht – statt der SMS mit sechs Ziffern",
+          "Ein Passwort, das du dir neu ausdenken musst",
+          "Ein Schlüssel, mit dem du einzelne Chats abschließt",
+          "Die Nummer, die WhatsApp beim ersten Start verschickt"
+        ],
+        "r": 0,
+        "e": "Einzurichten unter Einstellungen → Konto → Passkeys, seit 2026 auch mehrere gleichzeitig für Handy und Tablet. Nichts zu merken, nichts abzutippen – und eine SMS kann dir niemand abfangen."
       },
       {
-        f: "In deiner Chat-Liste sitzt ein blau-lila Kreis. Was steckt dahinter?",
-        a: ["Meta AI – was du dort hineinschreibst, verlässt die Ende-zu-Ende-Verschlüsselung",
-            "Eine Werbeanzeige, die sich wegwischen lässt",
-            "Der Hinweis auf ein ausstehendes Update",
-            "Ein Chat mit dem WhatsApp-Kundendienst"],
-        r: 0,
-        e: "Ein Gesprächspartner wie ChatGPT, nur eben von Meta. Deine normalen Chats bleiben davon unberührt. Ganz entfernen lässt sich der Kreis derzeit nicht – ignorieren darfst du ihn."
+        "f": "In deiner Chat-Liste sitzt ein blau-lila Kreis. Was steckt dahinter?",
+        "a": [
+          "Meta AI – was du dort hineinschreibst, verlässt die Ende-zu-Ende-Verschlüsselung",
+          "Eine Werbeanzeige, die sich wegwischen lässt",
+          "Der Hinweis auf ein ausstehendes Update",
+          "Ein Chat mit dem WhatsApp-Kundendienst"
+        ],
+        "r": 0,
+        "e": "Ein Gesprächspartner wie ChatGPT, nur eben von Meta. Deine normalen Chats bleiben davon unberührt. Ganz entfernen lässt sich der Kreis derzeit nicht – ignorieren darfst du ihn."
       },
       {
-        f: "Was bleibt trotz aller Neuerungen unverändert?",
-        a: ["Deine Telefonnummer funktioniert weiter",
-            "Deine bestehenden Chats bleiben vollständig erhalten",
-            "Die Verschlüsselung deiner Nachrichten",
-            "Der Nutzername ist ab sofort Pflicht"],
-        r: [0, 1, 2],
-        e: "Der Nutzername ist ein Angebot, keine Pflicht – du kannst WhatsApp weiter benutzen wie bisher. Neuerungen kommen übrigens mit dem gewöhnlichen App-Update, installieren musst du nichts."
+        "f": "Was bleibt trotz aller Neuerungen unverändert?",
+        "a": [
+          "Deine Telefonnummer funktioniert weiter",
+          "Deine bestehenden Chats bleiben vollständig erhalten",
+          "Die Verschlüsselung deiner Nachrichten",
+          "Der Nutzername ist ab sofort Pflicht"
+        ],
+        "r": [
+          0,
+          1,
+          2
+        ],
+        "e": "Der Nutzername ist ein Angebot, keine Pflicht – du kannst WhatsApp weiter benutzen wie bisher. Neuerungen kommen übrigens mit dem gewöhnlichen App-Update, installieren musst du nichts."
       },
       {
-        f: "Was bewirkt „@alle“ in einer Gruppe?",
-        a: ["Es benachrichtigt jedes Mitglied der Gruppe",
-            "Es schreibt allen eine einzelne Nachricht",
-            "Es zeigt, wer gerade online ist",
-            "Es legt eine neue Gruppe mit denselben Leuten an"],
-        r: 0,
-        e: "Gedacht für „Wir treffen uns um 15 Uhr“ – nicht für jeden Gruß. Sonst schalten die ersten Mitglieder die Gruppe stumm."
+        "f": "Fangfrage: Du hast einen Nutzernamen eingerichtet. Sehen Leute, die deine Telefonnummer schon gespeichert haben, sie jetzt nicht mehr?",
+        "a": [
+          "Doch – wer die Nummer schon hat, sieht sie weiterhin; rückwirkend ändert sich nichts",
+          "Richtig – die Nummer verschwindet bei allen Kontakten",
+          "Sie sehen nur noch die letzten vier Ziffern",
+          "Die Nummer wird bei allen durch den Nutzernamen ersetzt"
+        ],
+        "r": 0,
+        "e": "Der Nutzername schützt nur vor dem Weitergeben an Neue: Du sagst künftig den Namen statt der Nummer. Für die Anmeldung bleibt die Telefonnummer nötig, und er ist auch kein zweites Konto – Profilbild und Name bleiben sichtbar."
       },
       {
-        f: "Was können Umfragen in Gruppen seit 2026?",
-        a: ["Anonym sein oder zu einem festen Zeitpunkt enden – und 15 Minuten lang korrigiert werden",
-            "Automatisch einen Termin im Kalender anlegen",
-            "Mehr als zehn Antwortmöglichkeiten anbieten",
-            "Das Ergebnis per E-Mail verschicken"],
-        r: 0,
-        e: "Anonym ist besonders nützlich, wenn niemand sehen soll, wer wie gestimmt hat. Und die Viertelstunde Nachbesserung rettet jede Umfrage mit Tippfehler."
+        "f": "Was können Umfragen in Gruppen seit 2026?",
+        "a": [
+          "Anonym sein oder zu einem festen Zeitpunkt enden – und 15 Minuten lang korrigiert werden",
+          "Automatisch einen Termin im Kalender anlegen",
+          "Mehr als zehn Antwortmöglichkeiten anbieten",
+          "Das Ergebnis per E-Mail verschicken"
+        ],
+        "r": 0,
+        "e": "Anonym ist besonders nützlich, wenn niemand sehen soll, wer wie gestimmt hat. Und die Viertelstunde Nachbesserung rettet jede Umfrage mit Tippfehler."
       },
       {
-        f: "Der Speicher wird knapp, aber die Texte der Vereinsgruppe möchtest du behalten. Was geht seit 2026?",
-        a: ["Gezielt einzelne Medientypen löschen – zum Beispiel alle Videos, während Texte und Fotos bleiben",
-            "Nur der ganze Chat lässt sich löschen",
-            "WhatsApp löscht automatisch alles, was älter als ein Jahr ist",
-            "Man muss die App neu installieren"],
-        r: 0,
-        e: "Zu finden unter Einstellungen → Speicher und Daten → Speicher verwalten. Früher hieß es oft: ganzer Chat oder gar nichts."
+        "f": "Der Speicher wird knapp, aber die Texte der Vereinsgruppe möchtest du behalten. Was geht seit 2026?",
+        "a": [
+          "Gezielt einzelne Medientypen löschen – zum Beispiel alle Videos, während Texte und Fotos bleiben",
+          "Nur der ganze Chat lässt sich löschen",
+          "WhatsApp löscht automatisch alles, was älter als ein Jahr ist",
+          "Man muss die App neu installieren"
+        ],
+        "r": 0,
+        "e": "Zu finden unter Einstellungen → Speicher und Daten → Speicher verwalten. Früher hieß es oft: ganzer Chat oder gar nichts."
       },
       {
-        f: "Was darfst du getrost übersehen?",
-        a: ["Die Apple-Watch-App, wenn du keine Apple Watch trägst",
-            "Konfetti- und Silvester-Effekte, die bei bestimmten Emojis von selbst entstehen",
-            "Neue Ordner für Firmen-Nachrichten, die gerade in anderen Ländern getestet werden",
-            "Ob deine App auf dem aktuellen Stand ist"],
-        r: [0, 1, 2],
-        e: "Auch die angekündigte Werbung im Status-Bereich ist in der EU vorerst verschoben – in deinen Chats erscheint ohnehin keine. Ob die App aktuell ist, lohnt dagegen einen Blick: Einstellungen → Hilfe → App-Info."
+        "f": "Was darfst du getrost übersehen?",
+        "a": [
+          "Die Apple-Watch-App, wenn du keine Apple Watch trägst",
+          "Konfetti- und Silvester-Effekte, die bei bestimmten Emojis von selbst entstehen",
+          "Neue Ordner für Firmen-Nachrichten, die gerade in anderen Ländern getestet werden",
+          "Ob deine App auf dem aktuellen Stand ist"
+        ],
+        "r": [
+          0,
+          1,
+          2
+        ],
+        "e": "Auch die angekündigte Werbung im Status-Bereich ist in der EU vorerst verschoben – in deinen Chats erscheint ohnehin keine. Ob die App aktuell ist, lohnt dagegen einen Blick: Einstellungen → Hilfe → App-Info."
       }
     ]
   }
