@@ -34,12 +34,21 @@
   .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px; margin-bottom:14px}
   .blocks{display:grid; gap:10px}
   .block{
-    display:block; width:100%; text-align:left; background:var(--card); color:var(--ink);
-    border:2px solid var(--line); border-radius:var(--radius); padding:14px 16px; box-shadow:var(--shadow);
+    display:flex; align-items:center; gap:14px; width:100%; text-align:left;
+    background:var(--weich,var(--card)); color:var(--ink);
+    border:2px solid var(--farbe,var(--line)); border-left-width:12px;
+    border-radius:var(--radius); padding:14px 16px; box-shadow:var(--shadow);
   }
-  .block:hover{border-color:var(--accent)}
+  .block:hover{filter:brightness(.97)}
+  .block .nr{
+    flex:0 0 auto; width:2.1em; height:2.1em; border-radius:50%;
+    background:var(--farbe,var(--accent)); color:#fff; font-weight:700;
+    display:grid; place-items:center;
+  }
+  .block .txt{flex:1; min-width:0}
   .block b{display:block; font-size:1.02em}
-  .block span{display:block; color:var(--muted); font-size:.8em; margin-top:2px}
+  .block .txt span{display:block; color:var(--ink); opacity:.75; font-size:.8em; margin-top:2px}
+  .block .los{flex:0 0 auto; color:var(--farbe,var(--accent)); font-weight:700; font-size:1.3em}
   .bar{height:6px; background:var(--line); border-radius:999px; overflow:hidden; margin-bottom:7px}
   .bar>i{display:block; height:100%; background:var(--accent); width:0%; transition:width .3s}
   .meta{display:flex; justify-content:space-between; color:var(--muted); font-size:.75em; margin-bottom:14px}
@@ -101,7 +110,6 @@
   <section id="start">
     <div class="card">
       <p style="margin:0 0 6px">Drei Runden für alle, die schon mit KI arbeiten. Die Fragen kommen jedes Mal in neuer Reihenfolge, und manche haben es in sich. Nach jeder Antwort kommt die Erklärung.</p>
-      <p class="hinweis">Am Beamer: mit den Tasten 1 bis 4 antworten, mit der Leertaste weiterblättern.</p>
     </div>
     <div class="blocks" id="blockListe"></div>
   </section>
@@ -467,12 +475,23 @@ function mische(n){
   return a;
 }
 
+// Jede Rubrik bekommt ihre eigene Farbe: [kräftig, zart]
+const RUBRIK_FARBEN = [
+  ["#3E7CB1", "#E8F0F7"],
+  ["#C28A3A", "#F8EEDC"],
+  ["#2C7A6A", "#E2F1ED"],
+  ["#B23B2E", "#F7E6E3"]
+];
+
 // Startbildschirm aufbauen
 BLOECKE.forEach((b, n) => {
   const btn = document.createElement("button");
   btn.className = "block";
   btn.type = "button";
-  btn.innerHTML = "<b>" + b.titel + "</b><span>" + b.unter + "</span>";
+  const [farbe, weich] = RUBRIK_FARBEN[n % RUBRIK_FARBEN.length];
+  btn.style.setProperty("--farbe", farbe);
+  btn.style.setProperty("--weich", weich);
+  btn.innerHTML = '<span class="nr">' + (n + 1) + '</span><span class="txt"><b>' + b.titel + "</b><span>" + b.unter + '</span></span><span class="los" aria-hidden="true">›</span>';
   btn.addEventListener("click", () => starte(n));
   $("blockListe").appendChild(btn);
 });
