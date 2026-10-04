@@ -185,6 +185,13 @@
   .ueber-text p{margin:0 0 12px}
 
   /* Detail-Ansicht Vortrag */
+  /* Zusammenfassung zum Ausklappen in der Vortrags-Ansicht */
+  details.mehr{margin:6px 0 18px;border:1px solid var(--linie);border-radius:12px;background:var(--creme-tile)}
+  details.mehr > summary{cursor:pointer;list-style:none;padding:13px 16px;font-family:var(--sans);font-size:16px;font-weight:600;display:flex;align-items:center;gap:10px}
+  details.mehr > summary::-webkit-details-marker{display:none}
+  details.mehr > summary::before{content:"+";flex:none;width:1.5em;height:1.5em;border-radius:50%;border:2px solid currentColor;display:grid;place-items:center;font-size:15px;line-height:1}
+  details.mehr[open] > summary::before{content:"–"}
+  details.mehr > p{margin:0;padding:0 16px 12px;font-family:var(--sans);font-size:15px;line-height:1.55;color:var(--ink-soft)}
   #detail{display:none}
   .back{background:none;border:none;color:var(--terra-tief);font-family:var(--sans);font-size:16px;cursor:pointer;padding:6px 0}
   .detailcard{background:var(--creme-tile);border:1px solid var(--linie);border-radius:14px;padding:20px 22px}
@@ -319,7 +326,7 @@
          "broschueren" (siehe tools/liste_bauen.py). Zwischen den beiden Marken
          also bitte nichts von Hand ändern – es wird überschrieben. -->
     <!-- HANDZETTEL:START -->
-    <details class="kat" open>
+    <details class="kat">
       <summary><span class="kat-titel">Smartphone-Tipps</span><span class="kat-zahl">5 Zettel</span></summary>
       <div class="grid2">
         <div class="dlbox">
@@ -349,7 +356,7 @@
         </div>
       </div>
     </details>
-    <details class="kat" open>
+    <details class="kat">
       <summary><span class="kat-titel">WhatsApp</span><span class="kat-zahl">2 Zettel</span></summary>
       <div class="grid2">
         <div class="dlbox">
@@ -364,7 +371,7 @@
         </div>
       </div>
     </details>
-    <details class="kat" open>
+    <details class="kat">
       <summary><span class="kat-titel">Internet und Sicherheit</span><span class="kat-zahl">2 Zettel</span></summary>
       <div class="grid2">
         <div class="dlbox">
@@ -379,7 +386,7 @@
         </div>
       </div>
     </details>
-    <details class="kat" open>
+    <details class="kat">
       <summary><span class="kat-titel">KI</span><span class="kat-zahl">3 Zettel</span></summary>
       <div class="grid2">
         <div class="dlbox">
@@ -399,7 +406,7 @@
         </div>
       </div>
     </details>
-    <details class="kat" open>
+    <details class="kat">
       <summary><span class="kat-titel">Google und Cloud</span><span class="kat-zahl">5 Zettel</span></summary>
       <div class="grid2">
         <div class="dlbox">
@@ -438,13 +445,13 @@
     <p>Kleine Wissensproben zu den Kursthemen – jede Antwort wird sofort erklärt.</p>
     <!-- QUIZZE:START -->
     <a class="dl" href="quizze/internet-grundlagen.html">
-      <span class="ico" style="background:#3E7CB1">?</span><span class="titel">Smartphone und Internet<small>Für Einsteiger &middot; 3 Runden</small></span><span class="pfeil">starten &rarr;</span></a>
+      <span class="ico" style="background:#3E7CB1">?</span><span class="titel">Smartphone und Internet<small>Von A wie App bis W wie WLAN &middot; 3 Runden</small></span><span class="pfeil">starten &rarr;</span></a>
     <a class="dl" href="quizze/sicherheit.html">
       <span class="ico" style="background:#B23B2E">?</span><span class="titel">Internet ohne Angst<small>Betrug erkennen, sicher anmelden &middot; 3 Runden</small></span><span class="pfeil">starten &rarr;</span></a>
     <a class="dl" href="quizze/whatsapp.html">
       <span class="ico" style="background:#C28A3A">?</span><span class="titel">WhatsApp<small>Alltag und Neues 2026 &middot; 2 Runden</small></span><span class="pfeil">starten &rarr;</span></a>
     <a class="dl" href="quizze/ki-und-sprachmodelle.html">
-      <span class="ico" style="background:#2C7A6A">?</span><span class="titel">KI und Sprachmodelle<small>Für Fortgeschrittene &middot; 3 Runden</small></span><span class="pfeil">starten &rarr;</span></a>
+      <span class="ico" style="background:#2C7A6A">?</span><span class="titel">KI und Sprachmodelle<small>Der Maschine auf den Zahn gefühlt &middot; 3 Runden</small></span><span class="pfeil">starten &rarr;</span></a>
     <!-- QUIZZE:ENDE -->
   </section>
 
@@ -495,27 +502,33 @@ const vortraege = [
   {t:"Das Internet – unendliche Weiten …", k:"Das Internet", ic:"🌐", sub:"Unendliche Weiten und Möglichkeiten", kurz:"Eine Reise durch das Netz und seine Möglichkeiten.",
    worum:"Was das Internet eigentlich ist, wie es entstand und welche Welten es uns öffnet.",
    fuerWen:"Alle, die neugierig sind und das große Ganze verstehen möchten.",
-   mitnehmen:"Ein Gefühl dafür, was hinter dem Netz steckt – und Lust, es zu erkunden."},
+   mitnehmen:"Ein Gefühl dafür, was hinter dem Netz steckt – und Lust, es zu erkunden.",
+   mehr:["Der Vortrag beginnt mit einem Augenzwinkern: „Ich komme aus einer Generation, da hat es aus der Cloud noch geregnet.“ Heute steckt hinter der Wolke ein Rechenzentrum – und genau solche Begriffe werden hier entzaubert.", "Zuerst die Grundlagen: Internet und Web sind nicht dasselbe. Das Internet ist das Netz aus vielen verbundenen Netzen, das Web sind die Seiten, die wir im Browser öffnen. Die wichtigsten Stationen: 1969 verbindet das ARPANET erste Forschungseinrichtungen, um 1990 entwickelt Tim Berners-Lee das World Wide Web.", "Dann der Blick unter die Haube: Jede Nachricht reist in vielen kleinen Datenpaketen, Router weisen ihnen den Weg. Was macht der Router zu Hause, was der Provider? Worin unterscheiden sich DSL, Glasfaser und Mobilfunk, LAN und WLAN – und wozu dient ein Mesh-WLAN? Dazu die Cloud: Synchronisieren ist noch keine Sicherung.", "Im dritten Teil geht es um das Gerät in der Hand: vom tragbaren Telefon zum Computer in der Tasche, um Apps, Benutzerkonten und den Unterschied zwischen WLAN zu Hause und mobilen Daten unterwegs.", "Auch die Kehrseite kommt vor: Rechenzentren verbrauchten 2024 rund 415 Terawattstunden Strom, etwa 1,5 Prozent des weltweiten Verbrauchs. Zum Schluss gibt es ein kleines Wörterbuch von App bis Widget und ein Quiz zum gemeinsamen Überlegen."]},
   {t:"Internet ohne Angst – Wie agiere ich sicher im Netz?", k:"Internet ohne Angst", ic:"🔒", sub:"Sicher agieren im Netz", kurz:"Sicher unterwegs, ohne die Freude zu verlieren.",
    worum:"Betrug, Passwörter, Datenschutz: die häufigsten Fallen und wie man sie umgeht.",
    fuerWen:"Alle, die sich im Netz sicherer fühlen möchten.",
-   mitnehmen:"Konkrete Handgriffe für mehr Sicherheit – ganz ohne Panikmache."},
+   mitnehmen:"Konkrete Handgriffe für mehr Sicherheit – ganz ohne Panikmache.",
+   mehr:["Die Botschaft gleich vorweg: Man muss kein Technikprofi sein, um sicherer zu handeln. Und niemand muss sich schämen, auf einen Täuschungsversuch hereinzufallen.", "Erster Teil – das Gerät schützen: automatische Updates, eine gute Bildschirmsperre und ein prüfender Blick auf Apps und ihre Berechtigungen. Dazu die Einordnung, was das Schloss im Browser (HTTPS) leistet und was nicht.", "Zweiter Teil – Betrug erkennen: wie Phishing funktioniert, der kurze Nachrichten-Check in drei Fragen und echte Beispiele zum gemeinsamen Prüfen. Dazu Anhänge, QR-Codes, angebliche Gewinne sowie Betrug am Telefon und im Messenger – von „Hallo Mama, neue Nummer!“ bis zum falschen Support-Mitarbeiter.", "Dritter Teil – sicher anmelden: für jedes Konto ein eigenes Passwort, ein Passwortmanager für den Überblick, zwei Faktoren für wichtige Konten und Passkeys als Nachfolger des Passworts. Wichtig auch: den Zugang behalten, wenn das Handy einmal weg ist.", "Vierter Teil – Daten schützen: Cloud, Synchronisierung und echte Sicherung, dazu Cookies und der sparsame Umgang mit persönlichen Daten in KI-Chats. Am Ende steht der Ernstfall („Schon geklickt – was jetzt?“) und ein Sicherheits-Check für zu Hause."]},
   {t:"Künstliche Intelligenz – Chance und Risiko", k:"Künstliche Intelligenz", ic:"🤖", sub:"Chance und Risiko", kurz:"Was KI kann, was nicht – und was das für uns bedeutet.",
    worum:"Chatbots wie ChatGPT verständlich erklärt, mit ehrlicher Einordnung von Nutzen und Grenzen.",
    fuerWen:"Neugierige ohne Vorkenntnisse, die mitreden und ausprobieren wollen.",
-   mitnehmen:"Ein klarer Blick auf Chancen und Risiken – und ein erstes eigenes Ausprobieren."},
+   mitnehmen:"Ein klarer Blick auf Chancen und Risiken – und ein erstes eigenes Ausprobieren.",
+   mehr:["Der Vortrag ist eine Momentaufnahme. Er beginnt bei den großen Erfindungen der Menschheit – Feuer, Rad, Elektrizität – und fragt, ob die KI in diese Reihe gehört.", "Grundlagen: Was ist Künstliche Intelligenz eigentlich, welche Stufen unterscheidet man, und was können die heutigen Systeme, die Texte, Bilder und Musik erzeugen?", "Anwendungen: KI im Alltag und im Smart Home, autonomes Fahren mit Robotaxis, humanoide Roboter, der Wandel in Unternehmen und Arbeitswelt sowie die Medizin – von der Auswertung von Röntgenbildern bis zur Genomforschung.", "Die große Bühne: die wirtschaftliche Macht der Tech-Konzerne, milliardenschwere Vorhaben in den USA, Europas und Deutschlands Stand – und der Stromhunger der Rechenzentren samt grüner Alternativen.", "Risiken und Nebenwirkungen: Datenschutz, Überwachung, autonome Waffen, computergesteuerter Börsenhandel und ethische Dilemmata. Zum Schluss geht es um die Superintelligenz – mit Stimmen von Ray Kurzweil, Stuart Russell, Yuval Noah Harari, Nick Bostrom und Stephen Hawking – und um die Frage: Quo vadis, Homo sapiens?"]},
   {t:"Über die Kostbarkeit des Alters – Wir schauen gemeinsam zurück und von hier aus nach vorn", k:"Kostbarkeit des Alters", ic:"🕰️", sub:"Zurückschauen und nach vorn", kurz:"Ein nachdenklicher Blick zurück und nach vorn.",
    worum:"Ein persönlicher Vortrag über das Älterwerden, Erinnerungen und neue Möglichkeiten.",
    fuerWen:"Alle, die innehalten und den eigenen Lebensweg neu betrachten möchten.",
-   mitnehmen:"Ermutigung, das Alter als kostbare, gestaltbare Zeit zu sehen."},
+   mitnehmen:"Ermutigung, das Alter als kostbare, gestaltbare Zeit zu sehen.",
+   mehr:["Der persönlichste Vortrag, mit vielen Bildern, kurzen Filmen und Musik. Er beginnt mit einer Rätselfrage: Was wollen alle werden, aber niemals sein? – Alt.", "Damals: eine Kindheit, die draußen stattfand. Lagerfeuer, Sackhüpfen, Matchbox-Autos und Lego, der erste Fernseher als Ereignis für die ganze Familie. Aber auch: Freiheit hat zwei Seiten. Zwischendurch ein Ratespiel mit Wörtern, die die Jugend nicht mehr kennt – vom Backfisch bis zur Flotten Lotte.", "Die Welt im Aufbruch: von der Kuba-Krise über Beatles, Mondlandung und Mauerfall bis zu iPhone und KI – als Bilderfolge mit Musik. Danach der Vergleich von Damals und Heute, und der Gedanke: Vielleicht ist genau das die Kostbarkeit des Alters – vergleichen zu können.", "Unter der Oberfläche: Unsere Biologie ist alt, unsere Welt ist neu. Warum die Zeit zu rasen scheint, warum wir nicht mehr mitrennen müssen und weshalb der eigene Kompass wichtiger wird als Nostalgie oder Zukunftsangst.", "Der Kern: Die Forschung zeigt, dass die Lebenszufriedenheit im Alter wieder steigt. Die Endlichkeit macht das Leben wertvoll, der Blick wird enger und klarer, und es wächst die Freiheit, auswählen zu dürfen. Was wirklich bleibt: Beziehungen und Erfahrungen."]},
   {t:"Fernsehen – eine Zeitreise", k:"Fernsehen – eine Zeitreise", ic:"📺", sub:"Nostalgie trifft Smart TV", kurz:"Nostalgie trifft Smart TV.",
    worum:"Vom Röhrengerät zum Streaming: wie sich das Fernsehen gewandelt hat und heute funktioniert.",
    fuerWen:"Alle, die den Fernseher von früher lieben und das Heute verstehen möchten.",
-   mitnehmen:"Überblick über Mediatheken, Streaming und die Bedienung des Smart TV."},
+   mitnehmen:"Überblick über Mediatheken, Streaming und die Bedienung des Smart TV.",
+   mehr:["Drei Teile: die Geschichte, die Technik – und die Frage, was das Fernsehen mit uns macht.", "Wie das Fernsehen ins Wohnzimmer kam: von den ersten Versuchen in den 1920er Jahren über die Gründung der ARD 1950 und das „Wunder von Bern“ 1954, das die Geräteverkäufe sprunghaft steigen ließ, bis zum Sendestart des ZDF 1963 mit den Mainzelmännchen. Am 25. August 1967 kam die Farbe – die erste Farbsendung war „Der Goldene Schuss“.", "Ein wenig Nostalgie: Lassie, Raumpatrouille Orion, Dalli Dalli, Werbespots der 50er und 60er Jahre und ein Ratespiel zu den Serien der Kindheit.", "Der Wandel: 1984 starten RTL und Sat.1, es folgen Kabel, Satellit und digitales Antennenfernsehen, 2014 kommen Netflix und Amazon Prime Video nach Deutschland. Der Vortrag sortiert die heutige Vielfalt – Satellit, Kabel, Antenne und Fernsehen über das Internet (IPTV) – mit Vor- und Nachteilen, erklärt den Wegfall des Nebenkostenprivilegs und wie man einen älteren Fernseher mit einem Stick nachrüstet.", "Was macht das mit uns? Vom gemeinsamen Fernsehabend zum Schauen auf Abruf, vom einen Programm zur Flut der Talkshows. Dazu zwei Schattenseiten: Smart-TVs als Datensammler und das Serien-Schauen am Stück mit seinen Folgen für Schlaf und Bewegung."]},
   {t:"Der digitale Nachlass – unsere Daten sind unsterblich", k:"Digitaler Nachlass", ic:"🗝️", sub:"Unsere Daten sind unsterblich", kurz:"Was von uns im Netz bleibt – und wie man vorsorgt.",
    worum:"Konten, Passwörter und Erinnerungen im Netz vorausschauend regeln.",
    fuerWen:"Alle, die für sich und ihre Angehörigen vorsorgen möchten.",
-   mitnehmen:"Eine Checkliste, um den digitalen Nachlass rechtzeitig zu ordnen."}
+   mitnehmen:"Eine Checkliste, um den digitalen Nachlass rechtzeitig zu ordnen.",
+   mehr:["Viele Daten bleiben nach dem Tod erhalten – Konten, Abos und Profile verschwinden nicht von allein. Rechtlich gehört der digitale Nachlass zum Erbe: Die Erben übernehmen Verträge, auch die Kosten. Nur ein kleiner Teil der Menschen hat das bisher vollständig geregelt.", "Was hinterlassen wir? Daten auf Geräten und Spuren im Netz: E-Mail, Messenger, soziale Medien, Online-Banking, Kundenkonten, Fotos in der Cloud, digitales Geld. Die wichtigste Lehre: Ohne Zugangsdaten gibt es keinen Zugriff, kein Kündigen und kein Löschen.", "Fälle aus der Praxis zeigen, was passiert, wenn nichts geregelt ist: das fehlende Passwort, das weiterlaufende Streaming-Abo, das unerreichbare Bitcoin-Vermögen, Geburtstagsgrüße an einen Verstorbenen – und der Rechtsstreit von Eltern um das Facebook-Konto ihrer Tochter, in dem am Ende das Erbrecht Vorrang bekam.", "Was Erben tun können: Anbieter anschreiben, Sterbeurkunde vorlegen, Kontoauszüge nach Abbuchungen durchsehen. Und was jede und jeder selbst tun kann: eine Liste der Konten anlegen, Zugangsdaten sicher hinterlegen, eine Vertrauensperson bestimmen, bei Google den Kontoinaktivität-Manager und bei Apple den Nachlasskontakt einrichten. Dazu gibt es ein Formular zum Ausfüllen.", "Der Ausblick: digitale Grabsteine, Profile im Gedenkzustand und die Frage, ob wir als digitaler Klon weiterleben wollen. Das Fazit: Vorsorge ist ein Geschenk an die Familie."]}
 ];
 
 function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
@@ -532,6 +545,7 @@ function showDetail(i){
        <dt>Für wen?</dt><dd>${esc(v.fuerWen)}</dd>
        <dt>Was nehme ich mit?</dt><dd>${esc(v.mitnehmen)}</dd>
      </dl>
+     ${v.mehr ? `<details class="mehr"><summary>Zusammenfassung des Vortrags</summary>${v.mehr.map(a=>`<p>${esc(a)}</p>`).join('')}</details>` : ''}
      <p style="color:var(--ink-soft);font-size:15px;font-family:var(--sans)">Die Folien und Materialien
      zu diesem Thema liegen im geschützten Kursbereich.</p>`;
   document.getElementById('home').style.display='none';

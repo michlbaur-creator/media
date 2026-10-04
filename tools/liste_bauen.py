@@ -33,8 +33,7 @@ Kategorien:
     nicht auf der Seite. Unterstriche werden Leerzeichen, Bindestriche bleiben
     stehen (seit 01.10.2026, wie bei den Dateinamen).
     Hinten in der Ueberschrift steht, wie viele Zettel drin sind.
-    Alle Abschnitte sind offen - ausser solchen, deren Name auf "Archiv"
-    endet, die sind zugeklappt. Leere Ordner werden weggelassen.
+    Alle Abschnitte sind beim Oeffnen der Seite eingeklappt (seit 04.10.2026). Leere Ordner werden weggelassen.
     Es wird nur eine Ebene tief geschaut; Ordner in Ordnern bleiben aussen vor.
 
     PDFs, die direkt in broschueren/ liegen, stehen wie bisher ganz oben,
@@ -168,7 +167,7 @@ def zeilen():
             continue
         gesamt += len(dateien)
         _, ueberschrift = ordnername(unter)
-        offen = "" if ueberschrift.strip().lower().endswith("archiv") else " open"
+        offen = ""   # seit 04.10.2026: alle Abschnitte beim Öffnen der Seite eingeklappt
         anzahl = f"{len(dateien)} Zettel"
         kaesten = "\n".join(kasten(p, unter.name, "        ") for p in dateien)
         bloecke.append(
