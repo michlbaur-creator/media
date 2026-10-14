@@ -376,7 +376,7 @@
       <div class="grid2">
         <div class="dlbox">
           <a class="dl" href="broschueren/30_Internet_und_Sicherheit/2026-09-26_Digitaler_Nachlass.pdf" target="_blank" rel="noopener">
-            <span class="ico">PDF</span><span class="titel">Digitaler Nachlass<small>PDF · 178 KB · 26.09.2026</small></span><span class="pfeil">öffnen &rarr;</span></a>
+            <span class="ico">PDF</span><span class="titel">Digitaler Nachlass<small>PDF · 231 KB · 26.09.2026</small></span><span class="pfeil">öffnen &rarr;</span></a>
           <button type="button" class="druck" data-pdf="broschueren/30_Internet_und_Sicherheit/2026-09-26_Digitaler_Nachlass.pdf" data-titel="Digitaler Nachlass" title="Ausdrucken" aria-label="Digitaler Nachlass ausdrucken"><svg viewBox="0 0 24 24" aria-hidden="true"><rect class="p" x="7" y="2.5" width="10" height="5.5" rx="1"/><rect x="3" y="8" width="18" height="8" rx="2"/><rect class="p" x="7" y="13" width="10" height="8.5" rx="1"/><circle cx="17.6" cy="11" r="1"/></svg></button>
         </div>
         <div class="dlbox">
@@ -543,6 +543,7 @@ const vortraege = [
    worum:"Konten, Passwörter und Erinnerungen im Netz vorausschauend regeln.",
    fuerWen:"Alle, die für sich und ihre Angehörigen vorsorgen möchten.",
    mitnehmen:"Eine Checkliste, um den digitalen Nachlass rechtzeitig zu ordnen.",
+   video:"videos/nachlass/", videoInfo:"Ihr digitales Vermächtnis · gut anderthalb Minuten",
    mehr:["Viele Daten bleiben nach dem Tod erhalten – Konten, Abos und Profile verschwinden nicht von allein. Rechtlich gehört der digitale Nachlass zum Erbe: Die Erben übernehmen Verträge, auch die Kosten. Nur ein kleiner Teil der Menschen hat das bisher vollständig geregelt.", "Was hinterlassen wir? Daten auf Geräten und Spuren im Netz: E-Mail, Messenger, soziale Medien, Online-Banking, Kundenkonten, Fotos in der Cloud, digitales Geld. Die wichtigste Lehre: Ohne Zugangsdaten gibt es keinen Zugriff, kein Kündigen und kein Löschen.", "Fälle aus der Praxis zeigen, was passiert, wenn nichts geregelt ist: das fehlende Passwort, das weiterlaufende Streaming-Abo, das unerreichbare Bitcoin-Vermögen, Geburtstagsgrüße an einen Verstorbenen – und der Rechtsstreit von Eltern um das Facebook-Konto ihrer Tochter, in dem am Ende das Erbrecht Vorrang bekam.", "Was Erben tun können: Anbieter anschreiben, Sterbeurkunde vorlegen, Kontoauszüge nach Abbuchungen durchsehen. Und was jede und jeder selbst tun kann: eine Liste der Konten anlegen, Zugangsdaten sicher hinterlegen, eine Vertrauensperson bestimmen, bei Google den Kontoinaktivität-Manager und bei Apple den Nachlasskontakt einrichten. Dazu gibt es ein Formular zum Ausfüllen.", "Der Ausblick: digitale Grabsteine, Profile im Gedenkzustand und die Frage, ob wir als digitaler Klon weiterleben wollen. Das Fazit: Vorsorge ist ein Geschenk an die Familie."]}
 ];
 
@@ -560,6 +561,7 @@ function showDetail(i){
        <dt>Für wen?</dt><dd>${esc(v.fuerWen)}</dd>
        <dt>Was nehme ich mit?</dt><dd>${esc(v.mitnehmen)}</dd>
      </dl>
+     ${v.video ? `<a class="cta" href="${v.video}">&#9654; Erklärvideo ansehen<small>${esc(v.videoInfo||'')}</small></a>` : ''}
      ${v.mehr ? `<details class="mehr"><summary>Zusammenfassung des Vortrags</summary>${v.mehr.map(a=>`<p>${esc(a)}</p>`).join('')}</details>` : ''}
      <p style="color:var(--ink-soft);font-size:15px;font-family:var(--sans)">Die Folien und Materialien
      zu diesem Thema liegen im geschützten Kursbereich.</p>`;

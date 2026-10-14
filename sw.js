@@ -10,7 +10,7 @@
    „Neue Version verfügbar"-Banner aus.
 */
 
-const SHELL_CACHE = 'media-shell-v18';
+const SHELL_CACHE = 'media-shell-v19';
 const MEDIA_CACHE = 'media-media-v1';
 
 const CORE = [
@@ -28,6 +28,8 @@ const CORE = [
   './einstieg-ki/index.html',
   './kurse/',
   './kurse/index.html',
+  './videos/nachlass/',
+  './videos/nachlass/index.html',
   './impressum/',
   './impressum/index.html',
   './manifest.webmanifest',
@@ -71,6 +73,7 @@ self.addEventListener('fetch', (event) => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin !== location.origin) return; // externe PDFs (mibaso.de) nicht abfangen
+  if (/\.(mp4|webm|m4v)$/i.test(url.pathname)) return; // Videos direkt vom Server (Spulen, kein Riesen-Cache)
 
   // Icons/Bilder: zuerst Cache
   if (istMedia(url)) {
