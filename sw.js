@@ -90,9 +90,11 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Seiten/Daten: zuerst Netz (frisch), sonst Cache, sonst Startseite
+  // Seiten/Daten: zuerst Netz (frisch), sonst Cache, sonst Startseite.
+  // cache:'no-cache' fragt immer beim Server nach – sonst liefert der
+  // Browser-Zwischenspeicher bis zu 10 Minuten lang die alte Seite.
   event.respondWith(
-    fetch(req)
+    fetch(req, { cache: 'no-cache' })
       .then((res) => {
         if (res && res.status === 200 && res.type === 'basic') {
           const copy = res.clone();
