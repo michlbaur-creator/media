@@ -104,7 +104,7 @@ KARTEN = [
     ("05  /  KI-ANGEBOTE VERGLEICHEN", "KI-Vergleichswerkstatt",
      ["Welche KI passt zu mir? Fünf Chat-Angebote, Kosten und Limits im Überblick –",
       "und im Blindtest selbst beurteilen, welche Antwort überzeugt."],
-     "Vergleichswerkstatt öffnen  >", "https://ki-vergleichswerkstatt-mibaso.mbaur747329.chatgpt.site/#entdecken",
+     "Vergleichswerkstatt öffnen  >", "https://media.mibaso.de/demos/ki-vergleich/#entdecken",
      bild_vergleich),
 ]
 
