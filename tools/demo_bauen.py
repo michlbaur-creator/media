@@ -31,7 +31,7 @@ def link(x, top, w, h, url):
 c.setFillColorRGB(*CREME); c.rect(0, 0, W, H, stroke=0, fill=1)
 text(38, 32.1 + 1.5, "MIBASO  /  EINSTIEG  /  KI", "Helvetica", 10, TERRA)
 text(38, 50.1 + 4, "Demo", "Times-Roman", 34, INK)
-text(38, 109.1 + 1.5, "Fünf Beispiele zum Anklicken: planen, entdecken, vergleichen und kreativ gestalten.",
+text(38, 109.1 + 1.5, "Sechs Beispiele zum Anklicken: planen, entdecken, vergleichen und kreativ gestalten.",
      "Helvetica", 11, INK)
 
 # --- Illustrationen ohne Foto ---------------------------------------------
@@ -77,6 +77,23 @@ def bild_vergleich(x, top, w, h):
         p.arcTo(m + sx - 9, Y(b - 7) - 6, m + sx + 9, Y(b - 7) + 6, 180, 180); p.close()
         c.drawPath(p, stroke=0, fill=1)
 
+def bild_hamburg(x, top, w, h):
+    s = (w / 90, h / 113)
+    rrect(x, top, w, h, 0.1, (0.8314, 0.9059, 0.8824))
+    c.setFillColorRGB(0.9294, 0.8118, 0.5529); c.circle(x + 70 * s[0], Y(top + 22 * s[1]), 9 * min(s), stroke=0, fill=1)
+    # Speicher-Backstein-Sockel
+    poly([(14, 62), (64, 62), (64, 86), (14, 86)], TERRA, x, top, s)
+    # Glasaufbau mit Wellendach
+    poly([(14, 62), (14, 44), (24, 36), (34, 46), (44, 32), (54, 44), (64, 38), (64, 62)], (0.2745, 0.4667, 0.3922), x, top, s)
+    c.setStrokeColorRGB(1, 1, 1); c.setLineWidth(0.5)
+    for i in range(4):
+        yy = top + (66 + i * 5) * s[1]; c.line(x + 17 * s[0], Y(yy), x + 61 * s[0], Y(yy))
+    # Wasser
+    rrect(x, top + 86 * s[1], w, 27 * s[1], 0.1, (0.5333, 0.7059, 0.7333))
+    c.setStrokeColorRGB(1, 1, 1); c.setLineWidth(0.9)
+    for yy, x0 in ((94, 8), (102, 40), (107, 14)):
+        c.line(x + x0 * s[0], Y(top + yy * s[1]), x + (x0 + 22) * s[0], Y(top + yy * s[1]))
+
 def foto(name, maxw, maxh):
     im = Image.open(f"{IMG}/{name}")
     r = min(maxw / im.width, maxh / im.height)
@@ -88,49 +105,54 @@ KARTEN = [
       "Notizen speichern. Mit Karten und Kalenderexport."],
      "Reiseplan öffnen  >", "https://media.mibaso.de/demos/urlaubsplanung/Viechtach-Urlaubsplan-interaktiv.html",
      "01.jpg"),
-    ("02  /  PDF MIT LINKS", "Urlaubsprogramm Viechtach",
+    ("02  /  INTERAKTIVE WEBSEITE", "Hamburg interaktiv",
+     ["Vier Tage Hamburg: Tagesprogramm wählen, HVV-Karten planen, Kosten",
+      "zusammenrechnen, Termine in den Kalender übernehmen."],
+     "Hamburg-Plan öffnen  >", "https://media.mibaso.de/demos/urlaubsplanung/Hamburg-2027-interaktiv.html",
+     bild_hamburg),
+    ("03  /  PDF MIT LINKS", "Urlaubsprogramm Viechtach",
      ["Ein ausgearbeiteter Reiseplan mit Natur, Wellness, Einkehr und weiterführenden",
       "Links. Lesen, speichern und ausdrucken."],
      "Urlaubsprogramm öffnen  >", "https://media.mibaso.de/demos/urlaubsplanung/Urlaubsprogramm_Viechtach_2027.pdf",
      "02.png"),
-    ("03  /  DIGITALES BUCH", "Der Fuchs und der Wolf",
+    ("04  /  DIGITALES BUCH", "Der Fuchs und der Wolf",
      ["Ein Vorlesebuch von Michael Baur. Das digitale Flip-Buch verbindet Geschichte",
       "und Bilder und lässt sich Seite für Seite durchblättern."],
      "Flip-Buch öffnen  >", "https://online.fliphtml5.com/mibaso/slmj/", "03.png"),
-    ("04  /  REISEPLANUNG MIT CHATGPT", "Deinen Urlaub im Chat planen",
+    ("05  /  REISEPLANUNG MIT CHATGPT", "Deinen Urlaub im Chat planen",
      ["Reiseauftrag kopieren, in den eigenen ChatGPT-Chat einfügen und gemeinsam",
       "planen. Auch mit kostenlosem Zugang, innerhalb seiner Limits."],
      "Reiseauftrag öffnen  >", "https://media.mibaso.de/demos/urlaubsplanung/Reiseauftrag.html", bild_landschaft),
-    ("05  /  KI-ANGEBOTE VERGLEICHEN", "KI-Vergleichswerkstatt",
+    ("06  /  KI-ANGEBOTE VERGLEICHEN", "KI-Vergleichswerkstatt",
      ["Welche KI passt zu mir? Fünf Chat-Angebote, Kosten und Limits im Überblick –",
       "und im Blindtest selbst beurteilen, welche Antwort überzeugt."],
      "Vergleichswerkstatt öffnen  >", "https://media.mibaso.de/demos/ki-vergleich/#entdecken",
      bild_vergleich),
 ]
 
-TOP, KH, GAP = 146.0, 112.0, 9.5
+TOP, KH, GAP = 135.0, 97.0, 6.0
 for i, (lab, tit, zeilen, knopf, url, bild) in enumerate(KARTEN):
     t = TOP + i * (KH + GAP)
     rrect(38, t, 519.28, KH, 10, (1, 1, 1))
-    sx, st, sw, sh = 50, t + 10, 90, KH - 20
+    sx, st, sw, sh = 50, t + 8, 90, KH - 16
     if callable(bild):
         bild(sx, st, sw, sh)
     else:
         ir, iw, ih = foto(bild, sw, sh)
         c.drawImage(ir, sx + (sw - iw) / 2, Y(st + (sh - ih) / 2 + ih), iw, ih)
     link(sx, st, sw, sh, url)
-    text(156, t + 8.5, lab, "Helvetica", 8.7, TERRA)
-    text(156, t + 20, tit, "Times-Roman", 19, INK)
+    text(156, t + 7, lab, "Helvetica", 8.7, TERRA)
+    text(156, t + 17.5, tit, "Times-Roman", 19, INK)
     for j, z in enumerate(zeilen):
-        text(156, t + 46.5 + j * 13, z, "Helvetica", 10.5, INK)
-    rrect(156, t + KH - 33, 230, 23, 5, TERRA)
-    text(168, t + KH - 33 + 6.2, knopf, "Helvetica", 10.5, (1, 1, 1))
-    link(156, t + KH - 33, 230, 23, url)
+        text(156, t + 42 + j * 12.5, z, "Helvetica", 10.5, INK)
+    rrect(156, t + KH - 29, 230, 21, 5, TERRA)
+    text(168, t + KH - 29 + 5.3, knopf, "Helvetica", 10.5, (1, 1, 1))
+    link(156, t + KH - 29, 230, 21, url)
 
-ende = TOP + 5 * KH + 4 * GAP
-text(38, ende + 12, "Zum Öffnen auf das Bild oder die Schaltfläche klicken. Internetverbindung erforderlich.",
+ende = TOP + len(KARTEN) * KH + (len(KARTEN) - 1) * GAP
+text(38, ende + 9, "Zum Öffnen auf das Bild oder die Schaltfläche klicken. Internetverbindung erforderlich.",
      "Helvetica", 10, INK)
-text(38, ende + 26, "KI-Vorschläge und Preise sind unverbindlich. Angaben vor einer Buchung prüfen.",
+text(38, ende + 22, "KI-Vorschläge und Preise sind unverbindlich. Angaben vor einer Buchung prüfen.",
      "Helvetica", 10, INK)
 text(38, 797.2 + 1.3, "Michael Baur  |  media.mibaso.de", "Helvetica", 9, TERRA)
 c.setFillColorRGB(*TERRA); c.setFont("Helvetica", 9)
