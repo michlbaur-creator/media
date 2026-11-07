@@ -17,6 +17,10 @@ Der Dateiname bestimmt, was auf der Seite steht:
     Das Datum vorne darf 2026-09-16 oder 2026-09 heissen - oder ganz fehlen.
     Ein Pluszeichen vorne (+2026-09-19_Tipps.pdf) holt einen Zettel in seinem
     Abschnitt ganz nach oben; das Pluszeichen selbst erscheint nicht.
+    Eine Positionsnummer vorne (01_2026-09-26_Google_Notizen.pdf) legt die
+    Reihenfolge im Abschnitt fest: 01 zuerst, dann 02 usw. (seit 07.11.2026).
+    Die Nummer erscheint nicht auf der Seite. Nummerierte Zettel stehen vor
+    den unnummerierten, Zettel mit Pluszeichen bleiben ganz oben.
     Dateien, die mit einem Unterstrich beginnen (_entwurf.pdf), werden
     uebersprungen; so kann man etwas ablegen, ohne es zu veroeffentlichen.
 
@@ -55,6 +59,7 @@ SEITE = WURZEL / "index.html"
 START = "<!-- HANDZETTEL:START -->"
 ENDE = "<!-- HANDZETTEL:ENDE -->"
 
+POSITION = re.compile(r"^(\d{1,2})_(.*)$")   # "01_..." = feste Reihenfolge
 DATUM = re.compile(r"^(\d{4})-(\d{2})(?:-(\d{2}))?[_ -]+(.*)$")
 PRAEFIX = re.compile(r"^(\d+)[_ -]+(.*)$")
 
@@ -70,6 +75,10 @@ def zerlegen(pfad: Path):
     stamm = pfad.stem
     oben = stamm.startswith("+")          # "+" vorne = ganz nach oben
     stamm = stamm.lstrip("+")
+    position = None
+    pos = POSITION.match(stamm)
+    if pos:
+        position, stamm = int(pos.group(1)), pos.group(2)
     treffer = DATUM.match(stamm)
     if treffer:
         jahr, monat, tag, rest = treffer.groups()
@@ -77,6 +86,8 @@ def zerlegen(pfad: Path):
         datumstext = f"{tag}.{monat}.{jahr}" if tag else f"{monat}/{jahr}"
     else:
         schluessel, datumstext, rest = "0000-00-00", "", stamm
+    if position is not None:              # kleine Nummer = weiter oben
+        schluessel = f"9998-{99 - position:02d}-" + schluessel
     if oben:
         schluessel = "9999-" + schluessel
     titel = rest.replace("_", " ").strip()
